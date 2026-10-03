@@ -1,12 +1,13 @@
 // Edzésnapló service worker — az app offline is elindul.
 // Stratégia: a tárolt verziót adja azonnal, közben a háttérben letölti az újat;
 // ha változott, szól az appnak ("Új verzió érhető el").
-const CACHE = 'edzesnaplo-v1';
+const CACHE = 'edzesnaplo-v2';
 const SHELL = ['./', './index.html', './manifest.webmanifest',
-  './icons/icon-180.png', './icons/icon-192.png', './icons/icon-512.png'];
+  './icon-180.png', './icon-192.png', './icon-512.png'];
 
 self.addEventListener('install', e => {
-  e.waitUntil(caches.open(CACHE).then(c => c.addAll(SHELL)).then(() => self.skipWaiting()));
+  // fájlonként cache-el: ha egy ikon hiányzik, attól még az app offline működik
+  e.waitUntil(caches.open(CACHE).then(c => Promise.all(SHELL.map(u => c.add(u).catch(() => null)))).then(() => self.skipWaiting()));
 });
 
 self.addEventListener('activate', e => {
