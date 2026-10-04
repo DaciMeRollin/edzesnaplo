@@ -1,7 +1,7 @@
 // Edzésnapló service worker — az app offline is elindul.
 // Stratégia: a tárolt verziót adja azonnal, közben a háttérben letölti az újat;
 // ha változott, szól az appnak ("Új verzió érhető el").
-const CACHE = 'edzesnaplo-v4';
+const CACHE = 'edzesnaplo-3e73b196';
 const SHELL = ['./', './index.html', './manifest.webmanifest',
   './icon-180.png', './icon-192.png', './icon-512.png'];
 
