@@ -227,6 +227,7 @@ input[type=checkbox]{width:20px;height:20px;accent-color:var(--day);flex:none}
 .spin{width:22px;height:22px;border-radius:50%;border:3px solid var(--line);border-top-color:var(--day);flex:none}
 @media (prefers-reduced-motion: no-preference){.spin{animation:spin .9s linear infinite}}
 @keyframes spin{to{transform:rotate(360deg)}}
+.isprev{margin:0 14px 8px;padding:8px 10px;border-radius:9px;background:color-mix(in srgb,var(--warn) 14%,var(--surface));border:1px solid color-mix(in srgb,var(--warn) 40%,var(--line));font-size:13px;font-weight:600}
 /* animált ábrák */
 :root{--hl:#e8590c}
 @media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--hl:#ff9a5c}}
@@ -270,6 +271,105 @@ input[type=checkbox]{width:20px;height:20px;accent-color:var(--day);flex:none}
 .cd.sel{outline:2px solid var(--day);outline-offset:-1px;background:color-mix(in srgb,var(--day) 10%,var(--surface))}
 @media (max-width:380px){.cd .mk{width:11px;height:11px;font-size:8px}.wd{min-height:62px}}
 @media (max-width:380px){.grid4{grid-template-columns:repeat(2,minmax(0,1fr))}}
+
+/* ---- Fókusz mód (aktív edzés): egy nyitott gyakorlat, összecsukott kész/következő sorok, pihenő-gyűrű a fejlécben ---- */
+[data-col]{--day-soft:color-mix(in srgb,var(--day) 14%,var(--surface));--good-soft:color-mix(in srgb,var(--good) 16%,var(--surface))}
+.fhead{position:sticky;top:calc(env(safe-area-inset-top,0px) + 54px);z-index:15;background:var(--bg);margin-inline:-16px;padding:10px 16px;border-bottom:1px solid var(--line)}
+.fhead .hrow{display:flex;align-items:baseline;gap:10px}
+.fhead .day{font-family:var(--f-display);font-weight:700;font-size:26px;line-height:1;text-transform:uppercase;letter-spacing:.02em;white-space:nowrap}
+.fhead .day i{display:inline-block;width:10px;height:10px;border-radius:50%;background:var(--day);margin-right:8px;vertical-align:middle;transform:translateY(-3px)}
+.fhead .sub{color:var(--muted);font-size:13px;flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.fhead .clock{font-family:var(--f-display);font-size:22px;font-weight:600}
+.fstrip{display:flex;gap:3px;margin-top:10px}
+.fstrip button{flex:1;min-width:0;height:10px;border:0;border-radius:3px;background:var(--line);padding:0;position:relative}
+.fstrip button::after{content:"";position:absolute;inset:-9px 0}
+.fstrip button.done{background:var(--good)}
+.fstrip button.cur{background:var(--day)}
+.fstrip button.pair{flex:.6}
+.fhead .count{font-size:12px;color:var(--muted);margin-top:5px;display:flex;justify-content:space-between;gap:8px}
+.frest{display:flex;align-items:center;gap:12px;margin-top:10px;padding:8px 10px;border-radius:12px;background:var(--surface);border:1px solid var(--line)}
+.fring{flex:none;width:68px;height:68px;position:relative}
+.fring svg{width:68px;height:68px;transform:rotate(-90deg);display:block}
+.fring .t{position:absolute;inset:0;display:grid;place-items:center;font-family:var(--f-display);font-weight:700;font-size:21px}
+.frest .lbl{flex:1;min-width:0;font-size:13px;line-height:1.3}
+.frest .lbl b{display:block;font-size:15px}
+.frest .bt{display:flex;flex-direction:column;gap:4px}
+.frest .bt button{border:1px solid var(--line);background:var(--surface2);border-radius:8px;min-height:32px;padding:0 10px;font-size:13px;font-weight:700}
+.frest.soon{border-color:var(--hl)}
+.frest.soon .t{color:var(--hl)}
+.frest.go{background:var(--good-soft);border-color:var(--good)}
+.frest.go .t{color:var(--good)}
+.flash{position:fixed;inset:0;pointer-events:none;z-index:99;background:var(--good);opacity:0}
+.flash.on{animation:fl 1.2s ease-out}
+@keyframes fl{0%{opacity:.5}100%{opacity:0}}
+.flist{display:flex;flex-direction:column;gap:8px}
+.fold{display:flex;align-items:center;gap:10px;width:100%;text-align:left;border:1px solid var(--line);background:var(--surface);border-radius:10px;padding:10px 12px;min-height:52px}
+.fold .id{font-family:var(--f-display);font-weight:700;color:var(--muted);min-width:30px;flex:none}
+.fold .nm{flex:1;min-width:0;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.fold .rx{font-family:var(--f-display);font-weight:600;font-size:16px;color:var(--muted);white-space:nowrap}
+.fold .rx small{font-size:13px}
+.fold.done{background:var(--good-soft);border-color:color-mix(in srgb,var(--good) 35%,var(--line))}
+.fold.done .id{color:var(--good)}
+.fold.done .rx{color:var(--fg)}
+.fold.part .id{color:var(--day)}
+.fcard{background:var(--surface);border:2px solid var(--day);border-radius:var(--r);overflow:hidden}
+.fsep{border-top:1px dashed var(--line);margin:4px 14px}
+.fcard .ch{padding:12px 14px 6px;display:flex;gap:10px;align-items:flex-start}
+.fcard .badge{background:var(--day-soft)}
+.fcard .exname{font-weight:700;font-size:17px;line-height:1.2}
+.fcard .tags{display:flex;gap:6px;flex-wrap:wrap;margin-top:4px}
+.freco{margin:2px 14px 8px;font-size:13px;color:var(--muted);display:flex;flex-wrap:wrap;gap:4px 8px;align-items:center}
+.freco .k{font-weight:700;font-size:12px;padding:2px 8px;border-radius:999px;background:var(--surface2);color:var(--fg);white-space:nowrap}
+.freco .k.up{background:var(--good-soft);color:var(--good)}
+.freco .k.down{background:color-mix(in srgb,var(--warn) 16%,var(--surface));color:var(--warn)}
+.freco .stepb{margin-left:auto;border:1px solid var(--line);background:var(--surface);border-radius:999px;font-size:12px;font-weight:600;padding:3px 9px;min-height:30px;color:var(--muted)}
+.freco details{flex-basis:100%}
+.freco summary{cursor:pointer;font-weight:600;list-style:none}
+.freco summary::-webkit-details-marker{display:none}
+.freco p{margin:4px 0 0;color:var(--fg)}
+.fcard .isprev{margin:0 14px 8px}
+.fmach{display:block;width:calc(100% - 28px);margin:0 14px 6px;height:38px;border:1px dashed var(--line);background:transparent;border-radius:8px;padding:0 10px;font-size:16px}
+.fsets{padding:4px 10px 10px;display:flex;flex-direction:column;gap:6px}
+.fset{display:grid;grid-template-columns:22px minmax(0,1.15fr) minmax(0,1fr) 54px;gap:6px;align-items:center;padding:6px 4px;border-radius:10px}
+.fset.one{grid-template-columns:22px minmax(0,1fr) 64px}
+.fset.active{background:var(--day-soft)}
+.fset .n{font-family:var(--f-display);font-weight:700;font-size:18px;color:var(--muted);text-align:center}
+.stp{display:grid;grid-template-columns:34px minmax(0,1fr) 34px;height:48px;border-radius:10px;overflow:hidden;border:1.5px solid var(--line);background:var(--surface)}
+.stp button{border:0;background:var(--surface2);font-size:20px;font-weight:700;padding:0;color:var(--fg)}
+.stp button:active{background:var(--line)}
+.fld{position:relative;display:grid;place-items:center;min-width:0}
+.fld input{width:100%;min-width:0;height:100%;border:0;border-radius:0;background:transparent;text-align:center;font-family:var(--f-display);font-size:22px;font-weight:700;padding:10px 0 0;font-variant-numeric:tabular-nums}
+.fld input::placeholder{color:var(--muted);opacity:.9}
+.fld small{position:absolute;top:2px;left:0;right:0;text-align:center;font-size:10px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);pointer-events:none}
+.stp.sugg{border-style:dashed;background:transparent}
+.stp.sugg input{font-style:italic;font-weight:500;color:var(--muted)}
+.stp.sugg small{color:var(--day)}
+.stp.nos small{color:var(--muted)}
+.stp.val{border-color:var(--fg)}
+.fok{height:48px;border-radius:12px;border:2px solid var(--fg);background:var(--fg);color:var(--bg);font-size:24px;font-weight:700;padding:0}
+.fset:not(.active) .fok{background:transparent;color:var(--muted);border-color:var(--line)}
+.fset.isdone{grid-template-columns:22px 1fr auto}
+.fset .sum{font-family:var(--f-display);font-size:20px;font-weight:600}
+.fset .sum span{font-size:15px;color:var(--muted);font-weight:500}
+.fset .sum .tick{color:var(--good);font-weight:700;font-size:20px}
+.fset .undo{border:1px solid var(--line);background:transparent;border-radius:8px;min-height:36px;padding:0 10px;font-size:13px;font-weight:600;color:var(--muted)}
+.fset.pop{animation:pop .9s ease-out}
+@keyframes pop{0%{background:var(--good-soft);transform:scale(1.02)}100%{transform:none}}
+.frir{grid-column:1 / -1;display:flex;align-items:center;gap:5px;font-size:12px;color:var(--muted);font-weight:600;padding-left:28px}
+.frir span{margin-right:2px;white-space:nowrap}
+.frir button{flex:1;min-width:0;max-width:52px;height:36px;border-radius:8px;border:1.5px solid var(--line);background:var(--surface);font-weight:700;font-size:15px;padding:0}
+.frir button.sg{border-style:dashed;border-color:var(--day)}
+.frir button[aria-pressed="true"]{background:var(--fg);color:var(--bg);border-color:var(--fg);border-style:solid}
+.flast{grid-column:1 / -1;padding-left:28px;font-size:12px;color:var(--warn);font-weight:600}
+.fbig{grid-column:1 / -1;width:100%;min-height:52px;border-radius:12px;border:2px solid var(--fg);background:var(--fg);color:var(--bg);font-weight:700;font-size:16px}
+.ffoot{border-top:1px solid var(--line);padding:8px 14px;display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.ffoot .fb{border:1px solid var(--line);background:transparent;border-radius:8px;min-height:36px;padding:0 10px;font-size:13px;font-weight:600;color:var(--muted)}
+.fdone{padding:18px;border-radius:var(--r);background:var(--good-soft);border:1px solid var(--good);text-align:center}
+.fdone b{display:block;font-family:var(--f-display);font-size:26px;text-transform:uppercase}
+.btn.fin{background:var(--fg);border-color:var(--fg);color:var(--bg)}
+#toast{top:auto;bottom:calc(var(--tabh) + env(safe-area-inset-bottom,0px) + 14px)}
+@media (prefers-reduced-motion: no-preference){#farc{transition:stroke-dashoffset .9s linear}}
+@media (prefers-reduced-motion: reduce){.flash.on,.fset.pop{animation:none}}
 </style>
 </head>
 <body>
@@ -502,7 +602,7 @@ let LSK=LS; try{ const u=localStorage.getItem(LS+'.uid'); if(u&&localStorage.get
 let S = loadLocal(LSK) || {settings:normSettings(),sessions:{},programs:{},mob:{}};
 S.mob=S.mob||{};
 let PROGRAMS={};
-function rebuildPrograms(){ PROGRAMS=Object.assign({},BUILTIN); for(const k in S.programs){ try{ const p=buildProgram(S.programs[k]); if(p.weeks.length) PROGRAMS[k]=finalize(p); }catch(e){} } }
+function rebuildPrograms(){ PROGRAMS=Object.assign({},BUILTIN); for(const k in S.programs){ try{ const p=buildProgram(S.programs[k]); if(p.weeks.length) PROGRAMS[k]=finalize(p); }catch(e){} } for(const k in PROGRAMS){ try{ PROGRAMS[k]=applyMods(k,PROGRAMS[k]); }catch(e){} } }
 rebuildPrograms();
 const ui = {tab:'edzes', open:null, confirm:null, progEx:null, needsRender:false, edit:null, ai:null, progView:'ero', bwRange:'12w', bwFrom:null, bwTo:null, mobFocus:null, mobDay:null, mobSer:null, histView:'list', calMonth:null, calDay:null};
 let timer = null; // {endAt,total,label}
@@ -605,7 +705,7 @@ const findEx=(prog,id)=>{ const p=PROGRAMS[prog]; if(!p) return null; for(const 
 const labOf=(prog,id)=>{ const e=findEx(prog,id); return e?e.lab:id; };
 const finished=()=>Object.values(S.sessions).filter(s=>s.finished).sort((a,b)=>(b.date+b.startedAt).localeCompare(a.date+a.startedAt)||(b.startedAt-a.startedAt));
 function lastFor(prog,exId,exclude,skipDeload){
-  for(const s of finished()){ if(s.program!==prog||s.id===exclude) continue; if(skipDeload&&s.phase==='deload') continue; const x=s.ex&&s.ex[exId]; if(x&&x.sets.some(t=>t.done&&t.r!=null)) return {s,sets:x.sets.filter(t=>t.done),var:x.var||''}; }
+  for(const s of finished()){ if(s.program!==prog||s.id===exclude) continue; if(skipDeload&&s.phase==='deload') continue; const x=s.ex&&s.ex[exId]; if(x&&(x.swap||'')===swapOf(prog,exId)&&x.sets.some(t=>t.done&&t.r!=null)) return {s,sets:x.sets.filter(t=>t.done),var:x.var||''}; }
   return null;
 }
 // a session gyakorlatai: a program aktuális definíciójából, vagy ha az már nincs meg, a mentett pillanatképből
@@ -623,7 +723,7 @@ const DEFAULT_STEP={L1:5,L2:5,L4:5,L6:5,A1:5,B1:5,B2:2,B7a:2,B8a:2};
 const STEPS=[1,1.25,2,2.5,5,10];
 const stepFor=(prog,id)=> S.settings.step&&S.settings.step[prog+':'+id] || (prog==='CAL'?2.5:DEFAULT_STEP[id]) || 2.5;
 const mid=s=>{ if(!isNumRir(s)) return 2; const [a,b]=rng(s); return (a+b)/2; };
-function recommend(prog,e,phase,excludeId){
+function recommendBase(prog,e,phase,excludeId){
   const u=unitOf(e); if(u==='check'||u==='cm'||e.test) return null;
   const t=target(e,phase); if(t.lo==null) return null;
   const last=lastFor(prog,e.id,excludeId,phase!=='deload')||lastFor(prog,e.id,excludeId,false);
@@ -758,7 +858,7 @@ function viewMissing(){
 
 function viewHome(){
   const key=curKey(), p=P(), ps=PS(), slot=curSlot(key), d=p.days[slot.day], ph={label:phLabel(p,slot.phase),rule:ruleOf(p,slot.phase)};
-  const list=p.ex[slot.day].map(e=>{ const t=target(e,slot.phase); return `<li><span class="pid">${esc(e.lab)}</span><span class="nm">${esc(e.name)}${e.kieg?' <span class="tag">kieg.</span>':''}</span><span class="rx">${unitOf(e)==='check'?esc(e.reps):t.sets+' × '+esc(t.reps)}${(()=>{ const rc=recommend(key,e,slot.phase,null); return rc&&rc.reps? `<small>${rc.w?(e.cali?'+':'')+fmt(rc.w)+' kg × ':''}${rc.reps[0]}${rc.unit==='sec'?' mp':''}${rc.kind==='up'?' ↑':rc.kind==='down'?' ↓':''}</small>`:''; })()}</span></li>`; }).join('');
+  const list=p.ex[slot.day].map(e=>{ const t=target(e,slot.phase); return `<li><span class="pid">${esc(e.lab)}</span><span class="nm">${esc(e.name)}${e.kieg?' <span class="tag">kieg.</span>':''}${(()=>{ const li=lastIssueFor(key,e,null); return li&&li.type?` <span class="tag" style="color:var(--warn);border-color:var(--warn)">⚠ ${ISSUE_S[li.type]}</span>`:''; })()}${e.unpaired?' <span class="tag">külön</span>':''}</span><span class="rx">${unitOf(e)==='check'?esc(e.reps):t.sets+' × '+esc(t.reps)}${(()=>{ const rc=recommend(key,e,slot.phase,null); return rc&&rc.reps? `<small>${rc.w?(e.cali?'+':'')+fmt(rc.w)+' kg × ':''}${rc.reps[0]}${rc.unit==='sec'?' mp':''}${rc.kind==='up'?' ↑':rc.kind==='down'?' ↓':''}</small>`:''; })()}</span></li>`; }).join('');
   const others=Object.keys(p.days).filter(k=>k!==slot.day).map(k=>`<button class="chip" data-act="start" data-day="${esc(k)}" data-col="${p.days[k].col}"><span class="dot"></span>${esc(p.days[k].name)} helyette</button>`).join('');
   const lastS=finished().find(s=>s.program===key);
   return `
@@ -786,71 +886,178 @@ function viewHome(){
 }
 
 function viewActive(s){
-  const p=PROGRAMS[s.program];
-  const cards=p.ex[s.day].map(e=>exCard(s,e)).join('');
-  const doneN=p.ex[s.day].filter(e=>{ const x=s.ex[e.id]; return x&&x.sets.length&&x.sets.every(t=>t.done); }).length;
+  const p=PROGRAMS[s.program], L=fList(s), c=fCur(s);
+  const doneN=L.filter(e=>fExDone(s,e.id)).length, nx=c.st||c.all;
+  const strip=L.map(e=>`<button class="${fExDone(s,e.id)?'done':c.g.includes(e.id)?'cur':''}${(e.ss||e.ssFrom)&&fGroup(s,e.id).length>1?' pair':''}" data-act="fopen" data-ex="${e.id}" aria-label="${esc(e.lab+' '+e.name)}"></button>`).join('');
+  const seen=new Set(), html=[];
+  for(const e of L){ if(seen.has(e.id)) continue; const g=fGroup(s,e.id); g.forEach(x=>seen.add(x));
+    if(g.some(x=>c.g.includes(x))) html.push(fCard(s,g,c.st)); else for(const id of g) html.push(fFold(s,L.find(x=>x.id===id))); }
+  if(!c.all) html.push(`<div class="fdone"><b>Minden szett kész</b>Ha kell, írd be lent a fájdalmat és a testsúlyt, aztán fejezd be az edzést.</div>`);
   const pain=Array.from({length:11},(_,i)=>`<button data-act="pain" data-v="${i}" aria-pressed="${s.back===i}">${i}</button>`).join('');
   const conf = ui.confirm==='discard'
     ? `<div class="confirm"><span>Elveted az edzést? A beírt adatok törlődnek.</span><button class="btn danger sm" data-act="discard-yes">Elvetés</button><button class="btn sm" data-act="cancel">Mégse</button></div>`
     : `<button class="btn ghost" data-act="discard">Edzés elvetése</button>`;
   return `
-  <div class="sesshead">
-    <div><div class="t">${esc(dn(s.program,s.day))}</div><div class="s">${s.week}. hét · ${phLabel(p,s.phase)} · ${doneN}/${p.ex[s.day].length} kész</div></div>
-    <div class="clock num" id="elapsed">0:00</div>
+  <div class="fhead">
+    <div class="hrow"><div class="day"><i></i>${esc(dn(s.program,s.day))}</div><div class="sub">${s.week}. hét · ${phLabel(p,s.phase)}</div><div class="clock num" id="elapsed">0:00</div></div>
+    <div class="fstrip">${strip}</div>
+    <div class="count"><span>${doneN}/${L.length} gyakorlat kész</span><span>${nx?'Most: '+esc(labOf(s.program,nx[0]))+(fUnit(s,nx[0])==='check'?'':' · '+(nx[1]+1)+'. szett'):'Minden szett kész'}</span></div>
+    <div id="frest" hidden></div>
   </div>
-  <div class="stack" style="margin-top:12px">${mobList().some(m=>m.kind==='warm'&&m.date===s.date)?'':`<button class="btn" data-act="mstart" data-k="warm">🔥 Bemelegítés ehhez az edzéshez (kb. 10 perc)</button>`}${cards}
+  <div class="stack" style="margin-top:12px">${mobList().some(m=>m.kind==='warm'&&m.date===s.date)?'':`<button class="btn" data-act="mstart" data-k="warm">🔥 Bemelegítés ehhez az edzéshez (kb. 10 perc)</button>`}
+    <div class="flist">${html.join('')}</div>
     <section class="card stack">
       ${p.pain?`<div><div class="eyebrow">${p.painLabel||'Derék / sacrum fájdalom (0–10)'}</div><p class="small muted" style="margin:2px 0 8px">${p.painHint||'Edzés közben max. 3/10 elfogadható, ha 24 órán belül visszaáll.'}</p><div class="pain">${pain}</div></div>`:''}
       <div><label class="eyebrow" for="sbw">Testsúly (kg) <span style="text-transform:none;letter-spacing:0;font-weight:500">— ${p.cali?'a súlyozott gyakorlatok becsléséhez':'nem kötelező'}</span></label><input class="inp" id="sbw" data-f="bw" inputmode="decimal" placeholder="${lastBw()!=null?fmt2(lastBw()):'pl. 82,35'}" value="${s.bw!=null?fmt2(s.bw):''}" style="max-width:170px;margin-top:4px;font-variant-numeric:tabular-nums"></div>
       <div><label class="eyebrow" for="snote">Megjegyzés</label><textarea id="snote" data-f="note" placeholder="Alvás, energia, bármi, ami számít…">${esc(s.note)}</textarea></div>
-      <button class="btn primary big" data-act="finish">Edzés befejezése</button>
+      <button class="btn big fin" data-act="finish">Edzés befejezése</button>
       ${conf}
     </section>
   </div>`;
 }
 
-function exCard(s,e){
-  const t=target(e,s.phase), x=s.ex[e.id]||(s.ex[e.id]={name:e.name,lab:e.lab,sets:[]});
-  const last=lastFor(s.program,e.id,s.id), rc=recommend(s.program,e,s.phase,s.id);
-  const allDone=x.sets.length&&x.sets.every(q=>q.done);
+/* ===================== FÓKUSZ MÓD ===================== */
+// lépések sorrendje: szuperszettnél / párban felváltva a1, b1, a2, b2 …
+const fList=s=>PROGRAMS[s.program].ex[s.day];
+const fUnit=(s,id)=>unitOf(findEx(s.program,id));
+const fmtv=n=>n==null?'':(Math.round(n*100)/100).toString().replace('.',',');
+const odA=k=>ui.openD&&ui.openD[k]?'open':'';
+function fEnsure(s,e){ const x=s.ex[e.id]||(s.ex[e.id]={name:e.name,lab:e.lab,sets:[]}); if(!x.sets.length) x.sets.push({w:null,r:null,rir:null,done:false}); return x; }
+function fSteps(s){
+  const L=fList(s), has=id=>L.some(x=>x.id===id), out=[];
+  for(const e of L){ if(e.ssFrom&&has(e.ssFrom)) continue; const a=fEnsure(s,e).sets;
+    if(e.ss&&has(e.ss)){ const b=fEnsure(s,L.find(x=>x.id===e.ss)).sets;
+      for(let i=0;i<Math.max(a.length,b.length);i++){ if(i<a.length) out.push([e.id,i]); if(i<b.length) out.push([e.ss,i]); } }
+    else a.forEach((_,i)=>out.push([e.id,i])); }
+  return out;
+}
+function fGroup(s,id){ const L=fList(s), e=L.find(x=>x.id===id); if(!e) return [id];
+  if(e.ss&&L.some(x=>x.id===e.ss)) return [e.id,e.ss]; if(e.ssFrom&&L.some(x=>x.id===e.ssFrom)) return [e.ssFrom,e.id]; return [e.id]; }
+const fUndone=(s,t)=>{ const x=s.ex[t[0]]; return !!(x&&x.sets[t[1]]&&!x.sets[t[1]].done); };
+const fExDone=(s,id)=>{ const x=s.ex[id]; return !!(x&&x.sets.length&&x.sets.every(q=>q.done)); };
+// g: a nyitott csoport, st: a következő szett benne, all: a következő szett az egész edzésben
+function fCur(s){
+  const steps=fSteps(s), all=steps.find(t=>fUndone(s,t))||null;
+  const g= ui.fOpen&&fList(s).some(e=>e.id===ui.fOpen)? fGroup(s,ui.fOpen) : all? fGroup(s,all[0]) : [];
+  const st=steps.find(t=>g.includes(t[0])&&fUndone(s,t))||null;
+  return {g,st,all};
+}
+const fHasW=e=>{ const u=unitOf(e); return u==='reps'&&(!e.cali||e.plus||e.weighted); };
+// javasolt érték egy szetthez: a javaslat, de ha ma már más súllyal mentél, az a súly megy tovább
+function fSugg(s,e,i,rc){
+  const x=s.ex[e.id], prev=x&&i>0? x.sets.slice(0,i).reverse().find(q=>q.done) : null;
+  let w= rc&&rc.w!=null? rc.w : null, r= rc&&rc.reps&&rc.reps.length? rc.reps[Math.min(i,rc.reps.length-1)] : null;
+  if(prev&&prev.w!=null) w=prev.w;
+  if(r==null&&prev&&prev.r!=null) r=prev.r;
+  return {w:fHasW(e)?w:null,r};
+}
+function recoLbl(e,rc){
+  return rc.unit==='sec'? {up:'↑ következő lépcső',same:'= +2–3 mp',deload:'deload',new:'első alkalom',down:'↓ könnyebb'}[rc.kind]
+    : e.cali&&!rc.w&&rc.kind==='up'? '↑ következő lépcső' : e.cali&&!rc.w&&rc.kind==='down'? '↓ könnyebb variáció'
+    : {up:'↑ súlyemelés',down:'↓ súlycsökkentés',same:'= +1 ismétlés',deload:'deload',new:'első alkalom'}[rc.kind]||'';
+}
+function fSetsTxt(e,sets){
+  const d=sets.filter(q=>q.done), u=unitOf(e);
+  if(u==='sec'||u==='cm') return d.map(q=>q.r??'–').join(' · ')+(u==='sec'?' mp':' cm');
+  const ws=[...new Set(d.map(q=>q.w??null))];
+  if(ws.length===1) return d.map(q=>q.r??'–').join(' · ')+(ws[0]!=null?` <small>× ${e.cali?'+':''}${fmt(ws[0])} kg</small>`:'');
+  return d.map(q=>esc(setStr(q,e))).join(' · ');
+}
+function fFold(s,e){
+  const x=fEnsure(s,e), t=target(e,s.phase), d=fExDone(s,e.id), n=x.sets.filter(q=>q.done).length, u=unitOf(e);
+  let rx;
+  if(d) rx= u==='check'? 'kész' : fSetsTxt(e,x.sets);
+  else if(n) rx=`${n}/${x.sets.length} szett kész`;
+  else { const rc=u==='check'?null:recommend(s.program,e,s.phase,s.id); rx= u==='check'? esc(e.reps) : `${t.sets} × ${esc(t.reps)}${rc&&rc.w&&fHasW(e)?' · '+(e.cali?'+':'')+fmt(rc.w)+' kg':''}`; }
+  return `<button class="fold ${d?'done':n?'part':'next'}" data-act="fopen" data-ex="${e.id}"><span class="id">${d?'✓':''}${esc(e.lab)}</span><span class="nm">${esc(e.name)}</span><span class="rx num">${rx}</span></button>`;
+}
+function fCard(s,g,st){
+  const L=fList(s), ssl=PROGRAMS[s.program].ssLabel||'szuperszett';
+  return `<section class="fcard" id="fcard-${g[0]}">${g.map((id,gi)=>fBlock(s,L.find(x=>x.id===id),st,g.length>1,gi,ssl)).join('<div class="fsep"></div>')}</section>`;
+}
+function fBlock(s,e,st,pair,gi,ssl){
+  const t=target(e,s.phase), x=fEnsure(s,e), u=unitOf(e), rc=recommend(s.program,e,s.phase,s.id), last=lastFor(s.program,e.id,s.id);
   const mkey=s.program+':'+e.id, mval=S.settings.machine[mkey]||'';
-  const P0=PROGRAMS[s.program], u=unitOf(e), timed=u==='sec'||u==='cm';
-  if(!x.sets.length) x.sets.push({w:null,r:null,rir:null,done:false});
-  const rows= u==='check' ? `<button class="btn ${x.sets[0].done?'primary':''}" style="grid-column:1/-1" data-act="done" data-ex="${e.id}" data-i="0" aria-pressed="${!!x.sets[0].done}">${x.sets[0].done?'✓ Kész':'Megjelölöm késznek'}</button>`
-   : x.sets.map((q,i)=>{
-    const pv={w:rc&&rc.w, r:rc&&rc.reps?rc.reps[Math.min(i,rc.reps.length-1)]:null};
-    const isLast=i===x.sets.length-1 && t.lastRir!=null;
-    const wIn= timed? '<div></div>' : `<input id="w-${e.id}-${i}" data-ex="${e.id}" data-i="${i}" data-f="w" inputmode="decimal" enterkeyhint="next" aria-label="${i+1}. szett ${e.cali?'plusz ':''}súly" placeholder="${fmt(pv.w)}" value="${fmt(q.w)}" ${q.done?'data-done':''}>`;
-    const qIn= timed? '<div></div>' : `<input id="q-${e.id}-${i}" data-ex="${e.id}" data-i="${i}" data-f="rir" inputmode="numeric" enterkeyhint="done" aria-label="${i+1}. szett RIR" placeholder="${isLast?'0':(isNumRir(t.rir)?esc(t.rir):'')}" value="${q.rir??''}" ${q.done?'data-done':''}>`;
-    return `<div class="n">${i+1}</div>${wIn}
-      <input id="r-${e.id}-${i}" data-ex="${e.id}" data-i="${i}" data-f="r" inputmode="numeric" enterkeyhint="next" aria-label="${i+1}. szett ${u==='sec'?'másodperc':u==='cm'?'cm':'ismétlés'}" placeholder="${pv.r??''}" value="${q.r??''}" ${q.done?'data-done':''}>
-      ${qIn}
-      <button class="ok" data-act="done" data-ex="${e.id}" data-i="${i}" aria-pressed="${!!q.done}" aria-label="${i+1}. szett kész">✓</button>
-      ${isLast?'<div class="lastset">Utolsó szett: bukásig (RIR 0)</div>':''}`;
-  }).join('');
-  const head= u==='check'? '' : timed? `<div></div><div></div><div class="h">${u==='sec'?'mp':'cm'}</div><div></div><div></div>` : `<div></div><div class="h">${e.cali?'+kg':'kg'}</div><div class="h">ism.</div><div class="h">RIR</div><div></div>`;
-  const ssl=P0.ssLabel||'szuperszett';
-  const lastLine= last? `Múltkor (${huDate(last.s.date)}): ${last.sets.map(q=>setStr(q,e)).join(' · ')}${last.var?' · '+last.var:''}` : (e.cali? 'Még nincs korábbi adat — az első alkalommal keresd meg a megfelelő variációt.' : 'Még nincs korábbi adat — az első alkalommal lődd be a súlyt.');
-  return `<section class="card ex${allDone?' done':''}" id="ex-${e.id}">
-    <div class="exhead"><span class="badge">${esc(e.lab)}</span>
-      <div style="flex:1;min-width:0">
-        <div class="exname">${esc(e.name)}</div>
-        <div class="meta"><b>${u==='check'?esc(e.reps):t.sets+' × '+esc(t.reps)}</b>${rirLbl(t.rir)?' · '+esc(rirLbl(t.rir)):''}${u==='check'?'':' · '+(e.rest?restTxt(e.rest):'nincs pihenő')}</div>
-        <div class="row" style="margin-top:4px;gap:6px">${e.ss?`<span class="tag ss">${ssl} → ${esc(labOf(s.program,e.ss))}</span>`:''}${e.ssFrom?`<span class="tag ss">${ssl} ← ${esc(labOf(s.program,e.ssFrom))}</span>`:''}${e.kieg?'<span class="tag">kiegészítő dózis</span>':''}${e.skill?'<span class="tag">skill · nem bukásig</span>':''}${e.test?'<span class="tag">teszt</span>':''}</div>
-      </div></div>
-    ${recoBox(s.program,e,rc,t)}
-    ${u==='check'&&!e.test?'':`<div class="last">${esc(lastLine)}</div>`}
-    <div class="sets rows-${e.id}">
-      ${head}
-      ${rows}
-    </div>
-    <div class="exfoot">
-      ${u==='check'&&!e.test?'':`<input id="m-${e.id}" data-machine="${esc(mkey)}" placeholder="${e.cali?'Variáció (pl. emelt pike 40 cm)':'Gépbeállítás (pl. ülés 4)'}" value="${esc(mval)}" aria-label="${e.cali?'Variáció':'Gépbeállítás'}">`}
-      ${u==='check'?'':`<button class="btn sm" data-act="addset" data-ex="${e.id}" aria-label="Szett hozzáadása">+ szett</button>`}
-      ${x.sets.length>1?`<button class="btn sm ghost" data-act="rmset" data-ex="${e.id}" aria-label="Utolsó szett törlése">− szett</button>`:''}
-      ${e.tip||e.alt!=='—'?`<details class="more" style="flex-basis:100%"><summary>Végrehajtás${e.alt&&e.alt!=='—'?(e.cali?' · progresszió':' · alternatíva'):''}</summary>${e.tip?`<p>${esc(e.tip)}</p>`:''}${e.alt&&e.alt!=='—'?`<p class="muted">${e.cali?'Progresszió / könnyítés':'Alternatíva'}: ${esc(e.alt)}</p>`:''}</details>`:''}
-    </div>
-  </section>`;
+  const meta= u==='check'? `<b>${esc(e.reps)}</b>` : `<b>${t.sets} × ${esc(t.reps)}</b>${rirLbl(t.rir)?' · '+esc(rirLbl(t.rir)):''} · ${e.rest?restTxt(e.rest):pair&&gi===0?'pihenő nélkül → '+esc(labOf(s.program,e.ss)):'nincs pihenő'}`;
+  const tags=[pair?`<span class="tag ss">${ssl} ${gi===0?'→ '+esc(labOf(s.program,e.ss)):'← '+esc(labOf(s.program,e.ssFrom))}</span>`:'',
+    e.kieg?'<span class="tag">kiegészítő dózis</span>':'', e.skill?'<span class="tag">skill · nem bukásig</span>':'', e.test?'<span class="tag">teszt</span>':'',
+    e.unpaired?'<span class="tag">külön szettek</span>':'', e.swapped?'<span class="tag">cserélve</span>':''].join('');
+  const lastTxt= last? `Múltkor: ${last.sets.map(q=>setStr(q,e)).join(' · ')}${last.var?' · '+last.var:''}`
+    : u==='check'&&!e.test? '' : e.cali? 'Első alkalom — keresd meg a megfelelő variációt.' : 'Első alkalom — lődd be a súlyt.';
+  const reco= rc||lastTxt? `<div class="freco">${rc&&recoLbl(e,rc)?`<span class="k ${rc.kind}">${recoLbl(e,rc)}</span>`:''}${lastTxt?`<span>${esc(lastTxt)}</span>`:''}${rc&&rc.w?`<button class="stepb" data-act="step" data-key="${esc(mkey)}" aria-label="Súlylépcső váltása">lépcső ${fmt(rc.step)} kg</button>`:''}${rc&&rc.why?`<details data-od="wy${e.id}" ${odA('wy'+e.id)}><summary>Miért ez a javaslat?</summary><p>${esc(rc.why)}</p></details>`:''}</div>` : '';
+  const mach= u==='check'&&!e.test? '' : `<input class="fmach" id="m-${e.id}" data-machine="${esc(mkey)}" placeholder="${e.cali?'Variáció (pl. emelt pike 40 cm)':'Gépbeállítás (pl. ülés 4)'}" value="${esc(mval)}" aria-label="${e.cali?'Variáció':'Gépbeállítás'}">`;
+  const rows= u==='check'? fCheckRow(e,x) : x.sets.map((q,i)=>fRow(s,e,t,rc,q,i,!!st&&st[0]===e.id&&st[1]===i,x.sets.length)).join('');
+  const tips= e.tip||(e.alt&&e.alt!=='—')? `<details class="more" data-od="tp${e.id}" ${odA('tp'+e.id)} style="flex-basis:100%"><summary>Végrehajtás${e.alt&&e.alt!=='—'?(e.cali?' · progresszió':' · alternatíva'):''}</summary>${e.tip?`<p>${esc(e.tip)}</p>`:''}${e.alt&&e.alt!=='—'?`<p class="muted">${e.cali?'Progresszió / könnyítés':'Alternatíva'}: ${esc(e.alt)}</p>`:''}</details>` : '';
+  return `<div class="ch"><span class="badge">${esc(e.lab)}</span><div style="flex:1;min-width:0"><div class="exname">${esc(e.name)}</div><div class="meta">${meta}</div>${tags?`<div class="tags">${tags}</div>`:''}</div></div>
+    ${reco}${issuePrevHtml(rc)}${mach}
+    <div class="fsets">${rows}</div>
+    <div class="ffoot">${u==='check'?'':`<button class="fb" data-act="addset" data-ex="${e.id}">+ szett</button>${x.sets.length>1&&!x.sets[x.sets.length-1].done?`<button class="fb" data-act="rmset" data-ex="${e.id}">− szett</button>`:''}`}${tips}${u==='check'?'':issueBox(s,e,x)+modBox(s,e)}</div>`;
+}
+function fCheckRow(e,x){
+  const q=x.sets[0];
+  if(q.done) return `<div class="fset isdone" id="row-${e.id}-0"><div class="n">1</div><div class="sum"><span class="tick">✓</span> Kész</div><button class="undo" data-act="fundo" data-ex="${e.id}" data-i="0">Javít</button></div>`;
+  return `<div id="row-${e.id}-0"><button class="fbig" data-act="done" data-ex="${e.id}" data-i="0">✓ Megjelölöm késznek</button></div>`;
+}
+function fRow(s,e,t,rc,q,i,active,n){
+  const u=unitOf(e), timed=u==='sec'||u==='cm', hasW=fHasW(e)||(!timed&&q.w!=null), id=e.id;
+  if(q.done){
+    const main= timed? `${q.r??'–'} ${u==='sec'?'mp':'cm'}` : `${hasW&&q.w!=null?(e.cali?'+':'')+fmt(q.w)+' kg × ':''}${q.r??'–'}${hasW&&q.w!=null?'':' ism.'}`;
+    return `<div class="fset isdone" id="row-${id}-${i}"><div class="n">${i+1}</div><div class="sum num"><span class="tick">✓</span> ${main}${!timed&&q.rir!=null?` <span>@RIR ${q.rir}</span>`:''}</div><button class="undo" data-act="fundo" data-ex="${id}" data-i="${i}">Javít</button></div>`;
+  }
+  const sg=fSugg(s,e,i,rc), rL= u==='sec'?'mp':u==='cm'?'cm':'ism.';
+  const stp=(f,val,sug,lbl,mode,nm)=>`<div class="stp ${val==null?'sugg':'val'}${sug==null?' nos':''}"><button data-act="fdec" data-f="${f}" data-ex="${id}" data-i="${i}" aria-label="${nm} csökkentése">−</button><label class="fld"><small data-l="${lbl}">${val==null&&sug!=null?'javasolt':lbl}</small><input id="${f}-${id}-${i}" data-ex="${id}" data-i="${i}" data-f="${f}" inputmode="${mode}" enterkeyhint="done" autocomplete="off" placeholder="${fmtv(sug)}" value="${fmtv(val)}" aria-label="${i+1}. szett ${nm}"></label><button data-act="finc" data-f="${f}" data-ex="${id}" data-i="${i}" aria-label="${nm} növelése">+</button></div>`;
+  const isLast=i===n-1&&t.lastRir!=null;
+  let rir='';
+  if(active&&!timed&&(isNumRir(t.rir)||isLast)){ const [a,b]= isLast?[0,0]:rng(t.rir);
+    rir=`<div class="frir"><span>RIR</span>${[0,1,2,3,4].map(v=>`<button data-act="frir" data-ex="${id}" data-i="${i}" data-v="${v}" class="${q.rir==null&&v>=a&&v<=b?'sg':''}" aria-pressed="${q.rir===v}" aria-label="RIR ${v}">${v}</button>`).join('')}</div>`; }
+  return `<div class="fset${active?' active':''}${hasW?'':' one'}" id="row-${id}-${i}"><div class="n">${i+1}</div>${hasW?stp('w',q.w,sg.w,e.cali?'+kg':'kg','decimal','súly'):''}${stp('r',q.r,sg.r,rL,'numeric',u==='sec'?'másodperc':u==='cm'?'centiméter':'ismétlés')}<button class="fok" data-act="done" data-ex="${id}" data-i="${i}" aria-label="${i+1}. szett kész">✓</button>${rir}${isLast&&active?'<div class="flast">Utolsó szett: bukásig (RIR 0)</div>':''}</div>`;
+}
+function fFocus(){
+  const s=S.settings.activeId&&S.sessions[S.settings.activeId]; if(!s||ui.tab!=='edzes') return;
+  const c=fCur(s), st=c.st; if(!st) return;
+  const el=document.getElementById('row-'+st[0]+'-'+st[1]); if(!el) return;
+  const hb=($('.fhead')||{getBoundingClientRect:()=>({bottom:0})}).getBoundingClientRect().bottom, r=el.getBoundingClientRect(), vh=window.innerHeight;
+  const tabs=($('.tabs')||{offsetHeight:0}).offsetHeight;
+  if(r.top>=hb+8&&r.bottom<=vh-tabs-8) return;
+  const room=vh-tabs-hb, y=window.scrollY+r.top-hb-Math.max(8,(room-r.height)/3);
+  window.scrollTo({top:Math.max(0,y),behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth'});
+}
+function fScrollTo(el){
+  if(!el) return; const hb=($('.fhead')||{getBoundingClientRect:()=>({bottom:0})}).getBoundingClientRect().bottom;
+  window.scrollTo({top:Math.max(0,window.scrollY+el.getBoundingClientRect().top-hb-8),behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth'});
+}
+function flash(){ let f=$('#flash'); if(!f){ f=document.createElement('div'); f.id='flash'; f.className='flash'; document.body.appendChild(f); } f.classList.remove('on'); void f.offsetWidth; f.classList.add('on'); }
+function fAction(act,b,s){
+  if(!s||!['fopen','fundo','finc','fdec','frir','done'].includes(act)) return false;
+  const id=b.dataset.ex, i=+b.dataset.i, x=s.ex[id], e=findEx(s.program,id);
+  if(act==='fopen'){ const c=fCur(s); ui.fOpen= c.all&&fGroup(s,c.all[0]).includes(id)? null : id; render(); fScrollTo(document.getElementById('fcard-'+fGroup(s,id)[0])); return true; }
+  const q=x&&x.sets[i]; if(!q||!e) return true;
+  if(act==='fundo'){ q.done=false; ui.fOpen=id; queue(s.id); render(); setTimeout(fFocus,60); return true; }
+  if(act==='frir'){ const v=+b.dataset.v; q.rir= q.rir===v? null : v; queue(s.id); render(); return true; }
+  if(act==='finc'||act==='fdec'){ const f=b.dataset.f, u=unitOf(e), st= f==='w'? stepFor(s.program,id) : (u==='sec'||u==='cm')? 5 : 1;
+    const sg=fSugg(s,e,i,recommend(s.program,e,s.phase,s.id)), base= q[f]!=null? q[f] : sg[f]!=null? sg[f] : 0;
+    q[f]=Math.max(0,Math.round((base+(act==='finc'?1:-1)*st)*100)/100); queue(s.id); render(); return true; }
+  // done
+  if(q.done){ q.done=false; queue(s.id); render(); return true; }
+  if(unitOf(e)!=='check'){ const sg=fSugg(s,e,i,recommend(s.program,e,s.phase,s.id)); if(q.w==null&&sg.w!=null) q.w=sg.w; if(q.r==null&&sg.r!=null) q.r=sg.r;
+    if(q.r==null){ const u=unitOf(e); toast(u==='sec'?'Írd be, hány mp-ig tartottad':u==='cm'?'Írd be a magasságot (cm)':'Írd be az ismétlésszámot'); const inp=document.getElementById('r-'+id+'-'+i); inp&&inp.focus(); return true; } }
+  q.done=true;
+  const g=fGroup(s,id);
+  if(ui.fOpen&&!fSteps(s).some(t=>g.includes(t[0])&&fUndone(s,t))) ui.fOpen=null;
+  const c=fCur(s), nx=c.st||c.all, ne=nx&&findEx(s.program,nx[0]), exFin=fExDone(s,id);
+  const P0=PROGRAMS[s.program]||{};
+  let msg='';
+  if(unitOf(e)==='check'){ if(timer){ timer=null; saveTimer(); } }
+  else if(!nx){ timer=null; saveTimer(); msg='Minden szett kész — jöhet a befejezés'; }
+  else if(e.ss&&nx[0]===e.ss){ timer=null; saveTimer(); msg=(P0.ssLabel==='párban'?'Párban → ':'Szuperszett → ')+labOf(s.program,e.ss)+', pihenő nélkül'; }
+  else { const rest=e.rest||(e.ss&&(findEx(s.program,e.ss)||{}).rest)||90;
+    startTimer(rest,`Következő: ${ne.lab} ${ne.name}${unitOf(ne)==='check'?'':' · '+(nx[1]+1)+'. szett'}`);
+    if(exFin&&!g.includes(nx[0])) msg=`✓ ${g.map(k=>labOf(s.program,k)).join(' + ')} kész — jön: ${ne.lab}`; }
+  queue(s.id); render();
+  const row=document.getElementById('row-'+id+'-'+i); if(row) row.classList.add('pop');
+  if(msg) toast(msg);
+  setTimeout(fFocus, exFin?350:150);
+  return true;
 }
 
 function recoBox(prog,e,rc,t){
@@ -879,7 +1086,7 @@ function viewHistoryList(){
     const [y,m,d]=s.date.split('-');
     const body=sessExList(s).filter(e=>s.ex[e.id]&&s.ex[e.id].sets.some(t=>t.done)).map(e=>{
       const bw=s.bw??lastBw(), sets=s.ex[e.id].sets.filter(t=>t.done); const best=Math.max(0,...sets.map(t=>e1rmX(t,e,bw)||0));
-      return `<div class="hx"><div><b>${esc(e.lab)}</b> ${esc(e.name)}${s.ex[e.id].var?` <span class="small muted">· ${esc(s.ex[e.id].var)}</span>`:''}</div><div class="s num">${sets.map(q=>setStr(q,e)).join(' · ')}${best?` <span class="small">· e1RM ${e.cali?'+':''}${fmt(best)}</span>`:''}</div></div>`;
+      return `<div class="hx"><div><b>${esc(e.lab)}</b> ${esc(s.ex[e.id].name||e.name)}${s.ex[e.id].var?` <span class="small muted">· ${esc(s.ex[e.id].var)}</span>`:''}${s.ex[e.id].issue?` <span class="small" style="color:var(--warn)">· ⚠ ${ISSUE_S[s.ex[e.id].issue.type]||''}${s.ex[e.id].issue.area?' ('+(AREAS[s.ex[e.id].issue.area]||'')+(s.ex[e.id].issue.sev!=null?' '+s.ex[e.id].issue.sev+'/10':'')+')':''}</span>`:''}</div><div class="s num">${sets.map(q=>setStr(q,e)).join(' · ')}${best?` <span class="small">· e1RM ${e.cali?'+':''}${fmt(best)}</span>`:''}</div></div>`;
     }).join('')||'<p class="muted">Nincs rögzített szett.</p>';
     const del= ui.confirm==='del:'+s.id
       ? `<div class="confirm"><span>Törlöd ezt az edzést?</span><button class="btn danger sm" data-act="del-yes" data-id="${s.id}">Törlés</button><button class="btn sm" data-act="cancel">Mégse</button></div>`
@@ -1043,6 +1250,7 @@ function viewInfo(){
       <div class="eyebrow">Pozíció kézi beállítása</div>
       <div class="row" style="flex-wrap:nowrap"><label class="small" for="blk" style="white-space:nowrap">Blokk</label><input id="blk" type="number" inputmode="numeric" min="1" value="${ps.block}" style="width:72px;height:46px;border:1px solid var(--line);border-radius:10px;background:var(--surface);text-align:center;font-size:16px"><select id="slotSel" aria-label="Következő edzés">${slotOpts}</select></div>
     </section>
+    ${modsCard(key)}
     <section class="card stack" id="myprogs"><div class="eyebrow">Saját programok</div>
       <div>${myList}</div>
       <div class="row"><button class="btn" data-act="pnew-blank">+ Új program</button>${p.cali?'':`<button class="btn" data-act="pnew-copy">Másolat: ${esc(p.title)}</button>`}<button class="btn" data-act="ai-open">✨ Program AI-val</button></div>
@@ -1159,21 +1367,38 @@ function beep(){ try{ audio=audio||new (window.AudioContext||window.webkitAudioC
 function startTimer(sec,label){ if(!sec) return; timer={endAt:Date.now()+sec*1000,total:sec,label,beeped:false}; saveTimer(); renderTimer(); }
 function renderTimer(){
   const el=$('#timer');
-  if(!timer){ el.hidden=true; el.innerHTML=''; return; }
+  if(!timer||$('#frest')){ el.hidden=true; el.innerHTML=''; updateRest(); return; }
   el.hidden=false;
   if(!el.firstChild) el.innerHTML=`<div class="in"><div class="bar" id="tbar"></div><div class="tt" id="tt">0:00</div><div class="lbl" id="tl"></div><button data-act="t-15" aria-label="15 mp-cel kevesebb">−15</button><button data-act="t+15" aria-label="15 mp-cel több">+15</button><button data-act="tskip">Kész</button></div>`;
   $('#tl').textContent=timer.label; tick();
 }
 const mmss=s=>{ const a=Math.abs(Math.round(s)); return (s<0?'+':'')+Math.floor(a/60)+':'+String(a%60).padStart(2,'0'); };
+// pihenő-gyűrű a fókusz fejlécben
+function updateRest(){
+  const slot=$('#frest'); if(!slot) return;
+  if(!timer){ if(slot.firstChild) slot.innerHTML=''; slot.hidden=true; return; }
+  const C=2*Math.PI*29;
+  if(!slot.firstChild) slot.innerHTML=`<div class="frest" id="frin"><div class="fring"><svg viewBox="0 0 68 68" aria-hidden="true"><circle cx="34" cy="34" r="29" fill="none" style="stroke:var(--line)" stroke-width="7"/><circle id="farc" cx="34" cy="34" r="29" fill="none" stroke-width="7" stroke-linecap="round" stroke-dasharray="${C.toFixed(2)}" stroke-dashoffset="0"/></svg><div class="t num" id="frt" role="timer"></div></div><div class="lbl"><b id="frh"></b><span id="frl"></span></div><div class="bt"><button data-act="t+15" aria-label="15 mp-cel több">+15</button><button data-act="tskip">Kész</button></div></div>`;
+  slot.hidden=false;
+  const left=Math.ceil((timer.endAt-Date.now())/1000), frac=Math.max(0,Math.min(1,left/timer.total)), st=left<=0?'go':left<=10?'soon':'';
+  $('#frin').className='frest '+st;
+  const a=$('#farc'); a.style.stroke= st==='go'?'var(--good)':st==='soon'?'var(--hl)':'var(--day)'; a.setAttribute('stroke-dashoffset',(C*(1-frac)).toFixed(2));
+  $('#frt').textContent= left<=0?'Mehet':mmss(left);
+  $('#frh').textContent= left<=0?'Pihenő vége':'Pihenő';
+  $('#frl').textContent= timer.label||'';
+}
 function tick(){
   const a=S.settings.activeId&&S.sessions[S.settings.activeId]; const el=$('#elapsed');
   if(a&&el) el.textContent=mmss((Date.now()-a.startedAt)/1000).replace('+','');
-  if(timer&&$('#tt')){ const left=(timer.endAt-Date.now())/1000;
-    $('#tt').textContent=left>=0?mmss(left):mmss(left);
+  if(!timer) return;
+  const left=(timer.endAt-Date.now())/1000;
+  if(left<=0&&!timer.beeped){ timer.beeped=true; saveTimer(); beep(); if($('#frest')) flash(); }
+  if(left<-60){ timer=null; saveTimer(); renderTimer(); return; }
+  if($('#frest')) updateRest();
+  else if($('#tt')){
+    $('#tt').textContent=mmss(left);
     $('#tbar').style.width=Math.max(0,Math.min(100,(1-left/timer.total)*100))+'%';
     $('#timer').classList.toggle('over',left<0);
-    if(left<=0&&!timer.beeped){ timer.beeped=true; saveTimer(); beep(); }
-    if(left<-90){ timer=null; saveTimer(); renderTimer(); }
   }
 }
 setInterval(tick,1000);
@@ -1202,6 +1427,7 @@ function historySummary(){
   return `Edzések száma: ${list.length} (${list[list.length-1].date} – ${list[0].date}).`+
     (pains.length?` Derékfájdalom edzés közben (0–10): átlag ${fmt(pains.reduce((a,v)=>a+v,0)/pains.length)}, max ${Math.max(...pains)}.`:'')+
     (()=>{ const w=bwWeeks(bwDays()); if(!w.length) return ''; const l=w[w.length-1], f=w[Math.max(0,w.length-9)]; return ` Testsúly (heti átlag): legutóbb ${fmt2(l.avg)} kg`+(w.length>1?`, ${Math.round((parseD(l.wk)-parseD(f.wk))/6048e5)} héttel korábban ${fmt2(f.avg)} kg.`:'.'); })()+
+    (()=>{ const r=recentIssues(56); return r.length? '\nJelzett gondok az elmúlt 8 hétben: '+r.slice(0,12).map(i=>`${i.ex}: ${ISSUE_S[i.type]} (${AREAS[i.area]||''}${i.sev!=null?' '+i.sev+'/10':''})`).join('; ')+'.' : ''; })()+
     `\nGyakorlatok (név: hányszor, utolsó legjobb szett súly×ism.@RIR, becsült 1RM):\n`+lines.join('\n');
 }
 function aiPrompt(f){
@@ -1425,18 +1651,24 @@ function genRoutine(kind,ctx){
   if(kind==='test') return MTESTS.map(t=>({id:t.id,name:t.n,dose:t.goal,done:false,test:1}));
   if(kind==='warm'){
     const {cnt}=areasFor(ctx.prog,ctx.day), ex=new Set(), items=[mItem(mlib('cardio'),lvl)];
+    const IA=issueAreas(14); for(const a in IA) cnt[a]=(cnt[a]||0)+1.5;
     const dyn=pickFrom(['dyn'],cnt,4,{avoidBack:pain,rot:nPast}); if((cnt.csuklo||0)>=2&&!dyn.some(e=>e.id==='wrist')) dyn.splice(dyn.length-1,1,mlib('wrist')); dyn.forEach(e=>{ex.add(e.id); items.push(mItem(e,lvl));});
     const act=pickFrom(['act'],cnt,2,{exclude:ex,rot:nPast});
     if(pain&&!act.some(e=>e.id==='birddog')) act.splice(1,1,mlib('birddog'));
     act.filter(Boolean).forEach(e=>items.push(mItem(e,lvl)));
+    const used=new Set(items.map(i=>i.id));
+    for(const a of Object.values(IA).sort((x,y)=>y.max-x.max||(y.rom+y.pain)-(x.rom+x.pain)).slice(0,2)){
+      const e=pickFrom(['mob'],{[a.area]:1},1,{exclude:used})[0]; if(!e) continue; used.add(e.id);
+      items.push({...mItem(e,lvl),name:'Célzott: '+e.n,dose:`60–90 mp${e.sd?' oldalanként':''} · fájdalommentes tartományban`,sec:75,note:`Azért került ide, mert az elmúlt 2 hétben jelezted: ${[a.pain?'fájdalom':'',a.rom?'korlátozott mozgástartomány':'',a.tech?'technika':''].filter(Boolean).join(', ')} (${AREAS[a.area]}).`}); }
     const r=rampItem(ctx.prog,ctx.day); if(r) items.push(r);
     return items;
   }
   if(kind==='cool'){
     const {cnt,list}=areasFor(ctx.prog,ctx.day), items=[];
+    const IA=issueAreas(14); for(const a in IA) cnt[a]=(cnt[a]||0)+1;
     const st=pickFrom(['stat'],cnt,Math.min(6,Math.max(4,list.length)),{avoidBack:false,rot:nPast});
     if(pain&&!st.some(e=>e.id==='s_lowback')&&st.length) st[st.length-1]=mlib('s_lowback');
-    st.forEach(e=>items.push(mItem(e,lvl)));
+    st.forEach(e=>{ const it=mItem(e,lvl); const sore=e.a.find(a=>IA[a]&&IA[a].max>=4); if(sore) it.dose=it.dose.replace(' · érzet 4–6/10','')+` · csak enyhén (≤3/10), mert ${AREAS[sore].toLowerCase()} fájt`; items.push(it); });
     const ro=pickFrom(['roll'],cnt,1,{rot:nPast}); if(ro[0]) items.push(mItem(ro[0],lvl));
     return items;
   }
@@ -1455,6 +1687,7 @@ function suggestFocus(){
   const since=addDays(todayStr(),-7), cnt={};
   for(const s of finished()) if(s.date>=since){ const r=areasFor(s.program,s.day).cnt; for(const a in r) cnt[a]=(cnt[a]||0)+r[a]; }
   const p=P(); if(p&&p.pain) cnt.derek=(cnt.derek||0)+2;
+  const IA=issueAreas(14); for(const a in IA) cnt[a]=(cnt[a]||0)+10+IA[a].max;
   const order=['csipo','vadli','felsohat','vall','far','combhajlito','adduktor','lats','derek','csuklo','mell'];
   const l=Object.keys(cnt).filter(a=>MLIB.some(e=>e.k==='mob'&&e.a.includes(a))).sort((a,b)=>cnt[b]-cnt[a]||order.indexOf(a)-order.indexOf(b));
   const out=l.slice(0,3); for(const a of ['csipo','vadli','felsohat']) if(out.length<3&&!out.includes(a)) out.push(a); return out;
@@ -1485,7 +1718,7 @@ function finishMob(){
 }
 const sideVal=v=>v==null?'':fmt(v);
 function mobItemHtml(m,it,i){
-  const e=mlib(it.id), T=it.test&&MTESTS.find(t=>t.id===it.id), lvl=S.settings.mobLvl||2, sec=e?mTimer(e,lvl):0, sd=(e&&e.sd)||(T&&T.sd);
+  const e=mlib(it.id), T=it.test&&MTESTS.find(t=>t.id===it.id), lvl=S.settings.mobLvl||2, sec=it.sec||(e?mTimer(e,lvl):0), sd=(e&&e.sd)||(T&&T.sd);
   const unit=T?T.u:(e&&e.m), cue=T?T.c:e?e.c:it.note;
   const valIn=unit? (sd? ['b','j'].map(s=>`<label class="mv"><span>${s==='b'?'bal':'jobb'}</span><input class="inp" inputmode="decimal" data-mv="${i}" data-side="${s}" value="${sideVal(it.v&&it.v[s])}" placeholder="${unit}"></label>`).join('')
       : `<label class="mv"><span>${unit}</span><input class="inp" inputmode="decimal" data-mv="${i}" data-side="x" value="${sideVal(it.v&&it.v.x)}" placeholder="${unit}"></label>`):'';
@@ -1556,6 +1789,7 @@ function viewMob(){
   return `<h2 style="margin-top:18px">Mobilitás</h2>
   <div class="stack">
     ${weekStrip()}
+    ${issueCard()}
     ${todayW&&!coolDone?`<section class="card row" style="justify-content:space-between;border-color:var(--good)"><span class="small"><b>Mai edzés kész (${esc(dn(todayW.program,todayW.day))})</b><br><span class="muted">Jöhet a nyújtás, kb. 8 perc.</span></span><button class="btn sm" data-act="mstart" data-k="cool">Nyújtás</button></section>`:''}
     <section class="card stack">
       <div class="eyebrow">Ehhez az edzéshez igazítva · ${esc(ctx.why)}</div>
@@ -1642,7 +1876,7 @@ function mobAction(act,b){
   if(act==='mdel-yes'){ delete S.mob[b.dataset.id]; queue('m:'+b.dataset.id); ui.confirm=null; render(); toast('Törölve'); return true; }
   if(!m) return false;
   if(act==='mdone'){ const it=m.items[+b.dataset.i]; it.done=!it.done; queue('m:'+m.id); render(); return true; }
-  if(act==='mtimer'){ const it=m.items[+b.dataset.i], e=mlib(it.id); const sec=e?mTimer(e,S.settings.mobLvl||2):0; startTimer(sec,`${it.name}${e&&e.sd?' · egyik oldal, utána a másik':''}`); return true; }
+  if(act==='mtimer'){ const it=m.items[+b.dataset.i], e=mlib(it.id); const sec=it.sec||(e?mTimer(e,S.settings.mobLvl||2):0); startTimer(sec,`${it.name}${e&&e.sd?' · egyik oldal, utána a másik':''}`); return true; }
   if(act==='mswap'){ const i=+b.dataset.i, it=m.items[i], e=mlib(it.id); if(!e) return true; const used=new Set(m.items.map(x=>x.id));
     const cnt={}; e.a.forEach(a=>cnt[a]=1); const pool=MLIB.filter(x=>x.k===e.k&&!used.has(x.id)&&x.a.some(a=>cnt[a]));
     const alt=pool[0]||MLIB.find(x=>x.k===e.k&&!used.has(x.id)); if(alt){ m.items[i]=mItem(alt,S.settings.mobLvl||2); queue('m:'+m.id); render(); } else toast('Nincs több hasonló gyakorlat'); return true; }
@@ -1841,13 +2075,161 @@ function figTick(now){
 }
 function figStart(){ if(!figRAF) figRAF=requestAnimationFrame(figTick); }
 
+
+/* ===================== GOND-JELZÉS + SZEMÉLYES MÓDOSÍTÁSOK =====================
+   - Gyakorlatonként jelezhető gond (fájdalom / mozgástartomány / technika / gép) → a következő ugyanilyen gyakorlatnál
+     a javaslat ehhez igazodik, és a bemelegítés–nyújtás–mobilizáció is figyel a jelzett területre.
+   - Személyes módosítás (csak az adott felhasználónál): szuperszett helyett sima szettek, gyakorlatcsere. */
+const ISSUE_T={pain:'Fájdalom',rom:'Nem ment a mozgástartomány',tech:'Technika nem volt tiszta',equip:'Gép foglalt / nem elérhető'};
+const ISSUE_S={pain:'fájt',rom:'mozgástartomány',tech:'technika',equip:'gép'};
+const mods=()=>(S.settings.mods||(S.settings.mods={swap:{},ssPair:{},ssOff:{}}));
+const swapOf=(prog,id)=>((S.settings.mods||{}).swap||{})[prog+':'+id]||'';
+function guessArea(e){ for(const [re,as] of AREA_KW) if(re.test(e.origName||e.name)) return as[0]; return 'derek'; }
+function applyMods(key,P){
+  const m=S.settings.mods||{}, sw=m.swap||{}, pair=m.ssPair||{}, all=(m.ssOff||{})[key];
+  const pre=key+':';
+  if(!all&&!Object.keys(sw).some(k=>k.startsWith(pre))&&!Object.keys(pair).some(k=>k.startsWith(pre))) return P;
+  const Q={...P,ex:{}};
+  for(const d in P.ex){ const arr=P.ex[d].map(e=>({...e}));
+    for(const e of arr){ const s=sw[pre+e.id]; if(s){ e.origName=e.name; e.alt=e.name; e.name=s; e.swapped=true; } }
+    for(const e of arr){ if(e.ss&&(all||pair[pre+e.id])){ const b=arr.find(x=>x.id===e.ss); e.pairA=e.id; e.ss=null; e.unpaired=true; if(!e.rest) e.rest=(b&&b.rest)||90; if(b){ b.ssFrom=null; b.unpaired=true; b.pairA=e.id; } } }
+    Q.ex[d]=arr; }
+  return Q;
+}
+function lastIssueFor(prog,e,exclude){
+  const sw=swapOf(prog,e.id);
+  for(const s of finished()){ if(s.program!==prog||s.id===exclude) continue; const x=s.ex&&s.ex[e.id]; if(!x||(x.swap||'')!==sw) continue;
+    if(x.issue||x.sets.some(t=>t.done)) return x.issue? {...x.issue,date:s.date} : null; }
+  return null;
+}
+function recommend(prog,e,phase,excludeId){
+  let r=recommendBase(prog,e,phase,excludeId);
+  const li=lastIssueFor(prog,e,excludeId); if(!li||!li.type) return r;
+  r= r? {...r} : {kind:'same',why:''};
+  const step=stepFor(prog,e.id), last=lastFor(prog,e.id,excludeId,false), w0=last? Math.max(0,...last.sets.map(q=>q.w||0))||null : null;
+  const A=AREAS[li.area]||'', sev=li.sev!=null?`, ${li.sev}/10`:'';
+  const hold=()=>{ if(r.kind==='up'){ r.kind='same'; if(w0!=null&&r.w!=null) r.w=w0; } };
+  let pre='';
+  if(li.type==='pain'&&(li.sev??5)>=4){
+    pre=`⚠ Múltkor fájdalom (${A}${sev}). Ma könnyebben: kb. −15% terhelés, fájdalommentes mozgástartomány, lassú negatív. Ha ma is fáj, cseréld a gyakorlatot (⇄ Csere); ha visszatérő vagy éles, kérd szakember véleményét.`;
+    const base=r.w??w0;
+    if(base){ r.kind='down'; r.w=Math.max(step,Math.floor(base*0.85/step)*step); }
+    else if(r.reps){ r.kind='down'; r.reps=r.reps.map(x=>Math.max(1,x-2)); }
+    else r.kind='down';
+  } else if(li.type==='pain'){ pre=`Múltkor enyhe fájdalom (${A}${sev}). Ma nem emelünk: marad a terhelés, figyeld, hogy ne erősödjön.`; hold(); }
+  else if(li.type==='rom'){ pre=`Múltkor korlátozott volt a mozgástartomány (${A}). A bemelegítésbe bekerült erre célzott mobilizáció; ma a kontrollált, fájdalommentes tartomány a cél, a súly nem nő.`; hold(); }
+  else if(li.type==='tech'){ pre=`Múltkor nem volt tiszta a technika. Ma marad a súly, a cél a tiszta kivitelezés.`; hold(); }
+  else if(li.type==='equip'){ pre=`Múltkor nem volt elérhető a gép. Ha ma sem az, cseréld (⇄ Csere) — a csere külön haladást kap.`; }
+  if(li.note) pre+=` Megjegyzésed: „${li.note}”.`;
+  r.why=pre+(r.why?' '+r.why:''); r.issue=li; return r;
+}
+// ---- mobilitás-integráció
+function recentIssues(days=14){
+  const since=addDays(todayStr(),-days), out=[];
+  for(const s of finished()) if(s.date>=since) for(const id in s.ex||{}){ const x=s.ex[id]; if(x&&x.issue&&x.issue.type&&x.issue.type!=='equip') out.push({...x.issue,area:x.issue.area||'derek',date:s.date,ex:x.name||id}); }
+  return out;
+}
+function issueAreas(days=14){
+  const m={}; for(const i of recentIssues(days)){ const a=m[i.area]||(m[i.area]={area:i.area,pain:0,rom:0,tech:0,max:0,ex:new Set()}); a[i.type]=(a[i.type]||0)+1; if(i.type==='pain') a.max=Math.max(a.max,i.sev??5); a.ex.add(i.ex); }
+  return m;
+}
+function issueCard(){
+  const IA=Object.values(issueAreas(14)).sort((a,b)=>b.max-a.max||(b.pain+b.rom)-(a.pain+a.rom));
+  if(!IA.length) return '';
+  const row=a=>`<div class="small"><b>${AREAS[a.area]||a.area}</b> — ${[a.pain?`fájdalom${a.max?' (max '+a.max+'/10)':''}`:'',a.rom?'korlátozott mozgástartomány':'',a.tech?'technika':''].filter(Boolean).join(', ')} <span class="muted">· ${esc([...a.ex].slice(0,3).join(', '))}</span></div>`;
+  const can=IA.some(a=>MLIB.some(e=>e.k==='mob'&&e.a.includes(a.area)));
+  return `<section class="card stack" style="border-left:6px solid var(--warn)"><div class="eyebrow">Figyelendő · utolsó 2 hét</div>${IA.map(row).join('')}
+    <p class="small muted" style="margin:0">A bemelegítés és a nyújtás ezekre a területekre is figyel, a mobilizáció fókuszába pedig automatikusan bekerülnek. Éles, sugárzó vagy visszatérő fájdalomnál kérd szakember véleményét.</p>
+    ${can?`<button class="btn sm" data-act="mobissue" style="align-self:flex-start">Mobilizáció ezekre</button>`:''}</section>`;
+}
+// ---- edzés-kártya kiegészítések
+function issuePrevHtml(rc){
+  const li=rc&&rc.issue; if(!li) return '';
+  const adv= li.type==='pain'&&(li.sev??5)>=4? 'könnyebb terhelés javasolt' : li.type==='equip'? 'ha ma sem elérhető, cseréld' : 'ma nem emelünk';
+  return `<div class="isprev">⚠ Múltkor (${huDate(li.date)}): ${ISSUE_T[li.type]}${li.area?' · '+(AREAS[li.area]||''):''}${li.sev!=null&&li.type==='pain'?' · '+li.sev+'/10':''} — ${adv}</div>`;
+}
+function issueBox(s,e,x){
+  const is=x.issue, open=ui.openD&&ui.openD['gd'+e.id];
+  const chips=Object.entries(ISSUE_T).map(([k,l])=>`<button class="chip" data-act="iss-t" data-ex="${e.id}" data-v="${k}" aria-pressed="${!!is&&is.type===k}">${l}</button>`).join('');
+  const area= is? `<div class="row" style="flex-wrap:nowrap"><label class="small muted" for="ia-${e.id}" style="white-space:nowrap">Hol?</label><select id="ia-${e.id}" data-iss-area="${e.id}">${Object.entries(AREAS).map(([k,l])=>`<option value="${k}" ${is.area===k?'selected':''}>${l}</option>`).join('')}</select></div>`:'';
+  const sev= is&&is.type==='pain'? `<div><div class="small muted" style="margin-bottom:4px">Mennyire fájt? (0–10)</div><div class="pain">${Array.from({length:11},(_,i)=>`<button data-act="iss-sev" data-ex="${e.id}" data-v="${i}" aria-pressed="${is.sev===i}">${i}</button>`).join('')}</div></div>`:'';
+  return `<details class="more" data-od="gd${e.id}" style="flex-basis:100%" ${open?'open':''}><summary>${is?`<span style="color:var(--warn)">⚠ Jelzett gond: ${ISSUE_T[is.type]}${is.area?' · '+AREAS[is.area]:''}</span>`:'⚠ Gond volt? (fájdalom, mozgástartomány…)'}</summary>
+    <div class="stack" style="gap:8px;margin-top:6px"><div class="chips">${chips}</div>${area}${sev}
+    ${is?`<input class="inp" data-iss-note="${e.id}" placeholder="Megjegyzés (pl. jobb váll eleje, mély pozícióban)" value="${esc(is.note||'')}"><p class="small muted" style="margin:0">A következő ilyen edzésnél a javaslat ehhez igazodik, és a Mobilitás fül is figyel erre a területre.</p><button class="btn sm ghost" data-act="iss-clear" data-ex="${e.id}" style="align-self:flex-start">Jelzés törlése</button>`:''}</div></details>`;
+}
+function altList(e){
+  if(e.cali) return [];
+  const src=String((e.swapped?PROGRAMS_BASE_ALT(e):e.alt)||'').split(/\s*\/\s*/);
+  return [...new Set(src.map(a=>a&&a.replace(/\s*\(.*?\)\s*$/,'').trim()).filter(a=>a&&a!=='—'&&a!==e.name))].slice(0,5);
+}
+function PROGRAMS_BASE_ALT(e){ for(const k in BUILTIN){ for(const d in BUILTIN[k].ex){ const b=BUILTIN[k].ex[d].find(x=>x.id===e.id&&x.name===e.origName); if(b) return b.alt; } } return ''; }
+function modBox(s,e){
+  const open=ui.openD&&ui.openD['md'+e.id], alts=altList(e), pairA=e.pairA||(e.ss?e.id:e.ssFrom||null);
+  return `<details class="more" data-od="md${e.id}" style="flex-basis:100%" ${open?'open':''}><summary>⇄ Csere / módosítás${e.swapped?' <span class="tag">cserélve</span>':''}${e.unpaired?' <span class="tag">külön szettek</span>':''}</summary>
+    <div class="stack" style="gap:8px;margin-top:6px">
+      ${e.swapped?`<p class="small" style="margin:0">Most: <b>${esc(e.name)}</b> <span class="muted">(eredeti: ${esc(e.origName)})</span></p>`:''}
+      ${alts.length?`<div class="small muted">Csere erre:</div><div class="chips">${alts.map(a=>`<button class="chip" data-act="mod-swap" data-ex="${e.id}" data-name="${esc(a)}">${esc(a)}</button>`).join('')}</div>`:''}
+      <div class="row" style="flex-wrap:nowrap"><input class="inp" id="mc-${e.id}" placeholder="Saját gyakorlat neve" aria-label="Saját gyakorlat neve"><button class="btn sm" data-act="mod-custom" data-ex="${e.id}">Csere</button></div>
+      ${e.swapped?`<button class="btn sm ghost" data-act="mod-reset" data-ex="${e.id}" style="align-self:flex-start">Vissza az eredetire</button>`:''}
+      ${pairA?`<label class="row small" style="gap:8px;flex-wrap:nowrap"><input type="checkbox" data-mod-ss="${esc(pairA)}" ${e.unpaired?'checked':''}> Szuperszett helyett külön szettek, pihenővel (ennél a párnál)</label>`:''}
+      <p class="small muted" style="margin:0">A módosítás csak nálad érvényes, és a következő edzéseken is megmarad. Cserélt gyakorlatnál a súlyjavaslat külön, az új gyakorlat eredményeiből számolódik.</p>
+    </div></details>`;
+}
+function modsCard(key){
+  const m=S.settings.mods||{}, pre=key+':', sw=Object.entries(m.swap||{}).filter(([k])=>k.startsWith(pre)), pairs=Object.keys(m.ssPair||{}).filter(k=>k.startsWith(pre)&&m.ssPair[k]);
+  const p=PROGRAMS[key], hasSS=Object.values(BUILTIN[key]?BUILTIN[key].ex:p.ex).flat().some(e=>e.ss);
+  const nm=id=>{ for(const d in p.ex){ const e=p.ex[d].find(x=>x.id===id); if(e) return e.lab+' '+(e.origName||e.name); } return id; };
+  return `<section class="card stack" id="mymods"><div class="eyebrow">Személyes módosítások · ${esc(p.title)}</div>
+    ${hasSS?`<label class="row small" style="gap:8px;flex-wrap:nowrap"><input type="checkbox" data-mod-ssall="${esc(key)}" ${(m.ssOff||{})[key]?'checked':''}> Szuperszettek helyett mindig külön szettek (ha messze vannak egymástól a gépek)</label>`:''}
+    ${sw.map(([k,v])=>{ const id=k.slice(pre.length); return `<div class="row" style="flex-wrap:nowrap"><span class="small" style="flex:1">${esc(nm(id))} → <b>${esc(v)}</b></span><button class="btn sm ghost" data-act="mod-reset" data-ex="${esc(id)}" data-prog="${esc(key)}">Vissza</button></div>`; }).join('')}
+    ${pairs.length&&!(m.ssOff||{})[key]?`<div class="small muted">Külön szettként: ${pairs.map(k=>esc(nm(k.slice(pre.length)))).join(', ')}</div>`:''}
+    ${!sw.length&&!pairs.length&&!(m.ssOff||{})[key]?`<p class="small muted" style="margin:0">Edzés közben bármelyik gyakorlatnál a „⇄ Csere / módosítás” résznél cserélhetsz gyakorlatot, vagy bonthatod a szuperszettet. Ezek csak nálad érvényesek.</p>`:''}
+    ${sw.length||pairs.length||(m.ssOff||{})[key]?`<button class="btn sm ghost" data-act="mod-resetall" data-prog="${esc(key)}" style="align-self:flex-start">Minden módosítás visszaállítása</button>`:''}
+  </section>`;
+}
+function setSwap(prog,id,name){
+  const m=mods(); m.swap=m.swap||{}; if(name) m.swap[prog+':'+id]=name; else delete m.swap[prog+':'+id];
+  rebuildPrograms();
+  const s=S.settings.activeId&&S.sessions[S.settings.activeId];
+  if(s&&s.program===prog&&s.ex[id]){ const e=findEx(prog,id); s.ex[id].name=e?e.name:s.ex[id].name; if(name) s.ex[id].swap=name; else delete s.ex[id].swap; queue(s.id); }
+  queue('settings');
+}
+function adaptAction(act,b,s){
+  if(act==='mobissue'){ const IA=Object.values(issueAreas(14)).sort((a,b)=>b.max-a.max); ui.mobFocus=IA.map(a=>a.area).filter(a=>MLIB.some(e=>e.k==='mob'&&e.a.includes(a))).slice(0,3); startMob('mob'); return true; }
+  if(act==='mod-resetall'){ const k=b.dataset.prog, m=mods(); for(const g of ['swap','ssPair']) for(const x of Object.keys(m[g]||{})) if(x.startsWith(k+':')) delete m[g][x]; if(m.ssOff) delete m.ssOff[k]; rebuildPrograms();
+    const as=S.settings.activeId&&S.sessions[S.settings.activeId]; if(as&&as.program===k){ for(const id in as.ex){ const e=findEx(k,id); if(as.ex[id].swap){ delete as.ex[id].swap; if(e) as.ex[id].name=e.name; } } queue(as.id); }
+    queue('settings'); render(); toast('Módosítások visszaállítva'); return true; }
+  if(act==='mod-reset'&&b.dataset.prog){ setSwap(b.dataset.prog,b.dataset.ex,null); render(); return true; }
+  if(!s) return false;
+  const id=b.dataset.ex, x=id&&s.ex[id], e=id&&findEx(s.program,id);
+  if(act==='iss-t'&&x){ const v=b.dataset.v; if(x.issue&&x.issue.type===v) delete x.issue; else x.issue={...(x.issue||{}),type:v,area:(x.issue&&x.issue.area)||guessArea(e||{name:''})}; if(x.issue&&v!=='pain') delete x.issue.sev; ui.openD=ui.openD||{}; ui.openD['gd'+id]=true; queue(s.id); render(); return true; }
+  if(act==='iss-sev'&&x&&x.issue){ const v=+b.dataset.v; x.issue.sev= x.issue.sev===v? null : v; queue(s.id); render(); return true; }
+  if(act==='iss-clear'&&x){ delete x.issue; queue(s.id); render(); return true; }
+  if(act==='mod-swap'&&e){ setSwap(s.program,id,b.dataset.name); ui.openD=ui.openD||{}; ui.openD['md'+id]=true; render(); toast('Csere: '+b.dataset.name); return true; }
+  if(act==='mod-custom'&&e){ const v=(document.getElementById('mc-'+id)||{}).value||''; if(!v.trim()){ toast('Írd be a gyakorlat nevét'); return true; } setSwap(s.program,id,v.trim().slice(0,80)); render(); toast('Csere: '+v.trim()); return true; }
+  if(act==='mod-reset'&&e){ setSwap(s.program,id,null); render(); return true; }
+  return false;
+}
+function adaptChange(t){
+  const s=S.settings.activeId&&S.sessions[S.settings.activeId];
+  if(t.dataset.issArea&&s){ const x=s.ex[t.dataset.issArea]; if(x&&x.issue){ x.issue.area=t.value; queue(s.id); render(); } return true; }
+  if(t.dataset.modSs){ const k=(s?s.program:curKey())+':'+t.dataset.modSs, m=mods(); m.ssPair=m.ssPair||{}; if(t.checked) m.ssPair[k]=true; else delete m.ssPair[k]; rebuildPrograms(); queue('settings'); render(); return true; }
+  if(t.dataset.modSsall){ const m=mods(); m.ssOff=m.ssOff||{}; if(t.checked) m.ssOff[t.dataset.modSsall]=true; else delete m.ssOff[t.dataset.modSsall]; rebuildPrograms(); queue('settings'); render(); return true; }
+  return false;
+}
+function adaptInput(t,s){
+  if(t.dataset.issNote&&s){ const x=s.ex[t.dataset.issNote]; if(x&&x.issue){ x.issue.note=t.value.slice(0,200); queue(s.id); } return true; }
+  return false;
+}
+document.addEventListener('toggle',ev=>{ const d=ev.target; if(d.dataset&&d.dataset.od){ ui.openD=ui.openD||{}; ui.openD[d.dataset.od]=d.open; } },true);
+
 /* ===================== ACTIONS ===================== */
 function startSession(day){
   const key=curKey(), p=PROGRAMS[key], ps=PS(), slot=curSlot(key);
   const id='s'+Date.now().toString(36);
-  const ex={}; for(const e of p.ex[day]){ const t=target(e,slot.phase); ex[e.id]={name:e.name,lab:e.lab,sets:Array.from({length:t.sets},()=>({w:null,r:null,rir:null,done:false}))}; }
+  const ex={}; for(const e of p.ex[day]){ const t=target(e,slot.phase); ex[e.id]={name:e.name,lab:e.lab,...(e.swapped?{swap:e.name}:{}),sets:Array.from({length:t.sets},()=>({w:null,r:null,rir:null,done:false}))}; }
   S.sessions[id]={id,program:key,progTitle:p.title,day,dayName:p.days[day].name,block:ps.block,week:slot.week,slot:ps.pos+1,phase:slot.phase,date:todayStr(),startedAt:Date.now(),finished:false,back:null,note:'',ex};
-  S.settings.activeId=id; queue(id); queue('settings'); keepAwake(); ui.confirm=null; render(); window.scrollTo(0,0);
+  S.settings.activeId=id; queue(id); queue('settings'); keepAwake(); ui.confirm=null; ui.fOpen=null; render(); window.scrollTo(0,0);
 }
 function finishSession(){
   const s=S.sessions[S.settings.activeId]; if(!s) return;
@@ -1866,6 +2248,8 @@ document.addEventListener('click',ev=>{
   const b=ev.target.closest('[data-act]'); if(!b||b.disabled) return;
   const act=b.dataset.act, s=S.settings.activeId&&S.sessions[S.settings.activeId];
   if(mobAction(act,b)) return;
+  if(adaptAction(act,b,s)) return;
+  if(fAction(act,b,s)) return;
   if(act.startsWith('ed-')&&ui.edit){ editAction(act,b); return; }
   if(act==='ai-open'){ ui.ai={form:aiDefaults(),busy:false,err:null,ctl:null}; ui.edit=null; ui.confirm=null; render(); window.scrollTo(0,0); return; }
   if(act==='ai-cancel'){ ui.ai=null; render(); return; }
@@ -1887,20 +2271,8 @@ document.addEventListener('click',ev=>{
     delete S.programs[k]; rebuildPrograms(); if(S.settings.program===k){ S.settings.program='PPL'; queue('settings'); }
     queue('p_'+k); ui.confirm=null; render(); toast('Program törölve'); }
   else if(act==='start'){ if(audio==null){ try{ audio=new (window.AudioContext||window.webkitAudioContext)(); }catch(e){} } startSession(b.dataset.day); }
-  else if(act==='done'&&s){
-    const x=s.ex[b.dataset.ex], i=+b.dataset.i, q=x.sets[i];
-    if(!q.done){
-      ['w','r'].forEach(f=>{ if(q[f]==null){ const inp=document.getElementById(f+'-'+b.dataset.ex+'-'+i); const ph=inp&&num(inp.placeholder); if(ph!=null) q[f]=ph; } });
-      q.done=true;
-      const e=findEx(s.program,b.dataset.ex);
-      if(e&&unitOf(e)==='check'){}
-      else if(e&&e.ss) toast(((PROGRAMS[s.program]||{}).ssLabel==='párban'?'Párban → ':'Szuperszett → ')+labOf(s.program,e.ss));
-      else if(e) startTimer(e.rest, `Pihenő · ${e.lab} ${i+1}/${x.sets.length} kész`);
-    } else q.done=false;
-    queue(s.id); render();
-  }
   else if(act==='addset'&&s){ s.ex[b.dataset.ex].sets.push({w:null,r:null,rir:null,done:false}); queue(s.id); render(); }
-  else if(act==='rmset'&&s){ s.ex[b.dataset.ex].sets.pop(); queue(s.id); render(); }
+  else if(act==='rmset'&&s){ const xs=s.ex[b.dataset.ex].sets; if(xs.length>1&&!xs[xs.length-1].done) xs.pop(); queue(s.id); render(); }
   else if(act==='pain'&&s){ const v=+b.dataset.v; s.back= s.back===v?null:v; queue(s.id); render(); }
   else if(act==='finish'){ finishSession(); }
   else if(act==='discard'){ ui.confirm='discard'; render(); }
@@ -1909,7 +2281,7 @@ document.addEventListener('click',ev=>{
   else if(act==='del-yes'){ const id=b.dataset.id; delete S.sessions[id]; queue(id); ui.confirm=null; render(); toast('Edzés törölve'); }
   else if(act==='cancel'){ ui.confirm=null; render(); }
   else if(act==='t-15'&&timer){ timer.endAt-=15000; timer.beeped=false; saveTimer(); tick(); }
-  else if(act==='t+15'&&timer){ timer.endAt+=15000; timer.total+=15; timer.beeped=false; saveTimer(); tick(); }
+  else if(act==='t+15'&&timer){ if(timer.endAt<Date.now()){ timer.endAt=Date.now(); timer.total=0; } timer.endAt+=15000; timer.total+=15; timer.beeped=false; saveTimer(); tick(); }
   else if(act==='tskip'){ timer=null; saveTimer(); renderTimer(); }
   else if(act==='csv'){ exportCsv(); }
   else if(act==='backup'){ doBackup(); }
@@ -1923,6 +2295,7 @@ document.addEventListener('toggle',ev=>{ const d=ev.target; if(d.classList&&d.cl
 document.addEventListener('input',ev=>{
   const t=ev.target, s=S.settings.activeId&&S.sessions[S.settings.activeId];
   if(mobInput(t)) return;
+  if(adaptInput(t,s)) return;
   if(ui.ai&&ui.tab==='info'&&t.dataset.af){ ui.ai.form[t.dataset.af]= t.type==='checkbox'? t.checked : t.value; return; }
   if(ui.edit&&ui.tab==='info'){ const d=ui.edit.draft;
     if(t.dataset.pf){ d[t.dataset.pf]= t.type==='checkbox'? t.checked : t.value; return; }
@@ -1934,11 +2307,13 @@ document.addEventListener('input',ev=>{
   if(!s) return;
   if(t.dataset.f==='note'){ s.note=t.value; queue(s.id); return; }
   if(t.dataset.f==='bw'){ const v=parseBw(t.value); if(v!==s.bw&&(v!=null||t.value.trim()==='')){ s.bw=v; queue(s.id); } return; }
-  if(t.dataset.ex){ const q=s.ex[t.dataset.ex].sets[+t.dataset.i]; q[t.dataset.f]=num(t.value); queue(s.id); }
+  if(t.dataset.ex){ const q=s.ex[t.dataset.ex].sets[+t.dataset.i]; q[t.dataset.f]=num(t.value); queue(s.id);
+    const st=t.closest('.stp'); if(st){ const v=q[t.dataset.f], sm=st.querySelector('small'); st.classList.toggle('sugg',v==null); st.classList.toggle('val',v!=null); if(sm) sm.textContent= v==null&&t.placeholder? 'javasolt' : sm.dataset.l; } }
 });
 document.addEventListener('change',ev=>{
   const t=ev.target;
   if(mobChange(t)) return;
+  if(adaptChange(t)) return;
   if(t.dataset.pw!=null&&ui.edit){ ui.edit.draft.phases[+t.dataset.pw]=t.value; return; }
   if(t.id==='progEx'){ ui.progEx=t.value; render(); }
   else if(t.id==='bwFrom'||t.id==='bwTo'){ if(t.value){ ui[t.id]=t.value; render(); } }
@@ -1950,7 +2325,7 @@ document.addEventListener('change',ev=>{
 document.addEventListener('focusout',()=>{ setTimeout(()=>{ if(ui.needsRender&&!(document.activeElement&&document.activeElement.matches('input,textarea,select'))) render(); },50); });
 document.addEventListener('keydown',ev=>{
   if(ev.key!=='Enter') return; const t=ev.target; if(!t.dataset||!t.dataset.ex) return; ev.preventDefault();
-  const ins=[...document.querySelectorAll('.sets input')]; const i=ins.indexOf(t); if(ins[i+1]) ins[i+1].focus(); else t.blur();
+  const ins=[...document.querySelectorAll('.sets input,.fsets input')]; const i=ins.indexOf(t); if(ins[i+1]) ins[i+1].focus(); else t.blur();
 });
 
 async function exportCsv(){
