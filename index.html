@@ -368,6 +368,9 @@ input[type=checkbox]{width:20px;height:20px;accent-color:var(--day);flex:none}
 .fdone b{display:block;font-family:var(--f-display);font-size:26px;text-transform:uppercase}
 .btn.fin{background:var(--fg);border-color:var(--fg);color:var(--bg)}
 #toast{top:auto;bottom:calc(var(--tabh) + env(safe-area-inset-bottom,0px) + 14px)}
+.funk{grid-column:1 / -1;padding-left:28px;margin-top:-2px}
+.funk button{border:0;background:none;color:var(--muted);font-size:13px;font-weight:600;text-decoration:underline;text-underline-offset:3px;padding:4px 0;min-height:32px}
+.fset .sum .unk{font-size:13px;font-weight:600;color:var(--warn);margin-left:4px}
 @media (prefers-reduced-motion: no-preference){#farc{transition:stroke-dashoffset .9s linear}}
 @media (prefers-reduced-motion: reduce){.flash.on,.fset.pop{animation:none}}
 </style>
@@ -705,7 +708,7 @@ const findEx=(prog,id)=>{ const p=PROGRAMS[prog]; if(!p) return null; for(const 
 const labOf=(prog,id)=>{ const e=findEx(prog,id); return e?e.lab:id; };
 const finished=()=>Object.values(S.sessions).filter(s=>s.finished).sort((a,b)=>(b.date+b.startedAt).localeCompare(a.date+a.startedAt)||(b.startedAt-a.startedAt));
 function lastFor(prog,exId,exclude,skipDeload){
-  for(const s of finished()){ if(s.program!==prog||s.id===exclude) continue; if(skipDeload&&s.phase==='deload') continue; const x=s.ex&&s.ex[exId]; if(x&&(x.swap||'')===swapOf(prog,exId)&&x.sets.some(t=>t.done&&t.r!=null)) return {s,sets:x.sets.filter(t=>t.done),var:x.var||''}; }
+  for(const s of finished()){ if(s.program!==prog||s.id===exclude) continue; if(skipDeload&&s.phase==='deload') continue; const x=s.ex&&s.ex[exId]; if(x&&(x.swap||'')===swapOf(prog,exId)&&x.sets.some(t=>t.done&&t.r!=null)) return {s,sets:x.sets.filter(t=>t.done),var:x.var||'',unk:x.sets.filter(t=>t.done&&t.unk).length}; }
   return null;
 }
 // a session gyakorlatai: a program aktuális definíciójából, vagy ha az már nincs meg, a mentett pillanatképből
@@ -821,13 +824,14 @@ function coreGym(prog,e,t,phase,last){
   });
   return {kind,w,reps,step,why};
 }
+const rTxt=q=>q.unk?'?':(q.r??'–');
 function setStr(q,e){
   const u=unitOf(e);
-  if(u==='sec') return `${q.r??'–'} mp`;
-  if(u==='cm') return `${q.r??'–'} cm`;
+  if(u==='sec') return `${rTxt(q)} mp`;
+  if(u==='cm') return `${rTxt(q)} cm`;
   if(u==='check') return q.done?'kész':'–';
-  if(e&&e.cali) return `${q.w?'+'+fmt(q.w)+' kg × ':''}${q.r??'–'}${q.rir!=null?' @'+q.rir:''}`;
-  return `${fmt(q.w)||'–'}×${q.r??'–'}${q.rir!=null?' @'+q.rir:''}`;
+  if(e&&e.cali) return `${q.w?'+'+fmt(q.w)+' kg × ':''}${rTxt(q)}${q.rir!=null?' @'+q.rir:''}`;
+  return `${fmt(q.w)||'–'}×${rTxt(q)}${q.rir!=null?' @'+q.rir:''}`;
 }
 function sessVol(s){ let v=0,n=0; for(const k in s.ex) for(const t of s.ex[k].sets) if(t.done){ n++; if(t.w&&t.r) v+=t.w*t.r; } return {v,n}; }
 function toast(msg){ const t=$('#toast'); t.textContent=msg; t.hidden=false; clearTimeout(toast._t); toast._t=setTimeout(()=>t.hidden=true,2200); }
@@ -958,9 +962,9 @@ function recoLbl(e,rc){
 }
 function fSetsTxt(e,sets){
   const d=sets.filter(q=>q.done), u=unitOf(e);
-  if(u==='sec'||u==='cm') return d.map(q=>q.r??'–').join(' · ')+(u==='sec'?' mp':' cm');
+  if(u==='sec'||u==='cm') return d.map(rTxt).join(' · ')+(u==='sec'?' mp':' cm');
   const ws=[...new Set(d.map(q=>q.w??null))];
-  if(ws.length===1) return d.map(q=>q.r??'–').join(' · ')+(ws[0]!=null?` <small>× ${e.cali?'+':''}${fmt(ws[0])} kg</small>`:'');
+  if(ws.length===1) return d.map(rTxt).join(' · ')+(ws[0]!=null?` <small>× ${e.cali?'+':''}${fmt(ws[0])} kg</small>`:'');
   return d.map(q=>esc(setStr(q,e))).join(' · ');
 }
 function fFold(s,e){
@@ -1001,7 +1005,7 @@ function fCheckRow(e,x){
 function fRow(s,e,t,rc,q,i,active,n){
   const u=unitOf(e), timed=u==='sec'||u==='cm', hasW=fHasW(e)||(!timed&&q.w!=null), id=e.id;
   if(q.done){
-    const main= timed? `${q.r??'–'} ${u==='sec'?'mp':'cm'}` : `${hasW&&q.w!=null?(e.cali?'+':'')+fmt(q.w)+' kg × ':''}${q.r??'–'}${hasW&&q.w!=null?'':' ism.'}`;
+    const main= (timed? `${rTxt(q)} ${u==='sec'?'mp':'cm'}` : `${hasW&&q.w!=null?(e.cali?'+':'')+fmt(q.w)+' kg × ':''}${rTxt(q)}${hasW&&q.w!=null?'':' ism.'}`)+(q.unk?`<span class="unk">${timed?'nem mért':'nem számolt'}</span>`:'');
     return `<div class="fset isdone" id="row-${id}-${i}"><div class="n">${i+1}</div><div class="sum num"><span class="tick">✓</span> ${main}${!timed&&q.rir!=null?` <span>@RIR ${q.rir}</span>`:''}</div><button class="undo" data-act="fundo" data-ex="${id}" data-i="${i}">Javít</button></div>`;
   }
   const sg=fSugg(s,e,i,rc), rL= u==='sec'?'mp':u==='cm'?'cm':'ism.';
@@ -1010,7 +1014,7 @@ function fRow(s,e,t,rc,q,i,active,n){
   let rir='';
   if(active&&!timed&&(isNumRir(t.rir)||isLast)){ const [a,b]= isLast?[0,0]:rng(t.rir);
     rir=`<div class="frir"><span>RIR</span>${[0,1,2,3,4].map(v=>`<button data-act="frir" data-ex="${id}" data-i="${i}" data-v="${v}" class="${q.rir==null&&v>=a&&v<=b?'sg':''}" aria-pressed="${q.rir===v}" aria-label="RIR ${v}">${v}</button>`).join('')}</div>`; }
-  return `<div class="fset${active?' active':''}${hasW?'':' one'}" id="row-${id}-${i}"><div class="n">${i+1}</div>${hasW?stp('w',q.w,sg.w,e.cali?'+kg':'kg','decimal','súly'):''}${stp('r',q.r,sg.r,rL,'numeric',u==='sec'?'másodperc':u==='cm'?'centiméter':'ismétlés')}<button class="fok" data-act="done" data-ex="${id}" data-i="${i}" aria-label="${i+1}. szett kész">✓</button>${rir}${isLast&&active?'<div class="flast">Utolsó szett: bukásig (RIR 0)</div>':''}</div>`;
+  return `<div class="fset${active?' active':''}${hasW?'':' one'}" id="row-${id}-${i}"><div class="n">${i+1}</div>${hasW?stp('w',q.w,sg.w,e.cali?'+kg':'kg','decimal','súly'):''}${stp('r',q.r,sg.r,rL,'numeric',u==='sec'?'másodperc':u==='cm'?'centiméter':'ismétlés')}<button class="fok" data-act="done" data-ex="${id}" data-i="${i}" aria-label="${i+1}. szett kész">✓</button>${rir}${isLast&&active?'<div class="flast">Utolsó szett: bukásig (RIR 0)</div>':''}${active?`<div class="funk"><button data-act="funk" data-ex="${id}" data-i="${i}">${timed?'Nem mértem le — kész így':'Nem számoltam meg — kész így'}</button></div>`:''}</div>`;
 }
 function fFocus(){
   const s=S.settings.activeId&&S.sessions[S.settings.activeId]; if(!s||ui.tab!=='edzes') return;
@@ -1028,19 +1032,20 @@ function fScrollTo(el){
 }
 function flash(){ let f=$('#flash'); if(!f){ f=document.createElement('div'); f.id='flash'; f.className='flash'; document.body.appendChild(f); } f.classList.remove('on'); void f.offsetWidth; f.classList.add('on'); }
 function fAction(act,b,s){
-  if(!s||!['fopen','fundo','finc','fdec','frir','done'].includes(act)) return false;
+  if(!s||!['fopen','fundo','finc','fdec','frir','done','funk'].includes(act)) return false;
   const id=b.dataset.ex, i=+b.dataset.i, x=s.ex[id], e=findEx(s.program,id);
   if(act==='fopen'){ const c=fCur(s); ui.fOpen= c.all&&fGroup(s,c.all[0]).includes(id)? null : id; render(); fScrollTo(document.getElementById('fcard-'+fGroup(s,id)[0])); return true; }
   const q=x&&x.sets[i]; if(!q||!e) return true;
-  if(act==='fundo'){ q.done=false; ui.fOpen=id; queue(s.id); render(); setTimeout(fFocus,60); return true; }
+  if(act==='fundo'){ q.done=false; delete q.unk; ui.fOpen=id; queue(s.id); render(); setTimeout(fFocus,60); return true; }
   if(act==='frir'){ const v=+b.dataset.v; q.rir= q.rir===v? null : v; queue(s.id); render(); return true; }
   if(act==='finc'||act==='fdec'){ const f=b.dataset.f, u=unitOf(e), st= f==='w'? stepFor(s.program,id) : (u==='sec'||u==='cm')? 5 : 1;
     const sg=fSugg(s,e,i,recommend(s.program,e,s.phase,s.id)), base= q[f]!=null? q[f] : sg[f]!=null? sg[f] : 0;
     q[f]=Math.max(0,Math.round((base+(act==='finc'?1:-1)*st)*100)/100); queue(s.id); render(); return true; }
   // done
-  if(q.done){ q.done=false; queue(s.id); render(); return true; }
-  if(unitOf(e)!=='check'){ const sg=fSugg(s,e,i,recommend(s.program,e,s.phase,s.id)); if(q.w==null&&sg.w!=null) q.w=sg.w; if(q.r==null&&sg.r!=null) q.r=sg.r;
-    if(q.r==null){ const u=unitOf(e); toast(u==='sec'?'Írd be, hány mp-ig tartottad':u==='cm'?'Írd be a magasságot (cm)':'Írd be az ismétlésszámot'); const inp=document.getElementById('r-'+id+'-'+i); inp&&inp.focus(); return true; } }
+  if(q.done){ q.done=false; delete q.unk; queue(s.id); render(); return true; }
+  if(act==='funk'){ const sg=fSugg(s,e,i,recommend(s.program,e,s.phase,s.id)); if(q.w==null&&sg.w!=null) q.w=sg.w; q.r=null; q.unk=true; }
+  else if(unitOf(e)!=='check'){ delete q.unk; const sg=fSugg(s,e,i,recommend(s.program,e,s.phase,s.id)); if(q.w==null&&sg.w!=null) q.w=sg.w; if(q.r==null&&sg.r!=null) q.r=sg.r;
+    if(q.r==null){ const u=unitOf(e); toast(u==='sec'?'Írd be, hány mp-ig tartottad — vagy „Nem mértem le”':u==='cm'?'Írd be a magasságot (cm) — vagy „Nem mértem le”':'Írd be az ismétlésszámot — vagy „Nem számoltam meg”'); const inp=document.getElementById('r-'+id+'-'+i); inp&&inp.focus(); return true; } }
   q.done=true;
   const g=fGroup(s,id);
   if(ui.fOpen&&!fSteps(s).some(t=>g.includes(t[0])&&fUndone(s,t))) ui.fOpen=null;
@@ -2102,8 +2107,13 @@ function lastIssueFor(prog,e,exclude){
     if(x.issue||x.sets.some(t=>t.done)) return x.issue? {...x.issue,date:s.date} : null; }
   return null;
 }
+function unkNote(prog,e,phase,excludeId,r){
+  if(!r||!r.why) return r;
+  const l=lastFor(prog,e.id,excludeId,phase!=='deload')||lastFor(prog,e.id,excludeId,false); if(!l||!l.unk) return r;
+  return {...r,why:r.why+` (Múltkor ${l.unk} szett ${unitOf(e)==='sec'?'ideje nem volt lemérve':'ismétlésszáma nem volt megszámolva'} — azokat kihagytam a számolásból.)`};
+}
 function recommend(prog,e,phase,excludeId){
-  let r=recommendBase(prog,e,phase,excludeId);
+  let r=unkNote(prog,e,phase,excludeId,recommendBase(prog,e,phase,excludeId));
   const li=lastIssueFor(prog,e,excludeId); if(!li||!li.type) return r;
   r= r? {...r} : {kind:'same',why:''};
   const step=stepFor(prog,e.id), last=lastFor(prog,e.id,excludeId,false), w0=last? Math.max(0,...last.sets.map(q=>q.w||0))||null : null;
@@ -2307,7 +2317,7 @@ document.addEventListener('input',ev=>{
   if(!s) return;
   if(t.dataset.f==='note'){ s.note=t.value; queue(s.id); return; }
   if(t.dataset.f==='bw'){ const v=parseBw(t.value); if(v!==s.bw&&(v!=null||t.value.trim()==='')){ s.bw=v; queue(s.id); } return; }
-  if(t.dataset.ex){ const q=s.ex[t.dataset.ex].sets[+t.dataset.i]; q[t.dataset.f]=num(t.value); queue(s.id);
+  if(t.dataset.ex){ const q=s.ex[t.dataset.ex].sets[+t.dataset.i]; q[t.dataset.f]=num(t.value); if(t.dataset.f==='r'&&q.r!=null) delete q.unk; queue(s.id);
     const st=t.closest('.stp'); if(st){ const v=q[t.dataset.f], sm=st.querySelector('small'); st.classList.toggle('sugg',v==null); st.classList.toggle('val',v!=null); if(sm) sm.textContent= v==null&&t.placeholder? 'javasolt' : sm.dataset.l; } }
 });
 document.addEventListener('change',ev=>{
@@ -2335,7 +2345,7 @@ async function exportCsv(){
     for(const e of sessExList(s)){ const x=s.ex[e.id]; if(!x) continue; const t=e.reps?target(e,s.phase):{reps:'',rir:'',lastRir:null};
       if(!x.sets) continue;
       x.sets.forEach((q,i)=>{ if(!q.done) return;
-        rows.push([pname,s.block,s.week,s.slot,dname,s.date,e.lab,e.name,i+1,t.reps,(i===x.sets.length-1&&t.lastRir)||t.rir,fmt(q.w),unitOf(e)==='check'?(q.done?'kész':''):(q.r??''),q.rir??'',fmt(e1rmX(q,e,s.bw??lastBw())),!e.cali&&q.w&&q.r?fmt(q.w*q.r):'',x.var||S.settings.machine[s.program+':'+e.id]||'',s.back??'',s.bw!=null?fmt2(s.bw):'',s.note||'']); });
+        rows.push([pname,s.block,s.week,s.slot,dname,s.date,e.lab,e.name,i+1,t.reps,(i===x.sets.length-1&&t.lastRir)||t.rir,fmt(q.w),unitOf(e)==='check'?(q.done?'kész':''):q.unk?'nem számolt':(q.r??''),q.rir??'',fmt(e1rmX(q,e,s.bw??lastBw())),!e.cali&&q.w&&q.r?fmt(q.w*q.r):'',x.var||S.settings.machine[s.program+':'+e.id]||'',s.back??'',s.bw!=null?fmt2(s.bw):'',s.note||'']); });
     }
   }
   const csv='﻿'+rows.map(r=>r.map(c=>{ c=String(c); return /[;"\n]/.test(c)?'"'+c.replace(/"/g,'""')+'"':c; }).join(';')).join('\r\n');
