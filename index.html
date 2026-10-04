@@ -373,6 +373,98 @@ input[type=checkbox]{width:20px;height:20px;accent-color:var(--day);flex:none}
 .fset .sum .unk{font-size:13px;font-weight:600;color:var(--warn);margin-left:4px}
 @media (prefers-reduced-motion: no-preference){#farc{transition:stroke-dashoffset .9s linear}}
 @media (prefers-reduced-motion: reduce){.flash.on,.fset.pop{animation:none}}
+
+/* ---- Kezdőlap / edzés vége / előzmények / haladás (újratervezés) ---- */
+.hrow2{display:flex;justify-content:space-between;align-items:center;gap:8px}
+.progbtn{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:6px 12px;font-weight:700;min-height:36px;white-space:nowrap}
+.progbtn svg{width:12px;height:12px;stroke:currentColor;fill:none;stroke-width:2}
+.week{display:grid;gap:6px}
+.wk{border:1px solid var(--line);background:var(--surface);border-radius:10px;padding:7px 4px 6px;text-align:center;display:flex;flex-direction:column;gap:2px;align-items:center;min-width:0}
+.wk b{font-family:var(--f-display);font-size:16px;font-weight:700;text-transform:uppercase;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%}
+.wk span{font-size:11px;color:var(--muted);font-weight:600;white-space:nowrap}
+.wk.done{background:var(--good-soft);border-color:color-mix(in srgb,var(--good) 40%,var(--line))}
+.wk.done span{color:var(--good)}
+.wk.now{border:2px solid var(--day);background:var(--day-soft)}
+.wk .bar{width:22px;height:4px;border-radius:2px;background:var(--day)}
+.hero{border-top:6px solid var(--day);display:flex;flex-direction:column;gap:12px}
+.facts{display:flex;gap:6px;flex-wrap:wrap}
+.fact{display:inline-flex;gap:5px;align-items:baseline;background:var(--surface2);border-radius:8px;padding:5px 9px;font-size:13px;color:var(--muted);font-weight:600}
+.fact b{font-family:var(--f-display);font-size:18px;color:var(--fg)}
+.rule{border:1px solid var(--line);border-radius:10px;padding:9px 11px;font-size:13px;background:var(--bg)}
+.rule summary{cursor:pointer;list-style:none;display:flex;gap:8px;align-items:center;font-weight:600}
+.rule summary::-webkit-details-marker{display:none}
+.rule summary .pill{font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:2px 7px;border-radius:999px;background:var(--day-soft);color:var(--fg);white-space:nowrap}
+.rule summary i{margin-left:auto;font-style:normal;color:var(--muted);font-size:12px;white-space:nowrap}
+.rule p{margin:8px 0 0}
+.alt{display:flex;gap:6px;align-items:center;flex-wrap:wrap;font-size:13px;color:var(--muted)}
+.alt .chip{font-size:13px;min-height:34px;padding:5px 11px}
+.lastbox{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.mini{border-radius:10px;background:var(--surface2);padding:8px 10px;min-width:0}
+.mini b{display:block;font-family:var(--f-display);font-size:22px;line-height:1.05}
+.mini span{font-size:12px;color:var(--muted)}
+.tplan{list-style:none;margin:0;padding:0}
+.tplan li{display:grid;grid-template-columns:34px minmax(0,1fr) auto;gap:2px 10px;padding:9px 0;border-bottom:1px solid var(--line);align-items:baseline}
+.tplan li:last-child{border-bottom:0}
+.tplan .id{font-family:var(--f-display);font-weight:700;color:var(--muted)}
+.tplan .nm{font-weight:600;min-width:0}
+.tplan .rx{font-family:var(--f-display);font-weight:600;font-size:16px;text-align:right;white-space:nowrap}
+.tplan .sub{grid-column:2 / -1;display:flex;gap:6px;align-items:center;flex-wrap:wrap;font-size:12.5px;color:var(--muted)}
+.trend{font-weight:700;font-size:12px;padding:1px 7px;border-radius:999px;white-space:nowrap;background:var(--surface2);color:var(--fg)}
+.trend.up{background:var(--good-soft);color:var(--good)}
+.trend.down,.trend.warn{background:color-mix(in srgb,var(--warn) 15%,var(--surface));color:var(--warn)}
+.scrim{position:fixed;inset:0;z-index:50;background:rgb(0 0 0 / .35)}
+.sheet{position:fixed;left:0;right:0;bottom:0;z-index:51;background:var(--surface);border-radius:16px 16px 0 0;padding:10px 16px calc(16px + env(safe-area-inset-bottom,0px));max-width:640px;margin:0 auto;display:flex;flex-direction:column;gap:6px;max-height:80vh;overflow-y:auto}
+.sheet .grab{width:40px;height:5px;border-radius:3px;background:var(--line);align-self:center;margin-bottom:6px;flex:none}
+.opt{display:flex;gap:12px;align-items:center;text-align:left;border:1px solid var(--line);background:var(--surface);border-radius:12px;padding:11px 12px;min-height:56px;width:100%}
+.opt[aria-pressed="true"]{border:2px solid var(--fg)}
+.opt b{display:block}
+.opt span.s{font-size:13px;color:var(--muted)}
+.opt .sw{display:flex;gap:3px;flex:none}
+.opt .sw i{width:8px;height:22px;border-radius:2px;display:block;background:var(--day)}
+.done-head{display:flex;gap:14px;align-items:center;padding:16px 0 4px}
+.okb{width:54px;height:54px;border-radius:50%;background:var(--good);color:var(--surface);display:grid;place-items:center;font-size:28px;font-weight:700;flex:none}
+.done-head .t{font-family:var(--f-display);font-weight:700;text-transform:uppercase;font-size:32px;line-height:1}
+.stat em{display:block;font-style:normal;font-size:12px;font-weight:700;margin-top:2px}
+.pos{color:var(--good)} .neg{color:var(--warn)}
+.prc{display:flex;gap:12px;align-items:center;padding:11px 12px;border-radius:12px;background:var(--good-soft);border:1px solid color-mix(in srgb,var(--good) 40%,var(--line))}
+.prc .medal{width:42px;height:42px;border-radius:10px;background:var(--good);color:var(--surface);display:grid;place-items:center;font-family:var(--f-display);font-weight:700;font-size:15px;flex:none}
+.prc b{display:block}
+.prc span{font-size:13px;color:var(--muted)}
+.cmp{list-style:none;margin:0;padding:0}
+.cmp li{display:grid;grid-template-columns:34px minmax(0,1fr) auto;gap:2px 10px;padding:9px 0;border-bottom:1px solid var(--line);align-items:center}
+.cmp li:last-child{border-bottom:0}
+.cmp .id{font-family:var(--f-display);font-weight:700;color:var(--muted);grid-row:1 / span 3}
+.cmp .nm{font-weight:600;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.cmp .now{font-family:var(--f-display);font-size:16px;font-weight:600;grid-column:2}
+.cmp .now small{font-size:13px;color:var(--muted)}
+.cmp .was{font-size:12.5px;color:var(--muted);grid-column:2}
+.cmp .dl{grid-column:3;grid-row:1 / span 3;font-weight:700;font-size:13px;text-align:right;white-space:nowrap}
+.feel{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
+.feel button{min-height:44px;border:1px solid var(--line);border-radius:10px;background:var(--surface);font-weight:600}
+.feel button[aria-pressed="true"]{background:var(--fg);color:var(--bg);border-color:var(--fg)}
+.btn.sec{width:100%;min-height:48px}
+.hgrp{display:flex;justify-content:space-between;align-items:baseline;margin-top:6px}
+.hist{border-left:5px solid var(--day)}
+.hm{font-size:12.5px;color:var(--muted);display:flex;gap:6px;flex-wrap:wrap;align-items:center}
+.prb{font-size:11px;font-weight:700;padding:1px 6px;border-radius:999px;background:var(--good-soft);color:var(--good);white-space:nowrap}
+.painb{font-size:11px;font-weight:700;padding:1px 6px;border-radius:999px;background:var(--surface2);color:var(--muted);white-space:nowrap}
+.hist .vol em{display:block;font-style:normal;font-family:var(--f-body);font-size:12px;font-weight:700}
+.hx .s b.pr{color:var(--good);font-weight:700}
+.sum4{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.dchips{display:flex;gap:6px;flex-wrap:wrap}
+.dchips .chip[aria-pressed="true"]{background:var(--fg);color:var(--bg);border-color:var(--fg)}
+.exl{list-style:none;margin:0;padding:0}
+.exl button{display:grid;grid-template-columns:38px minmax(0,1fr) 84px 58px;gap:10px;align-items:center;width:100%;text-align:left;border:0;border-bottom:1px solid var(--line);background:transparent;padding:10px 0;min-height:56px}
+.exl li:last-child button{border-bottom:0}
+.exl button[aria-pressed="true"] .nm{text-decoration:underline;text-decoration-color:var(--day);text-decoration-thickness:2px;text-underline-offset:3px}
+.exl .id{font-family:var(--f-display);font-weight:700;color:var(--muted)}
+.exl .nm{font-weight:600;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.exl .nm small{display:block;font-weight:500;color:var(--muted);font-size:12px}
+.exl svg{width:84px;height:30px;display:block}
+.exl .pc{text-align:right;font-weight:700;font-size:13px}
+.selhead{display:flex;justify-content:space-between;align-items:baseline;gap:8px;flex-wrap:wrap}
+.selhead .v{font-family:var(--f-display);font-weight:700;font-size:26px;text-transform:uppercase}
+@media (max-width:370px){.exl button{grid-template-columns:34px minmax(0,1fr) 64px 52px}.exl svg{width:64px}}
 </style>
 </head>
 <body>
@@ -849,7 +941,8 @@ function render(){
   $('#progLabel').textContent=P0.short||'';
   document.querySelectorAll('.tabs button').forEach(b=>b.setAttribute('aria-current',b.dataset.tab===ui.tab?'page':'false'));
   const v=$('#view');
-  v.innerHTML = ui.tab==='edzes' ? (activeOk? viewActive(active) : active? viewMissing() : viewHome())
+  const sumS= ui.tab==='edzes'&&!active&&ui.summary&&S.sessions[ui.summary]&&S.sessions[ui.summary].finished? S.sessions[ui.summary] : null;
+  v.innerHTML = ui.tab==='edzes' ? (activeOk? viewActive(active) : active? viewMissing() : sumS? viewSummary(sumS) : viewHome())
              : ui.tab==='mob' ? viewMob()
              : ui.tab==='elozmeny' ? viewHistory()
              : ui.tab==='haladas' ? viewProgress() : (ui.edit? viewEditor() : ui.ai? viewAI() : viewInfo());
@@ -860,33 +953,73 @@ function viewMissing(){
   return `<div class="card empty" style="margin-top:14px"><b>A folyamatban lévő edzés programja nem található</b>Lehet, hogy még töltődik, vagy közben törölted a programot.<div class="row" style="justify-content:center;margin-top:12px"><button class="btn" data-act="discard-yes">Edzés elvetése</button></div></div>`;
 }
 
+function estMin(list,phase){
+  let sec=0; for(const e of list){ const t=target(e,phase), u=unitOf(e); if(u==='check'){ sec+=8*60; continue; }
+    const work= u==='sec'? (t.hi||30) : 40; sec+= t.sets*(work+(e.rest||0)) + 45; }
+  return Math.max(5,Math.round(sec/300)*5);
+}
+const sessMin=s=> s&&s.finishedAt&&s.startedAt? Math.max(1,Math.round((s.finishedAt-s.startedAt)/60000)) : null;
+function prevSame(s){ const L=finished(), i=L.findIndex(x=>x.id===s.id); return L.slice(i+1).find(x=>x.program===s.program&&x.day===s.day)||null; }
+const repsSum=s=>{ let n=0; for(const k in s.ex||{}) for(const q of s.ex[k].sets||[]) if(q.done&&q.r&&q.w==null) n+=q.r; return n; };
+function trendOf(key,e,rc){
+  const li=lastIssueFor(key,e,null);
+  if(li&&li.type) return ['warn','⚠ múltkor '+ISSUE_S[li.type]];
+  if(!rc) return null;
+  if(rc.kind==='up'){ const l=lastFor(key,e.id,null,false), w0=l? Math.max(0,...l.sets.map(q=>q.w||0)) : 0;
+    return ['up', rc.w&&w0&&rc.w>w0? '↑ +'+fmt(rc.w-w0)+' kg' : '↑ következő lépcső']; }
+  if(rc.kind==='same') return ['same', rc.unit==='sec'? '= +2–3 mp' : '= +1 ism.'];
+  if(rc.kind==='down') return ['down','↓ könnyebb'];
+  if(rc.kind==='deload') return ['same','deload'];
+  return ['same','első alkalom'];
+}
+function progSheet(){
+  const key=curKey();
+  const opt=k=>{ const q=PROGRAMS[k], ps=progState(k), sl=q.slots[ps.pos]||q.slots[0];
+    return `<button class="opt" data-act="prog" data-prog="${esc(k)}" aria-pressed="${k===key}"><span class="sw">${Object.values(q.days).map(d=>`<i data-col="${d.col}"></i>`).join('')}</span><span style="flex:1;min-width:0"><b>${esc(q.title)}</b><span class="s">${esc(q.label)} · ${ps.block}. blokk ${sl?sl.week+'. hét':''}</span></span>${k===key?'<b aria-hidden="true">✓</b>':''}</button>`; };
+  return `<div class="scrim" data-act="psheet-x"></div><div class="sheet" role="dialog" aria-label="Program választása"><div class="grab"></div>
+    <div class="eyebrow" style="margin-bottom:4px">Program</div>${Object.keys(PROGRAMS).map(opt).join('')}
+    <button class="btn" data-act="newprog" style="margin-top:4px">+ Saját program összeállítása</button></div>`;
+}
 function viewHome(){
   const key=curKey(), p=P(), ps=PS(), slot=curSlot(key), d=p.days[slot.day], ph={label:phLabel(p,slot.phase),rule:ruleOf(p,slot.phase)};
-  const list=p.ex[slot.day].map(e=>{ const t=target(e,slot.phase); return `<li><span class="pid">${esc(e.lab)}</span><span class="nm">${esc(e.name)}${e.kieg?' <span class="tag">kieg.</span>':''}${(()=>{ const li=lastIssueFor(key,e,null); return li&&li.type?` <span class="tag" style="color:var(--warn);border-color:var(--warn)">⚠ ${ISSUE_S[li.type]}</span>`:''; })()}${e.unpaired?' <span class="tag">külön</span>':''}</span><span class="rx">${unitOf(e)==='check'?esc(e.reps):t.sets+' × '+esc(t.reps)}${(()=>{ const rc=recommend(key,e,slot.phase,null); return rc&&rc.reps? `<small>${rc.w?(e.cali?'+':'')+fmt(rc.w)+' kg × ':''}${rc.reps[0]}${rc.unit==='sec'?' mp':''}${rc.kind==='up'?' ↑':rc.kind==='down'?' ↓':''}</small>`:''; })()}</span></li>`; }).join('');
-  const others=Object.keys(p.days).filter(k=>k!==slot.day).map(k=>`<button class="chip" data-act="start" data-day="${esc(k)}" data-col="${p.days[k].col}"><span class="dot"></span>${esc(p.days[k].name)} helyette</button>`).join('');
-  const lastS=finished().find(s=>s.program===key);
+  const list=p.ex[slot.day];
+  const recs=list.map(e=>unitOf(e)==='check'?null:recommend(key,e,slot.phase,null));
+  const rows=list.map((e,i)=>{ const t=target(e,slot.phase), rc=recs[i], tr=trendOf(key,e,rc);
+    const val= rc&&rc.reps? `${rc.w&&fHasW(e)?(e.cali?'+':'')+fmt(rc.w)+' kg × ':''}${rc.reps[0]}${rc.unit==='sec'?' mp':''}` : '';
+    return `<li><span class="id">${esc(e.lab)}</span><span class="nm">${esc(e.name)}</span><span class="rx num">${val}</span>
+      <span class="sub"><span>${unitOf(e)==='check'?esc(e.reps):t.sets+' × '+esc(t.reps)}</span>${tr?`<span class="trend ${tr[0]}">${tr[1]}</span>`:''}${e.ss||e.ssFrom?`<span class="tag ss">${p.ssLabel||'szuperszett'}</span>`:''}${e.kieg?'<span class="tag">kieg.</span>':''}${e.unpaired?'<span class="tag">külön</span>':''}</span></li>`; }).join('');
+  const wk=p.weeks[slot.week-1]||[], base=ps.pos-(slot.inWeek-1);
+  const tiles=wk.map((day,i)=>{ const pos=base+i, done=pos<ps.pos, now=pos===ps.pos, dd=p.days[day]||{name:day,col:'blue'};
+    const fs= done? finished().find(x=>x.program===key&&x.block===ps.block&&x.slot===pos+1) : null;
+    return `<div class="wk${done?' done':now?' now':''}" data-col="${dd.col}"><b>${esc(dd.name)}</b><span>${done?'✓ '+(fs?huDate(fs.date):'kész'):now?'következő':(i+1)+'. alkalom'}</span>${now?'<i class="bar"></i>':''}</div>`; }).join('');
+  const nSets=list.reduce((a,e)=>a+(unitOf(e)==='check'?0:target(e,slot.phase).sets),0), nUp=recs.filter(r=>r&&r.kind==='up').length;
+  const others=Object.keys(p.days).filter(k=>k!==slot.day).map(k=>`<button class="chip" data-act="start" data-day="${esc(k)}" data-col="${p.days[k].col}"><span class="dot"></span>${esc(p.days[k].name)}</button>`).join('');
+  const lastD=finished().find(s=>s.program===key&&s.day===slot.day);
+  const lastS=(()=>{ const x=finished().find(s=>s.program===key); return x&&x!==lastD? x : null; })();
+  const lastBox= lastD? (()=>{ const {v,n}=sessVol(lastD), m=sessMin(lastD);
+    return `<section class="card stack" style="gap:10px"><div class="row" style="justify-content:space-between"><h2 style="margin:0">Múltkori ${esc(d.name)}</h2><span class="small muted">${huDate(lastD.date)}</span></div>
+      <div class="lastbox"><div class="mini"><b class="num">${m??'–'}</b><span>perc</span></div><div class="mini"><b class="num">${p.cali? n : Math.round(v).toLocaleString('hu-HU')}</b><span>${p.cali?'szett':'kg volumen'}</span></div><div class="mini"><b class="num">${lastD.back!=null?lastD.back+'/10':'–'}</b><span>${p.cali?'fájdalom':'derék'}</span></div></div></section>`; })() : '';
   return `
   <div class="stack" style="margin-top:14px">
-    <div class="seg" role="group" aria-label="Program">
-      ${Object.keys(PROGRAMS).map(k=>`<button data-act="prog" data-prog="${esc(k)}" aria-pressed="${k===key}">${esc(PROGRAMS[k].label)}</button>`).join('')}
-      <button data-act="newprog" aria-label="Saját program összeállítása">+ Saját</button>
-    </div>
-    <section class="card next stack">
+    <div class="hrow2"><span class="eyebrow">${ps.block}. blokk · ${slot.week}. hét · ${ph.label}</span><button class="progbtn" data-act="psheet" aria-haspopup="dialog">${esc(p.label)}<svg viewBox="0 0 12 12" aria-hidden="true"><path d="M2 4l4 4 4-4"/></svg></button></div>
+    ${wk.length>1?`<div class="week" style="grid-template-columns:repeat(${wk.length},minmax(0,1fr))">${tiles}</div>`:''}
+    <section class="card hero">
       <div>
-        <div class="eyebrow">Következő edzés · ${ps.block}. blokk · ${slot.week}. hét · ${slot.inWeek}. alkalom</div>
+        <div class="eyebrow">Következő · ${slot.week}. hét · ${slot.inWeek}. alkalom</div>
         <div class="dayname">${esc(d.name)}</div>
         <div class="muted">${esc(d.sub)}</div>
       </div>
-      <div><span class="phase"><span class="dot"></span>${ph.label}</span></div>
-      <p class="small" style="margin:0">${esc(ph.rule)}</p>
-      <button class="btn primary big" data-act="start" data-day="${esc(slot.day)}">Edzés indítása</button>
-      <div class="chips">${others}</div>
+      <div class="facts"><span class="fact"><b class="num">~${estMin(list,slot.phase)}</b>perc</span><span class="fact"><b>${list.length}</b>gyakorlat</span><span class="fact"><b>${nSets}</b>szett</span>${nUp?`<span class="fact"><b>${nUp}</b>emelés ↑</span>`:''}</div>
+      <details class="rule" data-od="rule" ${odA('rule')}><summary><span class="pill">${ph.label}</span><span>${esc(ph.rule.split(/[.:]/)[0])}</span><i>részletek</i></summary><p>${esc(ph.rule)}</p></details>
+      <button class="btn big fin" data-act="start" data-day="${esc(slot.day)}">Edzés indítása</button>
+      ${others?`<div class="alt"><span>Ma inkább:</span>${others}</div>`:''}
     </section>
+    ${lastBox}
     ${needsBackup()?`<section class="card backup row" style="justify-content:space-between"><span class="small"><b>Biztonsági mentés esedékes</b><br><span class="muted">${backupAge()==null?'Még egyszer sem mentettél.':backupAge()+' napja mentettél utoljára.'}</span></span><button class="btn sm" data-act="backup">Mentés most</button></section>`:''}
     ${lastS?`<p class="small muted" style="margin:0">Utolsó edzés: ${huDate(lastS.date,{month:'long',day:'numeric'})} · ${esc(dn(lastS.program,lastS.day))}</p>`:''}
-    <h2 style="margin-bottom:0">Mai terv</h2>
-    <section class="card"><ul class="plan">${list}</ul></section>
-  </div>`;
+    <div class="row" style="justify-content:space-between;margin-top:6px"><h2 style="margin:0">Mai terv</h2><span class="small muted">javaslat</span></div>
+    <section class="card" style="padding-block:4px"><ul class="tplan">${rows}</ul></section>
+  </div>${ui.psheet?progSheet():''}`;
 }
 
 function viewActive(s){
@@ -911,11 +1044,77 @@ function viewActive(s){
   <div class="stack" style="margin-top:12px">${mobList().some(m=>m.kind==='warm'&&m.date===s.date)?'':`<button class="btn" data-act="mstart" data-k="warm">🔥 Bemelegítés ehhez az edzéshez (kb. 10 perc)</button>`}
     <div class="flist">${html.join('')}</div>
     <section class="card stack">
-      ${p.pain?`<div><div class="eyebrow">${p.painLabel||'Derék / sacrum fájdalom (0–10)'}</div><p class="small muted" style="margin:2px 0 8px">${p.painHint||'Edzés közben max. 3/10 elfogadható, ha 24 órán belül visszaáll.'}</p><div class="pain">${pain}</div></div>`:''}
-      <div><label class="eyebrow" for="sbw">Testsúly (kg) <span style="text-transform:none;letter-spacing:0;font-weight:500">— ${p.cali?'a súlyozott gyakorlatok becsléséhez':'nem kötelező'}</span></label><input class="inp" id="sbw" data-f="bw" inputmode="decimal" placeholder="${lastBw()!=null?fmt2(lastBw()):'pl. 82,35'}" value="${s.bw!=null?fmt2(s.bw):''}" style="max-width:170px;margin-top:4px;font-variant-numeric:tabular-nums"></div>
-      <div><label class="eyebrow" for="snote">Megjegyzés</label><textarea id="snote" data-f="note" placeholder="Alvás, energia, bármi, ami számít…">${esc(s.note)}</textarea></div>
+      <p class="small muted" style="margin:0">A befejezés után összefoglaló jön: ott adhatod meg a ${p.cali?'fájdalmat':'derékfájdalmat'}, a testsúlyt és a megjegyzést.</p>
       <button class="btn big fin" data-act="finish">Edzés befejezése</button>
       ${conf}
+    </section>
+  </div>`;
+}
+
+
+/* ===================== EDZÉS VÉGE (összefoglaló) + CSÚCSOK ===================== */
+// hiányzó RIR = a program szerinti cél-RIR közepe (ugyanígy számol a javaslat-motor is)
+const fillRir=(q,e,ph)=>{ if(q.rir!=null||!e.reps) return q; const t=target(e,ph||'normal'); return isNumRir(t.rir)? {...q,rir:mid(t.rir)} : q; };
+let _pr=null, _prKey='';
+function prScan(){
+  const L=finished(), k=L.length+':'+L.map(x=>x.id+(x.finishedAt||'')+(x.bw||'')).join(',').length+':'+(L[0]?L[0].id:'');
+  if(_pr&&_prKey===k) return _pr;
+  const best={}, out={};
+  for(const s of L.slice().reverse()){ const bw=s.bw??lastBw();
+    for(const e of sessExList(s)){ const x=s.ex&&s.ex[e.id]; if(!x||!x.sets) continue; const u=unitOf(e); if(u==='check'||u==='cm') continue;
+      const m=metricOf(e), key=s.program+':'+e.id+':'+(x.swap||'');
+      let top=null, ti=-1;
+      x.sets.forEach((q,i)=>{ if(!q.done||q.r==null) return; const v= m.e1? e1rmX(fillRir(q,e,s.phase),e,bw) : q.r; if(v==null||!isFinite(v)) return; if(top==null||v>top){ top=v; ti=i; } });
+      if(top==null) continue;
+      const prev=best[key];
+      if(prev!=null&&top>prev+0.05){ const o=out[s.id]||(out[s.id]={n:0,sets:{},list:[]}); o.n++; (o.sets[e.id]=o.sets[e.id]||[]).push(ti); o.list.push({e,val:top,prev,m,set:x.sets[ti]}); }
+      if(prev==null||top>prev) best[key]=top;
+    } }
+  _pr=out; _prKey=k; return out;
+}
+function cmpDelta(e,now,was){
+  const u=unitOf(e), cnt=a=>a.filter(q=>q.r!=null), sum=a=>cnt(a).reduce((x,q)=>x+q.r,0), mw=a=>Math.max(0,...cnt(a).map(q=>q.w||0));
+  if(u==='sec'||u==='cm'){ const d=sum(now)-sum(was); return [d===0?'=':(d>0?'+':'−')+Math.abs(d)+(u==='sec'?' mp':' cm'), u==='cm'?(d<0?'pos':d>0?'neg':''):(d>0?'pos':d<0?'neg':'')]; }
+  const dw=mw(now)-mw(was); if(Math.abs(dw)>0.01) return [(dw>0?'+':'−')+fmt(Math.abs(dw))+' kg', dw>0?'pos':'neg'];
+  const d=sum(now)-sum(was); return [d===0?'= ugyanannyi':(d>0?'+':'−')+Math.abs(d)+' ism.', d>0?'pos':d<0?'neg':''];
+}
+const mmssL=ms=>{ const t=Math.round(ms/1000), h=Math.floor(t/3600), m=Math.floor(t%3600/60), sec=t%60; return h? h+':'+String(m).padStart(2,'0')+':'+String(sec).padStart(2,'0') : m+':'+String(sec).padStart(2,'0'); };
+function viewSummary(s){
+  const p=PROGRAMS[s.program]||{cali:false,pain:true}, prev=prevSame(s), {v,n}=sessVol(s);
+  const total=Object.values(s.ex||{}).reduce((a,x)=>a+(x.sets||[]).length,0);
+  const dur=s.finishedAt-s.startedAt, pdur=prev&&prev.finishedAt? prev.finishedAt-prev.startedAt : null;
+  const dMin=pdur? Math.round((dur-pdur)/60000) : null;
+  const pv=prev? sessVol(prev).v : 0, pct=prev&&pv&&!p.cali? (v-pv)/pv*100 : null;
+  const reps=repsSum(s), preps=prev? repsSum(prev) : 0, rpct=prev&&preps&&p.cali? (reps-preps)/preps*100 : null;
+  const pr=(prScan()[s.id]||{list:[]}).list;
+  const prHtml=pr.map(o=>{ const m=o.m, u=m.unit, ttl=m.e1? `${fmt(o.val)} kg becsült 1RM${o.e.cali?' (plusz súly)':''}` : `${fmt(o.val)} ${u}`;
+    return `<div class="prc"><div class="medal">${m.e1?'e1RM':u==='mp'?'MP':'ISM'}</div><div style="min-width:0"><b>${esc(o.e.lab)} ${esc(o.e.name)} · ${ttl}</b><span>eddigi legjobb ${fmt(o.prev)} ${u} · ${esc(setStr(o.set,o.e))}</span></div></div>`; }).join('');
+  let better=0, worse=0;
+  const rows=sessExList(s).map(e=>{ const x=s.ex[e.id], u=unitOf(e); if(!x||u==='check') return ''; const now=x.sets.filter(q=>q.done); if(!now.length) return '';
+    const last=lastFor(s.program,e.id,s.id); const dl= last? cmpDelta(e,now,last.sets) : ['első alkalom',''];
+    if(dl[1]==='pos') better++; else if(dl[1]==='neg') worse++;
+    return `<li><span class="id">${esc(e.lab)}</span><span class="nm">${esc(x.name||e.name)}</span><span class="dl ${dl[1]}">${dl[0]}</span><span class="now num">${fSetsTxt(e,now)}</span><span class="was">${last?'múltkor '+esc(last.sets.map(q=>setStr(q,e)).join(' · ')):'még nincs korábbi adat'}</span></li>`; }).join('');
+  const scale=Array.from({length:11},(_,i)=>`<button data-act="spain" data-v="${i}" aria-pressed="${s.back===i}">${i}</button>`).join('');
+  const feels=['Könnyű','Rendben','Nagyon nehéz'].map((l,i)=>`<button data-act="sfeel" data-v="${i}" aria-pressed="${s.feel===i}">${l}</button>`).join('');
+  const coolDone=mobList().some(m=>m.kind==='cool'&&m.date===s.date);
+  return `<div class="stack">
+    <div class="done-head"><div class="okb" aria-hidden="true">✓</div><div style="min-width:0"><div class="t">${esc(dn(s.program,s.day))} kész</div><div class="small muted">${huDate(s.date,{month:'long',day:'numeric',weekday:'long'})} · ${s.week}. hét · ${phLabel(p,s.phase).toLowerCase()}</div></div></div>
+    <div class="stats">
+      <div class="stat"><div class="v num">${mmssL(dur)}</div><div class="k">időtartam</div>${dMin!=null&&dMin!==0?`<em class="${dMin<0?'pos':'muted'}">${Math.abs(dMin)} perccel ${dMin<0?'gyorsabb':'hosszabb'}</em>`:''}</div>
+      <div class="stat"><div class="v num">${n}/${total}</div><div class="k">szett</div><em class="muted">${n===total?'mind kész':(total-n)+' kimaradt'}</em></div>
+      ${p.cali? `<div class="stat"><div class="v num">${reps}</div><div class="k">ismétlés</div>${rpct!=null?`<em class="${rpct>=0?'pos':'neg'}">${rpct>=0?'+':'−'}${fmt(Math.abs(rpct))}% múltkorhoz</em>`:''}</div>`
+        : `<div class="stat"><div class="v num">${Math.round(v).toLocaleString('hu-HU')}</div><div class="k">kg volumen</div>${pct!=null?`<em class="${pct>=0?'pos':'neg'}">${pct>=0?'+':'−'}${fmt(Math.abs(pct))}% múltkorhoz</em>`:''}</div>`}
+    </div>
+    ${pr.length?`<h2 style="margin:6px 0 0">Új csúcs${pr.length>1?'ok':''}</h2>${prHtml}`:''}
+    ${rows?`<div class="row" style="justify-content:space-between;margin-top:6px"><h2 style="margin:0">Múltkorhoz képest</h2><span class="small muted">${better} jobb${worse?' · '+worse+' kevesebb':''}</span></div>
+    <section class="card" style="padding-block:4px"><ul class="cmp">${rows}</ul></section>`:''}
+    <section class="card stack">
+      ${p.pain?`<div><div class="eyebrow">${p.painLabel||'Derék / sacrum fájdalom (0–10)'}</div><p class="small muted" style="margin:2px 0 8px">${p.painHint||'Edzés közben max. 3/10 elfogadható, ha 24 órán belül visszaáll.'}</p><div class="pain">${scale}</div></div>`:''}
+      <div><div class="eyebrow" style="margin-bottom:6px">Milyen volt összességében?</div><div class="feel">${feels}</div></div>
+      <div><label class="eyebrow" for="sumbw">Testsúly (kg) <span style="text-transform:none;letter-spacing:0;font-weight:500">— ${p.cali?'a súlyozott gyakorlatok becsléséhez':'nem kötelező'}</span></label><input class="inp" id="sumbw" data-bw="${s.id}" inputmode="decimal" placeholder="${lastBw()!=null?fmt2(lastBw()):'pl. 82,35'}" value="${s.bw!=null?fmt2(s.bw):''}" style="max-width:170px;margin-top:4px;font-variant-numeric:tabular-nums"></div>
+      <div><label class="eyebrow" for="sumnote">Megjegyzés</label><textarea id="sumnote" data-snote="${s.id}" placeholder="Alvás, energia, bármi, ami számít…">${esc(s.note)}</textarea></div>
+      <button class="btn big fin" data-act="ssave">Mentés</button>
+      ${coolDone?'':`<button class="btn sec" data-act="scool">Nyújtás indítása · kb. 8 perc</button>`}
     </section>
   </div>`;
 }
@@ -1085,25 +1284,30 @@ function viewHistoryList(){
   const list=finished();
   const head=`<div class="row" style="justify-content:space-between;margin-top:14px"><h2 style="margin:8px 0">Előzmények</h2>${list.length?'<button class="btn sm" data-act="csv">Export CSV (Excel)</button>':''}</div>`;
   if(!list.length) return head+`<div class="card empty"><b>Még nincs befejezett edzés</b>Indíts egyet az Edzés fülön — a befejezett edzések itt jelennek meg, dátum szerint.</div>`;
-  return head+`<div class="stack">`+list.map(s=>{
-    const p=PROGRAMS[s.program], dInfo=p&&p.days[s.day], {v,n}=sessVol(s), c=dInfo?dInfo.col:'blue';
-    const dname=dInfo?dInfo.name:(s.dayName||s.day);
-    const [y,m,d]=s.date.split('-');
+  const prs=prScan(), t=todayStr(), w0=weekStart(t), w1=weekStart(addDays(t,-7));
+  const groups=[]; for(const s of list){ const wk=weekStart(s.date); let g=groups[groups.length-1]; if(!g||g.wk!==wk){ g={wk,items:[]}; groups.push(g); } g.items.push(s); }
+  const card=s=>{
+    const p=PROGRAMS[s.program], dInfo=p&&p.days[s.day], {v,n}=sessVol(s), c=dInfo?dInfo.col:'blue', cali=p&&p.cali;
+    const dname=dInfo?dInfo.name:(s.dayName||s.day), d=s.date.split('-')[2], pr=prs[s.id]||{n:0,sets:{}}, m=sessMin(s), prev=prevSame(s);
+    let delta=''; if(prev){ const a=cali?repsSum(s):v, b=cali?repsSum(prev):sessVol(prev).v; if(b){ const pc=(a-b)/b*100; delta=`<em class="${pc>=0?'pos':'neg'}">${pc>=0?'+':'−'}${fmt(Math.abs(pc))}%</em>`; } }
     const body=sessExList(s).filter(e=>s.ex[e.id]&&s.ex[e.id].sets.some(t=>t.done)).map(e=>{
-      const bw=s.bw??lastBw(), sets=s.ex[e.id].sets.filter(t=>t.done); const best=Math.max(0,...sets.map(t=>e1rmX(t,e,bw)||0));
-      return `<div class="hx"><div><b>${esc(e.lab)}</b> ${esc(s.ex[e.id].name||e.name)}${s.ex[e.id].var?` <span class="small muted">· ${esc(s.ex[e.id].var)}</span>`:''}${s.ex[e.id].issue?` <span class="small" style="color:var(--warn)">· ⚠ ${ISSUE_S[s.ex[e.id].issue.type]||''}${s.ex[e.id].issue.area?' ('+(AREAS[s.ex[e.id].issue.area]||'')+(s.ex[e.id].issue.sev!=null?' '+s.ex[e.id].issue.sev+'/10':'')+')':''}</span>`:''}</div><div class="s num">${sets.map(q=>setStr(q,e)).join(' · ')}${best?` <span class="small">· e1RM ${e.cali?'+':''}${fmt(best)}</span>`:''}</div></div>`;
+      const x=s.ex[e.id], bw=s.bw??lastBw(), sets=x.sets.filter(t=>t.done); const best=Math.max(0,...sets.map(t=>e1rmX(fillRir(t,e,s.phase),e,bw)||0)); const pi=pr.sets[e.id]||[];
+      const txt=x.sets.map((q,i)=>q.done? esc(setStr(q,e))+(pi.includes(i)?' <b class="pr">· csúcs</b>':'') : null).filter(Boolean).join(' · ');
+      return `<div class="hx"><div><b>${esc(e.lab)}</b> ${esc(x.name||e.name)}${x.var?` <span class="small muted">· ${esc(x.var)}</span>`:''}${x.issue?` <span class="small" style="color:var(--warn)">· ⚠ ${ISSUE_S[x.issue.type]||''}${x.issue.area?' ('+(AREAS[x.issue.area]||'')+(x.issue.sev!=null?' '+x.issue.sev+'/10':'')+')':''}</span>`:''}</div><div class="s num">${txt}${best?` <span class="small">· e1RM ${e.cali?'+':''}${fmt(best)}</span>`:''}</div></div>`;
     }).join('')||'<p class="muted">Nincs rögzített szett.</p>';
     const del= ui.confirm==='del:'+s.id
       ? `<div class="confirm"><span>Törlöd ezt az edzést?</span><button class="btn danger sm" data-act="del-yes" data-id="${s.id}">Törlés</button><button class="btn sm" data-act="cancel">Mégse</button></div>`
       : `<button class="btn sm ghost" data-act="del" data-id="${s.id}">Törlés</button>`;
-    const plabel= s.program!==curKey()? ' · '+esc(p?p.label:(s.progTitle||'törölt program')) : '';
+    const plabel= s.program!==curKey()? ' <span class="muted small">· '+esc(p?p.short||p.label:(s.progTitle||'törölt program'))+'</span>' : '';
+    const feel= s.feel!=null? ['könnyű','rendben','nagyon nehéz'][s.feel] : '';
     return `<details class="card hist" data-col="${c}" data-id="${s.id}" ${ui.open===s.id?'open':''}>
       <summary><div class="d num">${+d}<small>${huDate(s.date,{month:'short'})}</small></div>
-        <div style="min-width:0"><div class="ttl"><span class="dot"></span> ${esc(dname)} <span class="muted small">· ${s.block}. blokk ${s.week}. hét</span></div><div class="small muted">${n} szett${s.bw!=null?` · ${fmt2(s.bw)} kg`:''}${s.back!=null?` · ${p&&p.cali?'fájdalom':'derék'} ${s.back}/10`:''}${plabel}</div></div>
-        <div class="vol num">${p&&p.cali? n+'<div class="small muted" style="font-family:var(--f-body)">szett</div>' : Math.round(v).toLocaleString('hu-HU')+'<div class="small muted" style="font-family:var(--f-body)">kg vol.</div>'}</div></summary>
+        <div style="min-width:0"><div class="ttl">${esc(dname)}${plabel}</div><div class="hm">${m?`<span>${m} perc</span>`:''}<span>${n} szett</span>${pr.n?`<span class="prb">${pr.n} csúcs</span>`:''}${s.back!=null?`<span class="painb">${p&&p.cali?'fájdalom':'derék'} ${s.back}/10</span>`:''}${feel?`<span class="painb">${feel}</span>`:''}</div></div>
+        <div class="vol num">${cali? repsSum(s)+'<div class="small muted" style="font-family:var(--f-body)">ism.</div>' : Math.round(v).toLocaleString('hu-HU')+' kg'}${delta}</div></summary>
       <div class="body">${body}<div class="row" style="margin-top:10px;flex-wrap:nowrap"><label class="small muted" for="hd-${s.id}" style="white-space:nowrap;min-width:92px">Dátum</label><input class="inp" type="date" id="hd-${s.id}" data-sdate="${s.id}" value="${s.date}" style="max-width:170px;height:38px"></div><div class="row" style="margin-top:6px;flex-wrap:nowrap"><label class="small muted" for="hbw-${s.id}" style="white-space:nowrap">Testsúly (kg)</label><input class="inp" id="hbw-${s.id}" data-bw="${s.id}" inputmode="decimal" placeholder="nincs megadva" value="${s.bw!=null?fmt2(s.bw):''}" style="max-width:150px;height:38px;font-variant-numeric:tabular-nums"></div>${s.note?`<p class="small"><b>Megjegyzés:</b> ${esc(s.note)}</p>`:''}<div class="row" style="margin-top:8px">${del}</div></div>
     </details>`;
-  }).join('')+`</div>`;
+  };
+  return head+`<div class="stack">`+groups.map(g=>`<div class="hgrp"><h2 style="margin:0">${g.wk===w0?'Ez a hét':g.wk===w1?'Múlt hét':weekLabel(g.wk)}</h2><span class="small muted">${g.items.length} edzés</span></div>${g.items.map(card).join('')}`).join('')+`</div>`;
 }
 
 function metricOf(e){
@@ -1118,7 +1322,7 @@ function progressData(prog,e){
   return finished().filter(s=>s.program===prog&&s.ex[e.id]).map(s=>{
     const bw=s.bw??lastBw();
     const sets=s.ex[e.id].sets.filter(t=>t.done&&t.r!=null&&(!m.e1||(t.r&&(e.cali||t.w)))); if(!sets.length) return null;
-    const val=t=> m.e1? (e1rmX(t,e,bw)??-Infinity) : t.r;
+    const val=t=> m.e1? (e1rmX(fillRir(t,e,s.phase),e,bw)??-Infinity) : t.r;
     let best=sets[0]; for(const t of sets){ if(m.low? val(t)<val(best) : val(t)>val(best)) best=t; }
     const v=val(best); if(!isFinite(v)) return null;
     return {date:s.date,e:v,best,vol:sets.reduce((a,t)=>a+(t.w||0)*(t.r||0),0),var:s.ex[e.id].var||'',tip:`${huDate(s.date)} · ${fmt(v)} ${m.unit} · ${setStr(best,e)}`};
@@ -1129,32 +1333,53 @@ function viewProgress(){
   if(ui.progView==='suly') return tog+`<h2 style="margin-top:18px">Testsúly</h2><div class="stack">${viewBodyweight()}</div>`;
   return tog+viewProgressEro();
 }
+function sparkSVG(vals,low){
+  if(vals.length<2) return `<svg viewBox="0 0 84 30" aria-hidden="true"><circle cx="78" cy="15" r="3" style="fill:var(--day)"/></svg>`;
+  const lo=Math.min(...vals), hi=Math.max(...vals), r=hi-lo||1, X=i=>3+i*78/(vals.length-1), Y=v=>4+(hi-v)/r*22;
+  const d=vals.map((v,i)=>(i?'L':'M')+X(i).toFixed(1)+' '+Y(v).toFixed(1)).join(' ');
+  const last=vals[vals.length-1], good= low? last<=vals[vals.length-2] : last>=vals[vals.length-2];
+  return `<svg viewBox="0 0 84 30" aria-hidden="true"><path d="${d} L${X(vals.length-1).toFixed(1)} 26 L3 26 Z" style="fill:var(--day);fill-opacity:.12"/><path d="${d}" style="fill:none;stroke:var(--day);stroke-width:2;stroke-linejoin:round"/><circle cx="${X(vals.length-1).toFixed(1)}" cy="${Y(last).toFixed(1)}" r="3" style="fill:${good?'var(--day)':'var(--warn)'}"/></svg>`;
+}
 function viewProgressEro(){
-  const prog=curKey(), p=PROGRAMS[prog];
-  const seen=new Set(), all=[];
-  for(const arr of Object.values(p.ex)) for(const e of arr) if(unitOf(e)!=='check'&&!seen.has(e.id)){ seen.add(e.id); all.push(e); }
-  if(!ui.progEx||!all.find(e=>e.id===ui.progEx)) ui.progEx=all[0].id;
-  const shown=new Set();
-  const opts=Object.entries(p.ex).map(([d,arr])=>{ const items=arr.filter(e=>unitOf(e)!=='check'&&!shown.has(e.id)); items.forEach(e=>shown.add(e.id)); return items.length?`<optgroup label="${esc(dn(prog,d))}">${items.map(e=>`<option value="${esc(e.id)}" ${e.id===ui.progEx?'selected':''}>${esc(e.lab)} · ${esc(e.name)}</option>`).join('')}</optgroup>`:''; }).join('');
-  const e=all.find(x=>x.id===ui.progEx), m=metricOf(e);
-  const data=progressData(prog,e);
-  let body;
-  if(!data.length) body=`<div class="card empty"><b>Még nincs adat ehhez a gyakorlathoz</b>A görbe az első befejezett edzés után jelenik meg.</div>`;
-  else {
-    const first=data[0].e, lastE=data[data.length-1].e, best=m.low? Math.min(...data.map(d=>d.e)) : Math.max(...data.map(d=>d.e));
-    const ch=data.length>1&&first? ((lastE-first)/Math.abs(first)*100):null;
-    body=`<div class="stats">
-      <div class="stat"><div class="v num">${fmt(lastE)}</div><div class="k">Utolsó (${m.unit})</div></div>
-      <div class="stat"><div class="v num">${fmt(best)}</div><div class="k">Legjobb</div></div>
-      <div class="stat"><div class="v num">${ch==null?'–':(ch>=0?'+':'')+fmt(ch)+'%'}</div><div class="k">Változás az elsőhöz</div></div></div>
-      <section class="card"><div class="eyebrow" style="margin-bottom:6px">${m.label}</div><div class="chartbox" id="chart">${chartSVG(data,{label:m.label})}<div class="tip" id="tip" hidden></div></div></section>
-      <section class="card scroll"><table class="tbl"><thead><tr><th>Dátum</th><th>Legjobb szett</th><th class="r">${m.k}</th>${e.cali?'<th>Variáció</th>':'<th class="r">Volumen</th>'}</tr></thead><tbody>
-      ${data.slice().reverse().slice(0,12).map(d=>`<tr><td>${huDate(d.date)}</td><td class="num">${setStr(d.best,e)}</td><td class="r">${fmt(d.e)}</td>${e.cali?`<td class="small">${esc(d.var)}</td>`:`<td class="r">${Math.round(d.vol)}</td>`}</tr>`).join('')}</tbody></table></section>`;
-  }
-  const foot= m.e1? (e.cali? 'e1RM plusz súly = (testsúly + plusz) × (1 + (ism. + RIR)/30) − testsúly. A testsúlyt edzés végén add meg (vagy utólag az Előzményeknél).' : 'e1RM = súly × (1 + (ism. + RIR)/30) — RIR-rel korrigált Epley-becslés; gépen csak az adott gépen belül összehasonlítható.')
-    : e.cali&&unitOf(e)==='reps'? 'Variáció-váltásnál az ismétlésszám visszaesik — ezért a Variáció oszlopot is nézd.' : '';
-  return `<h2 style="margin-top:18px">Haladás <span class="muted small" style="font-family:var(--f-body);text-transform:none;letter-spacing:0">· ${esc(p.title)}</span></h2><div class="stack"><select id="progEx" aria-label="Gyakorlat">${opts}</select>${body}
-    ${foot?`<p class="small muted" style="margin:0">${foot}</p>`:''}</div>`;
+  const prog=curKey(), p=PROGRAMS[prog], days=Object.keys(p.days);
+  const exOf=d=>(p.ex[d]||[]).filter(e=>unitOf(e)!=='check');
+  if(ui.progEx&&!ui.progDay){ for(const d of days) if(exOf(d).some(e=>e.id===ui.progEx)){ ui.progDay=d; break; } }
+  if(!ui.progDay||!p.days[ui.progDay]||!exOf(ui.progDay).length) ui.progDay=days.find(d=>exOf(d).length)||days[0];
+  const list=exOf(ui.progDay), D={}; for(const e of list) D[e.id]=progressData(prog,e);
+  if(!ui.progEx||!list.find(e=>e.id===ui.progEx)) ui.progEx=(list.find(e=>D[e.id].length)||list[0]||{}).id;
+  // 4 hetes összegzés
+  const since=addDays(todayStr(),-27), inWin=finished().filter(s=>s.program===prog&&s.date>=since);
+  const perW=Math.max(...p.weeks.map(w=>w.length)), prs=prScan(), nPr=inWin.reduce((a,s)=>a+((prs[s.id]||{}).n||0),0);
+  const ch=[]; for(const d of days) for(const e of exOf(d)){ const m=metricOf(e); if(!m.e1) continue; const data=progressData(prog,e); if(data.length<2) continue;
+    const lastV=data[data.length-1].e, baseP=[...data].reverse().find(x=>x.date<since)||data[0]; if(baseP===data[data.length-1]||!baseP.e) continue; ch.push((lastV-baseP.e)/Math.abs(baseP.e)*100); }
+  const avg= ch.length? ch.reduce((a,x)=>a+x,0)/ch.length : null;
+  const sum4=`<div class="row" style="justify-content:space-between"><h2 style="margin:0">Utolsó 4 hét</h2><span class="small muted">${huDate(since)} – ${huDate(todayStr())}</span></div>
+    <div class="sum4"><div class="stat"><div class="v num">${inWin.length}/${perW*4}</div><div class="k">edzés megvolt</div></div>
+    <div class="stat"><div class="v num">${avg==null?'–':(avg>=0?'+':'−')+fmt(Math.abs(avg))+'%'}</div><div class="k">${p.cali?'átlagos e1RM (súlyozott)':'átlagos e1RM'}</div>${avg!=null?`<em class="${avg>=0?'pos':'neg'}">${avg>=0?'↑ javul':'↓ visszaesés'}</em>`:''}</div>
+    <div class="stat"><div class="v num">${nPr}</div><div class="k">új csúcs</div></div></div>`;
+  const e=list.find(x=>x.id===ui.progEx), m=e?metricOf(e):null, data=e?D[e.id]:[];
+  let chart;
+  if(!e) chart='';
+  else if(!data.length) chart=`<section class="card empty"><b>${esc(e.lab)} ${esc(e.name)}: még nincs adat</b>A görbe az első befejezett edzés után jelenik meg.</section>`;
+  else { const f=data[0].e, l=data[data.length-1].e, pc=data.length>1&&f? (l-f)/Math.abs(f)*100 : null, good=pc!=null&&(m.low? pc<=0 : pc>=0);
+    chart=`<section class="card stack" style="gap:8px" data-col="${p.days[ui.progDay].col}">
+      <div class="selhead"><div style="min-width:0"><div class="eyebrow">${esc(e.lab)} · ${esc(m.label)}</div><div style="font-weight:700;font-size:17px">${esc(e.name)}</div></div><div class="v num">${fmt(l)} ${m.unit}${pc!=null?` <span class="small ${good?'pos':'neg'}" style="font-family:var(--f-body);text-transform:none">${pc>=0?'+':'−'}${fmt(Math.abs(pc))}% az első óta</span>`:''}</div></div>
+      <div class="chartbox" id="chart">${chartSVG(data,{label:m.label})}<div class="tip" id="tip" hidden></div></div>
+      <details class="more" data-od="ptbl" ${odA('ptbl')}><summary>Táblázat (utolsó 12)</summary><div class="scroll"><table class="tbl"><thead><tr><th>Dátum</th><th>Legjobb szett</th><th class="r">${m.k}</th>${e.cali?'<th>Variáció</th>':'<th class="r">Volumen</th>'}</tr></thead><tbody>
+      ${data.slice().reverse().slice(0,12).map(d=>`<tr><td>${huDate(d.date)}</td><td class="num">${setStr(d.best,e)}</td><td class="r">${fmt(d.e)}</td>${e.cali?`<td class="small">${esc(d.var)}</td>`:`<td class="r">${Math.round(d.vol)}</td>`}</tr>`).join('')}</tbody></table></div></details>
+    </section>`; }
+  const chips=days.filter(d=>exOf(d).length).map(d=>`<button class="chip" data-act="pday" data-v="${esc(d)}" aria-pressed="${d===ui.progDay}" data-col="${p.days[d].col}"><span class="dot"></span>${esc(p.days[d].name)}</button>`).join('');
+  const rows=list.map(x=>{ const dd=D[x.id], mm=metricOf(x), vals=dd.slice(-8).map(z=>z.e);
+    const pc= dd.length>1? (()=>{ const a=dd[dd.length-1].e, b0=dd[Math.max(0,dd.length-5)].e; return b0? (a-b0)/Math.abs(b0)*100 : null; })() : null;
+    const good= pc!=null&&(mm.low? pc<=0 : pc>=0);
+    return `<li><button data-act="pex" data-id="${esc(x.id)}" aria-pressed="${x.id===ui.progEx}"><span class="id">${esc(x.lab)}</span><span class="nm">${esc(x.name)}<small>${dd.length? fmt(dd[dd.length-1].e)+' '+mm.unit+(mm.e1?' e1RM':'') : 'még nincs adat'}</small></span>${dd.length?sparkSVG(vals,mm.low):'<span></span>'}<span class="pc ${pc==null?'muted':good?'pos':'neg'}">${pc==null?'–':(pc>=0?'+':'−')+fmt(Math.abs(pc))+'%'}</span></button></li>`; }).join('');
+  const foot= m&&m.e1? (e.cali? 'e1RM plusz súly = (testsúly + plusz) × (1 + (ism. + RIR)/30) − testsúly. A testsúlyt az edzés végén add meg (vagy utólag az Előzményeknél).' : 'e1RM = súly × (1 + (ism. + RIR)/30) — RIR-rel korrigált Epley-becslés; gépen csak az adott gépen belül összehasonlítható.')
+    : e&&e.cali&&unitOf(e)==='reps'? 'Variáció-váltásnál az ismétlésszám visszaesik — ezért a táblázatban a Variáció oszlopot is nézd.' : '';
+  return `<h2 style="margin-top:18px">Haladás <span class="muted small" style="font-family:var(--f-body);text-transform:none;letter-spacing:0">· ${esc(p.title)}</span></h2><div class="stack">
+    ${sum4}${chart}
+    <div class="dchips">${chips}</div>
+    <section class="card" style="padding-block:2px" data-col="${p.days[ui.progDay].col}"><ul class="exl">${rows}</ul></section>
+    <p class="small muted" style="margin:0">A százalék a legutóbbi 4 alkalom változása. Koppints egy gyakorlatra a nagy grafikonhoz.${foot?' '+foot:''}</p></div>`;
 }
 
 
@@ -2250,11 +2475,10 @@ function finishSession(){
   S.settings.activeId=null; timer=null; saveTimer();
   queue(s.id); queue('settings');
   try{ wake&&wake.release(); }catch(e){}
-  const {v,n}=sessVol(s); ui.tab='elozmeny'; ui.open=s.id; render(); window.scrollTo(0,0);
-  toast(P0&&P0.cali? `Mentve: ${n} szett` : `Mentve: ${n} szett · ${Math.round(v).toLocaleString('hu-HU')} kg`);
+  ui.tab='edzes'; ui.summary=s.id; ui.psheet=false; clearTimeout(toast._t); $('#toast').hidden=true; render(); window.scrollTo(0,0);
 }
 document.addEventListener('click',ev=>{
-  const tb=ev.target.closest('.tabs button'); if(tb){ ui.tab=tb.dataset.tab; ui.confirm=null; render(); window.scrollTo(0,0); return; }
+  const tb=ev.target.closest('.tabs button'); if(tb){ ui.tab=tb.dataset.tab; ui.confirm=null; ui.summary=null; ui.psheet=false; render(); window.scrollTo(0,0); return; }
   const b=ev.target.closest('[data-act]'); if(!b||b.disabled) return;
   const act=b.dataset.act, s=S.settings.activeId&&S.sessions[S.settings.activeId];
   if(mobAction(act,b)) return;
@@ -2270,8 +2494,18 @@ document.addEventListener('click',ev=>{
     try{ const f=ui.ai.form; if(r&&r.perWeek) f.perWeek=Math.max(1,Math.min(7,parseInt(r.perWeek,10)||f.perWeek)); const {draft,note}=draftFromAI(r,f); ui.ai=null; ui.edit={key:null,draft,note}; render(); window.scrollTo(0,0); }
     catch(e){ toast('Nem sikerült beolvasni — a teljes kódot másold be'); }
     return; }
-  if(act==='prog'){ S.settings.program=b.dataset.prog; queue('settings'); render(); }
-  else if(act==='newprog'){ ui.tab='info'; ui.edit=null; ui.confirm=null; render(); const el=$('#myprogs'); el&&el.scrollIntoView({block:'start'}); }
+  if(act==='psheet'){ ui.psheet=true; render(); return; }
+  if(act==='psheet-x'){ ui.psheet=false; render(); return; }
+  if(act==='spain'||act==='sfeel'||act==='ssave'||act==='scool'){ const ss=ui.summary&&S.sessions[ui.summary]; if(!ss) return;
+    if(act==='spain'){ const v=+b.dataset.v; ss.back= ss.back===v?null:v; queue(ss.id); render(); }
+    else if(act==='sfeel'){ const v=+b.dataset.v; ss.feel= ss.feel===v?null:v; queue(ss.id); render(); }
+    else if(act==='ssave'){ ui.summary=null; ui.tab='elozmeny'; ui.histView='list'; ui.open=ss.id; render(); window.scrollTo(0,0); toast('Edzés mentve'); }
+    else { ui.summary=null; startMob('cool'); }
+    return; }
+  if(act==='pday'){ ui.progDay=b.dataset.v; ui.progEx=null; render(); return; }
+  if(act==='pex'){ ui.progEx=b.dataset.id; render(); const c=$('#chart'); c&&c.closest('section').scrollIntoView({block:'start',behavior:'smooth'}); return; }
+  if(act==='prog'){ S.settings.program=b.dataset.prog; ui.psheet=false; queue('settings'); render(); }
+  else if(act==='newprog'){ ui.psheet=false; ui.tab='info'; ui.edit=null; ui.confirm=null; render(); const el=$('#myprogs'); el&&el.scrollIntoView({block:'start'}); }
   else if(act==='pnew-blank'){ ui.edit={key:null,draft:blankDraft()}; ui.confirm=null; render(); window.scrollTo(0,0); }
   else if(act==='pnew-copy'){ ui.edit={key:null,draft:draftFrom(curKey())}; ui.confirm=null; render(); window.scrollTo(0,0); }
   else if(act==='pedit'){ const k=b.dataset.key; if(S.programs[k]){ const d=JSON.parse(JSON.stringify(S.programs[k])); d.seq=d.seq||1000; ui.edit={key:k,draft:d}; ui.confirm=null; render(); window.scrollTo(0,0); } }
@@ -2314,6 +2548,7 @@ document.addEventListener('input',ev=>{
   }
   if(t.dataset.bw){ const ss=S.sessions[t.dataset.bw]; if(ss){ const v=parseBw(t.value); if(v!==ss.bw&&(v!=null||t.value.trim()==='')){ if(v==null) delete ss.bw; else ss.bw=v; queue(ss.id); } } return; }
   if(t.dataset.machine){ S.settings.machine[t.dataset.machine]=t.value; queue('settings'); return; }
+  if(t.dataset.snote){ const ss=S.sessions[t.dataset.snote]; if(ss){ ss.note=t.value; queue(ss.id); } return; }
   if(!s) return;
   if(t.dataset.f==='note'){ s.note=t.value; queue(s.id); return; }
   if(t.dataset.f==='bw'){ const v=parseBw(t.value); if(v!==s.bw&&(v!=null||t.value.trim()==='')){ s.bw=v; queue(s.id); } return; }
@@ -2334,6 +2569,7 @@ document.addEventListener('change',ev=>{
 });
 document.addEventListener('focusout',()=>{ setTimeout(()=>{ if(ui.needsRender&&!(document.activeElement&&document.activeElement.matches('input,textarea,select'))) render(); },50); });
 document.addEventListener('keydown',ev=>{
+  if(ev.key==='Escape'&&ui.psheet){ ui.psheet=false; render(); return; }
   if(ev.key!=='Enter') return; const t=ev.target; if(!t.dataset||!t.dataset.ex) return; ev.preventDefault();
   const ins=[...document.querySelectorAll('.sets input,.fsets input')]; const i=ins.indexOf(t); if(ins[i+1]) ins[i+1].focus(); else t.blur();
 });
