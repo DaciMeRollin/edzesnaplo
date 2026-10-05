@@ -534,33 +534,34 @@ const BUILTIN = {
   },
   AB: {
     title:'Full-body A/B', label:'A/B · heti 3', short:'A/B', pain:true,
-    days:{A:{sub:'guggolás + fekvenyomás (erő-fókusz)',col:'blue'},
-          B:{sub:'hack guggolás · ferde nyomás · húzódzkodás',col:'green'}},
+    days:{A:{sub:'guggolás + fekvenyomás (erő-fókusz) · vállkör',col:'blue'},
+          B:{sub:'hack guggolás · ferde nyomás · húzódzkodás · derékkímélő csípő-munka',col:'green'}},
     weeks:[['A','B','A'],['B','A','B'],['A','B','A'],['B','A','B'],['A','B']],
     phases:['intro','normal','normal','peak','deload'],
+    // az azonos gyakorlatok régi azonosítója megmaradt (A5a, A7b), hogy az előzmények és a súlyjavaslat folytatódjon; a kijelzett jel a lab
     ex:{
       A:[
-        ['A1','Guggolás rúddal (back squat)',3,'4–6','2',180,'Hack guggolás / Smith guggolás (ha a derék reagál)','Erő-gyakorlat. Mély, kontrollált guggolás, semleges gerinc. RIR 2 = 2 ismétlés tartalék, hogy a technika ne essen szét.'],
-        ['A2','Fekvenyomás rúddal',3,'4–6','2',180,'Gépi mellnyomás','Erő-gyakorlat. Lapockák hátra-le, kontrollált (≥2 mp) negatív, érintés a mellen.'],
-        ['A3','Mellkas-támaszos evezés (T-rúd vagy gép)',3,'8–10','1–2',120,'Ülő gépi evezés','A mellkas-támasz kiveszi a derekat a láncból → tisztább hát-inger, a derekat kíméli.'],
-        ['A4','Ülő lábhajlítás (seated leg curl)',3,'8–12','1',90,'Fekvő lábhajlítás','Ülő helyzetben a combhajlító hosszabb izomhosszon dolgozik (Maeo et al. 2021). Gerinc-terhelés nulla — ezért váltja most az RDL-t.'],
-        ['A5a','Tárogatás gépen / kábelen (pec deck)',2,'10–15','0–1',0,'Kábeles keresztbehúzás','Szuperszett az A5b-vel (antagonista pár). Hangsúly a nyújtott pozíción.'],
-        ['A5b','Mellhez húzás, semleges fogás',2,'10–12','1',90,'Egykezes kábeles lehúzás','Teljes nyújtás fent, könyököt a csípő felé.'],
-        ['A6a','Oldalemelés kábelen',3,'12–20','0–1',0,'Gépi oldalemelés','Szuperszett az A6b-vel. Kábelnél alul is van feszülés.'],
-        ['A6b','Tricepsznyújtás fej fölött kábellel',3,'10–15','0–1',90,'Francia nyomás kézisúlyzóval','Fej fölötti karhelyzetben a hosszú fej megnyúlik → nagyobb tricepsz-növekedés (Maeo et al. 2023).'],
-        ['A7a','Fordított tárogatás gépen (reverse pec deck)',3,'12–20','0–1',0,'Kábeles face pull','Szuperszett az A7b-vel. Hátsó váll: az evezésekből csak részben kap ingert.'],
-        ['A7b','Álló vádliemelés',3,'8–12','0–1',75,'Lábtolón vádli','Alul 1–2 mp megállás nyújtott helyzetben.']],
+        ['A1','Guggolás rúddal (back squat)',3,'6–8','3',150,'Smith guggolás sarokemeléssel / hack guggolás','TECHNIKA-FÓKUSZ az 1. blokkban (gyenge mobilitás + derék-előzmény). Sarok alá 1,5–2,5 cm emelés (tárcsa/ék) → kisebb bokahajlítás-igény, függőlegesebb törzs, a medence később billen. 2–3 mp negatív, SZÜNET NÉLKÜL (max 1 mp, ha a medence semleges). Mélység: amíg a medence nem billen hátra — első alkalmakkor videó oldalról. 50–60 kg, a mélység fokozatosan nő. A 4–6-os erő-tartomány a 2. blokkban jön vissza. A variációt írd be a Gépbeállítás / variáció mezőbe (más tempónál az e1RM nem összevethető).'],
+        ['A2','Fekvenyomás rúddal',3,'4–6','2',180,'Gépi mellnyomás','ERŐ-gyakorlat. Lapockák hátra-le, kontrollált (≥2 mp) negatív, érintés a mellen. Hosszú pihenő → a volumen-terhelés (kg×ism.) szettről szettre tartható.'],
+        ['A3','Mellkas-támaszos evezés (T-rúd vagy gép)',3,'8–10','1–2',120,'Ülő gépi evezés','A mellkas-támasz kiveszi a derekat a láncból (nincs gerincmerevítési igény) → tisztább hát-inger, a derekat kíméli.'],
+        ['A4','Ülő lábhajlítás (seated leg curl)',3,'8–12','1',90,'Fekvő lábhajlítás','Ülő helyzetben a csípő flexiós → a combhajlító hosszabb izomhosszon dolgozik, mint fekve; ez nagyobb hipertrófiát adott (Maeo et al. 2021). Gerinc-terhelés nulla — ezért váltja most az RDL-t.'],
+        ['A5a','Tárogatás gépen / kábelen (pec deck)',2,'10–15','0–1',90,'Kábeles keresztbehúzás','Most egyedül megy (a korábbi párja, a mellhez húzás átkerült a körbe). Hangsúly a nyújtott pozíción.',{lab:'A5',ss:null}],
+        ['A6a','Oldalemelés kábelen',3,'8–15','0–1',30,'Gépi oldalemelés','KÖR 1. tagja (A6a → A6b → A6c → A6d, majd újra). Csiga kb. comb-magasságban → a nyújtott kiinduló helyzetben a legnagyobb a feszülés. Ha az alkar fárad előbb, mint a váll: csuklómandzsetta. A gépen 9 kg a legkisebb súly → 8–15 ism. (a hipertrófia kb. 6–30 ism. között hasonló, ha a szett közel van a bukáshoz); progresszió ismétléssel 15-ig.',{ss:'A6b',circ:true}],
+        ['A6b','Tricepsznyújtás fej fölött kábellel',3,'10–15','0–1',30,'Francia nyomás kézisúlyzóval','KÖR 2. tagja. Fej fölötti karhelyzetben a hosszú fej megnyúlik → ~1,5× nagyobb tricepsz-növekedés (Maeo et al. 2023). Ugyanaz a kötél, mint a face pullnál → nincs átszerelés.',{ss:'A6c',circ:true}],
+        ['A6c','Face pull kötéllel',3,'12–20','0–1',30,'Kábeles fordított tárogatás / reverse pec deck','KÖR 3. tagja. Felső csiga, húzás szemmagasságba, könyök kifelé, a végén külső rotáció. Hátsó váll + középső csuklyás + rotátorköpeny: kevésbé izolált, mint a fordított tárogatás, de a sok nyomás mellett a külső rotátor munka hasznos.',{ss:'A6d',circ:true}],
+        ['A6d','Egykezes kábeles lehúzás',2,'10–12','1',30,'Mellhez húzás, semleges fogás (gép)','KÖR 4. tagja — csak 2 szett, a 3. körben kimarad. Felső csiga, D-fogantyú, térdelve; teljes nyújtás fent, könyököt a csípő felé. A face pull után jön: a hátsó váll közös, de itt a lats és a fogás korlátoz. Ha a fogás a szűk keresztmetszet → heveder.',{ss:null,circ:true}],
+        ['A7b','Álló vádliemelés',3,'8–12','0–1',75,'Lábtolón vádli','Egyedül végezve. Alul 1–2 mp megállás nyújtott helyzetben (kiveszi az Achilles-ín rugóhatását, a nyújtott pozíció a fő inger).',{lab:'A7',ss:null}]],
       B:[
-        ['B1','Hack guggolás (vagy lábtoló)',3,'6–10','1–2',150,'Lábtoló / Smith guggolás','Nehéz gép: nagy mechanikai feszülés tengelyirányú gerinc-terhelés nélkül. Mély ROM.'],
-        ['B2','Ferde nyomás kézisúlyzóval (30°)',3,'6–10','1–2',150,'Ferde fekvenyomás rúddal / Smith','Felső mell hangsúly; a kézisúlyzó mélyebb nyújtást enged, mint a rúd.'],
-        ['B3','Húzódzkodás (súllyal) / mellhez húzás',3,'5–8','2',150,'Mellhez húzás (nehéz)','Erő-jellegű húzás. Teljes lelógás alul. Ha 8 tiszta ism. megy testsúllyal → övvel plusz súly.'],
-        ['B4','45°-os csípőfeszítés (hip extension)',3,'10–15','2',120,'Kábeles pull-through / hip thrust','Csípőből csináld, nem a derék hajlik. Fájdalom-monitorozás. Ez a híd az RDL visszavezetéséhez.'],
+        ['B1','Hack guggolás (vagy lábtoló)',3,'6–10','1–2',150,'Lábtoló / Smith guggolás','Közepes tartomány nehéz géppel: nagy mechanikai feszülés tengelyirányú gerinc-terhelés nélkül. Mély ROM.'],
+        ['B2','Ferde nyomás kézisúlyzóval (30°)',3,'6–10','1–2',150,'Ferde fekvenyomás rúddal / Smith','Felső mell hangsúly; a kézisúlyzó mélyebb nyújtást enged, mint a rúd. Támogatja a fekvenyomás-erőt is.'],
+        ['B3','Húzódzkodás (súllyal) / mellhez húzás',3,'5–8','2',150,'Mellhez húzás (nehéz)','ERŐ-jellegű húzás. Teljes lelógás alul. Ha 8 tiszta ism. megy testsúllyal → övvel plusz súly.'],
+        ['B4','45°-os csípőfeszítés (hip extension)',3,'10–15','2',120,'Kábeles pull-through / hip thrust','A csípőfeszítést CSÍPŐBŐL csináld, semleges / enyhén kerek felső háttal — nem a derék hajlik. Fájdalom-monitorozás. Ez a híd az RDL visszavezetéséhez.'],
         ['B6a','Fekvő lábhajlítás',3,'10–15','0–1',0,'Ülő lábhajlítás','Szuperszett a B6b-vel (antagonisták).'],
-        ['B6b','Lábnyújtás (hátradöntött háttámlával)',2,'12–15','0–1',90,'—','Hátradöntött ülésnél a rectus femoris megnyúlik → jobb inger ennek a fejnek.'],
-        ['B7a','Oldalemelés kézisúlyzóval / gépen',4,'12–20','0–1',60,'Kábeles oldalemelés','Szuperszett a B7b-vel (az utolsó szettet egyedül).'],
-        ['B7b','Ülő vádliemelés',3,'12–20','0–1',60,'—','Ülve a soleus dolgozik dominánsan.'],
-        ['B8a','Bicepsz curl ferde padon',3,'8–12','0–1',0,'Bayesian kábeles curl','Szuperszett a B8b-vel. Ferde padon a bicepsz hosszú feje nyújtott helyzetben dolgozik.'],
-        ['B8b','Tricepsz letolás kábelen',2,'10–15','0–1',90,'Gépi tricepsz','Kiegészíti a fej fölötti nyújtást.']]
+        ['B6b','Lábnyújtás (hátradöntött háttámlával)',2,'12–15','0–1',90,'—','Hátradöntött ülésnél a rectus femoris megnyúlik (csípő-extenzió) → jobb inger ennek a fejnek.'],
+        ['B7a','Oldalemelés kézisúlyzóval / gépen',4,'12–20','0–1',60,'Kábeles oldalemelés','Szuperszett a B7b-vel (az utolsó 1–2 szettet egyedül).'],
+        ['B7b','Ülő vádliemelés',3,'12–20','0–1',60,'—','Ülve a soleus dolgozik dominánsan (térd flexióban a gastrocnemius rövidül).'],
+        ['B8a','Bicepsz curl ferde padon',3,'8–12','0–1',0,'Bayesian kábeles curl','Szuperszett a B8b-vel. Ferde padon a váll extenzióban → a bicepsz hosszú feje nyújtott helyzetben dolgozik.'],
+        ['B8b','Tricepsz letolás kábelen',2,'10–15','0–1',90,'Gépi tricepsz','Kiegészíti a fej fölötti nyújtást (laterális / mediális fej).']]
     }
   },
   CAL: {
@@ -640,8 +641,8 @@ function finalize(P){
 for (const key in BUILTIN){ const P=BUILTIN[key];
   for (const day in P.ex){ P.ex[day]=P.ex[day].map(t=>{
     const [id,name,sets,reps,rir,rest,alt,tip,o={}]=t; const kieg=name.startsWith('+ ');
-    const ss = rest===0 && /a$/.test(id) ? id.slice(0,-1)+'b' : null;
-    return {id,lab:id,name:kieg?name.slice(2):name,kieg,sets,reps,rir,rest,alt,tip,ss,cali:!!P.cali,unit:o.unit||'reps',lo:o.lo,hi:o.hi,
+    const ss = o.ss!==undefined ? o.ss : (rest===0 && /a$/.test(id) ? id.slice(0,-1)+'b' : null);
+    return {id,lab:o.lab||id,circ:!!o.circ,name:kieg?name.slice(2):name,kieg,sets,reps,rir,rest,alt,tip,ss,cali:!!P.cali,unit:o.unit||'reps',lo:o.lo,hi:o.hi,
       plus:!!o.plus,weighted:!!o.weighted,skill:!!o.skill,test:!!o.test,explosive:!!o.explosive,total:o.total||null};
   });}
   finalize(P);
@@ -806,8 +807,8 @@ function lastFor(prog,exId,exclude,skipDeload){
 // a session gyakorlatai: a program aktuális definíciójából, vagy ha az már nincs meg, a mentett pillanatképből
 function sessExList(s){
   const p=PROGRAMS[s.program];
-  if(p&&p.ex[s.day]) return p.ex[s.day];
-  return Object.keys(s.ex||{}).map(id=>({id,lab:s.ex[id].lab||id,name:s.ex[id].name||id}));
+  const base= p&&p.ex[s.day]? p.ex[s.day] : [], have=new Set(base.map(e=>e.id));
+  return base.concat(Object.keys(s.ex||{}).filter(id=>!have.has(id)).map(id=>({id,lab:s.ex[id].lab||id,name:s.ex[id].name||id})));
 }
 
 /* ---------- Javaslat: RIR-korrigált Epley + kettős progresszió ----------
@@ -987,7 +988,7 @@ function viewHome(){
   const rows=list.map((e,i)=>{ const t=target(e,slot.phase), rc=recs[i], tr=trendOf(key,e,rc);
     const val= rc&&rc.reps? `${rc.w&&fHasW(e)?(e.cali?'+':'')+fmt(rc.w)+' kg × ':''}${rc.reps[0]}${rc.unit==='sec'?' mp':''}` : '';
     return `<li><span class="id">${esc(e.lab)}</span><span class="nm">${esc(e.name)}</span><span class="rx num">${val}</span>
-      <span class="sub"><span>${unitOf(e)==='check'?esc(e.reps):t.sets+' × '+esc(t.reps)}</span>${tr?`<span class="trend ${tr[0]}">${tr[1]}</span>`:''}${e.ss||e.ssFrom?`<span class="tag ss">${p.ssLabel||'szuperszett'}</span>`:''}${e.kieg?'<span class="tag">kieg.</span>':''}${e.unpaired?'<span class="tag">külön</span>':''}</span></li>`; }).join('');
+      <span class="sub"><span>${unitOf(e)==='check'?esc(e.reps):t.sets+' × '+esc(t.reps)}</span>${tr?`<span class="trend ${tr[0]}">${tr[1]}</span>`:''}${e.ss||e.ssFrom?`<span class="tag ss">${e.circ?'kör':p.ssLabel||'szuperszett'}</span>`:''}${e.kieg?'<span class="tag">kieg.</span>':''}${e.unpaired?'<span class="tag">külön</span>':''}</span></li>`; }).join('');
   const wk=p.weeks[slot.week-1]||[], base=ps.pos-(slot.inWeek-1);
   const tiles=wk.map((day,i)=>{ const pos=base+i, done=pos<ps.pos, now=pos===ps.pos, dd=p.days[day]||{name:day,col:'blue'};
     const fs= done? finished().find(x=>x.program===key&&x.block===ps.block&&x.slot===pos+1) : null;
@@ -1119,6 +1120,9 @@ function viewSummary(s){
   </div>`;
 }
 
+/* ===================== CSOPORTOK: szuperszett-pár vagy kör (a → b → c …) ===================== */
+function grpOf(list,e){ if(!e) return []; const has=id=>list.find(x=>x.id===id); let h=e, k=0; while(h.ssFrom&&has(h.ssFrom)&&k++<10) h=has(h.ssFrom);
+  const out=[h]; let m=h; k=0; while(m.ss&&has(m.ss)&&k++<10){ m=has(m.ss); out.push(m); } return out; }
 /* ===================== FÓKUSZ MÓD ===================== */
 // lépések sorrendje: szuperszettnél / párban felváltva a1, b1, a2, b2 …
 const fList=s=>PROGRAMS[s.program].ex[s.day];
@@ -1128,14 +1132,12 @@ const odA=k=>ui.openD&&ui.openD[k]?'open':'';
 function fEnsure(s,e){ const x=s.ex[e.id]||(s.ex[e.id]={name:e.name,lab:e.lab,sets:[]}); if(!x.sets.length) x.sets.push({w:null,r:null,rir:null,done:false}); return x; }
 function fSteps(s){
   const L=fList(s), has=id=>L.some(x=>x.id===id), out=[];
-  for(const e of L){ if(e.ssFrom&&has(e.ssFrom)) continue; const a=fEnsure(s,e).sets;
-    if(e.ss&&has(e.ss)){ const b=fEnsure(s,L.find(x=>x.id===e.ss)).sets;
-      for(let i=0;i<Math.max(a.length,b.length);i++){ if(i<a.length) out.push([e.id,i]); if(i<b.length) out.push([e.ss,i]); } }
-    else a.forEach((_,i)=>out.push([e.id,i])); }
+  for(const e of L){ if(e.ssFrom&&has(e.ssFrom)) continue; const g=grpOf(L,e), sets=g.map(m=>fEnsure(s,m).sets), n=Math.max(...sets.map(a=>a.length));
+    for(let i=0;i<n;i++) g.forEach((m,j)=>{ if(i<sets[j].length) out.push([m.id,i]); }); }
   return out;
 }
 function fGroup(s,id){ const L=fList(s), e=L.find(x=>x.id===id); if(!e) return [id];
-  if(e.ss&&L.some(x=>x.id===e.ss)) return [e.id,e.ss]; if(e.ssFrom&&L.some(x=>x.id===e.ssFrom)) return [e.ssFrom,e.id]; return [e.id]; }
+  return grpOf(L,e).map(m=>m.id); }
 const fUndone=(s,t)=>{ const x=s.ex[t[0]]; return !!(x&&x.sets[t[1]]&&!x.sets[t[1]].done); };
 const fExDone=(s,id)=>{ const x=s.ex[id]; return !!(x&&x.sets.length&&x.sets.every(q=>q.done)); };
 // g: a nyitott csoport, st: a következő szett benne, all: a következő szett az egész edzésben
@@ -1181,8 +1183,10 @@ function fCard(s,g,st){
 function fBlock(s,e,st,pair,gi,ssl){
   const t=target(e,s.phase), x=fEnsure(s,e), u=unitOf(e), rc=recommend(s.program,e,s.phase,s.id), last=lastFor(s.program,e.id,s.id);
   const mkey=s.program+':'+e.id, mval=S.settings.machine[mkey]||'';
-  const meta= u==='check'? `<b>${esc(e.reps)}</b>` : `<b>${t.sets} × ${esc(t.reps)}</b>${rirLbl(t.rir)?' · '+esc(rirLbl(t.rir)):''} · ${e.rest?restTxt(e.rest):pair&&gi===0?'pihenő nélkül → '+esc(labOf(s.program,e.ss)):'nincs pihenő'}`;
-  const tags=[pair?`<span class="tag ss">${ssl} ${gi===0?'→ '+esc(labOf(s.program,e.ss)):'← '+esc(labOf(s.program,e.ssFrom))}</span>`:'',
+  const G=pair? fGroup(s,e.id) : [e.id], circ=G.length>2||e.circ, nxt=e.ss? labOf(s.program,e.ss) : circ&&pair? labOf(s.program,G[0]) : '';
+  const restT= e.rest? (circ&&pair? `~${e.rest} mp átállás → ${esc(nxt)}${e.ss?'':' (új kör)'}` : restTxt(e.rest)) : pair&&e.ss? 'pihenő nélkül → '+esc(nxt) : 'nincs pihenő';
+  const meta= u==='check'? `<b>${esc(e.reps)}</b>` : `<b>${t.sets} × ${esc(t.reps)}</b>${rirLbl(t.rir)?' · '+esc(rirLbl(t.rir)):''} · ${restT}`;
+  const tags=[pair?(circ?`<span class="tag ss">kör ${G.indexOf(e.id)+1}/${G.length}</span>`:`<span class="tag ss">${ssl} ${e.ss?'→ '+esc(labOf(s.program,e.ss)):'← '+esc(labOf(s.program,e.ssFrom))}</span>`):'',
     e.kieg?'<span class="tag">kiegészítő dózis</span>':'', e.skill?'<span class="tag">skill · nem bukásig</span>':'', e.test?'<span class="tag">teszt</span>':'',
     e.unpaired?'<span class="tag">külön szettek</span>':'', e.swapped?'<span class="tag">cserélve</span>':''].join('');
   const lastTxt= last? `Múltkor: ${last.sets.map(q=>setStr(q,e)).join(' · ')}${last.var?' · '+last.var:''}`
@@ -1253,7 +1257,7 @@ function fAction(act,b,s){
   let msg='';
   if(unitOf(e)==='check'){ if(timer){ timer=null; saveTimer(); } }
   else if(!nx){ timer=null; saveTimer(); msg='Minden szett kész — jöhet a befejezés'; }
-  else if(e.ss&&nx[0]===e.ss){ timer=null; saveTimer(); msg=(P0.ssLabel==='párban'?'Párban → ':'Szuperszett → ')+labOf(s.program,e.ss)+', pihenő nélkül'; }
+  else if(g.includes(nx[0])&&!e.rest){ timer=null; saveTimer(); msg=(P0.ssLabel==='párban'?'Párban → ':'Szuperszett → ')+labOf(s.program,nx[0])+', pihenő nélkül'; }
   else { const rest=e.rest||(e.ss&&(findEx(s.program,e.ss)||{}).rest)||90;
     startTimer(rest,`Következő: ${ne.lab} ${ne.name}${unitOf(ne)==='check'?'':' · '+(nx[1]+1)+'. szett'}`);
     if(exFin&&!g.includes(nx[0])) msg=`✓ ${g.map(k=>labOf(s.program,k)).join(' + ')} kész — jön: ${ne.lab}`; }
@@ -2322,7 +2326,8 @@ function applyMods(key,P){
   const Q={...P,ex:{}};
   for(const d in P.ex){ const arr=P.ex[d].map(e=>({...e}));
     for(const e of arr){ const s=sw[pre+e.id]; if(s){ e.origName=e.name; e.alt=e.name; e.name=s; e.swapped=true; } }
-    for(const e of arr){ if(e.ss&&(all||pair[pre+e.id])){ const b=arr.find(x=>x.id===e.ss); e.pairA=e.id; e.ss=null; e.unpaired=true; if(!e.rest) e.rest=(b&&b.rest)||90; if(b){ b.ssFrom=null; b.unpaired=true; b.pairA=e.id; } } }
+    for(const h of arr.filter(e=>e.ss&&!e.ssFrom)){ if(!(all||pair[pre+h.id])) continue; const g=grpOf(arr,h), lr=Math.max(...g.map(m=>m.rest||0));
+      for(const m of g){ m.pairA=h.id; m.unpaired=true; m.ss=null; m.ssFrom=null; if(!m.rest||m.rest<60) m.rest= lr>=60? lr : 90; } }
     Q.ex[d]=arr; }
   return Q;
 }
@@ -2399,14 +2404,14 @@ function altList(e){
 }
 function PROGRAMS_BASE_ALT(e){ for(const k in BUILTIN){ for(const d in BUILTIN[k].ex){ const b=BUILTIN[k].ex[d].find(x=>x.id===e.id&&x.name===e.origName); if(b) return b.alt; } } return ''; }
 function modBox(s,e){
-  const open=ui.openD&&ui.openD['md'+e.id], alts=altList(e), pairA=e.pairA||(e.ss?e.id:e.ssFrom||null);
+  const open=ui.openD&&ui.openD['md'+e.id], alts=altList(e), pairA=e.pairA||(e.ss||e.ssFrom? (grpOf(Object.values(PROGRAMS[s.program].ex).flat(),e)[0]||{}).id||null : null);
   return `<details class="more" data-od="md${e.id}" style="flex-basis:100%" ${open?'open':''}><summary>⇄ Csere / módosítás${e.swapped?' <span class="tag">cserélve</span>':''}${e.unpaired?' <span class="tag">külön szettek</span>':''}</summary>
     <div class="stack" style="gap:8px;margin-top:6px">
       ${e.swapped?`<p class="small" style="margin:0">Most: <b>${esc(e.name)}</b> <span class="muted">(eredeti: ${esc(e.origName)})</span></p>`:''}
       ${alts.length?`<div class="small muted">Csere erre:</div><div class="chips">${alts.map(a=>`<button class="chip" data-act="mod-swap" data-ex="${e.id}" data-name="${esc(a)}">${esc(a)}</button>`).join('')}</div>`:''}
       <div class="row" style="flex-wrap:nowrap"><input class="inp" id="mc-${e.id}" placeholder="Saját gyakorlat neve" aria-label="Saját gyakorlat neve"><button class="btn sm" data-act="mod-custom" data-ex="${e.id}">Csere</button></div>
       ${e.swapped?`<button class="btn sm ghost" data-act="mod-reset" data-ex="${e.id}" style="align-self:flex-start">Vissza az eredetire</button>`:''}
-      ${pairA?`<label class="row small" style="gap:8px;flex-wrap:nowrap"><input type="checkbox" data-mod-ss="${esc(pairA)}" ${e.unpaired?'checked':''}> Szuperszett helyett külön szettek, pihenővel (ennél a párnál)</label>`:''}
+      ${pairA?`<label class="row small" style="gap:8px;flex-wrap:nowrap"><input type="checkbox" data-mod-ss="${esc(pairA)}" ${e.unpaired?'checked':''}> ${e.circ?'Kör helyett':'Szuperszett helyett'} külön szettek, pihenővel (ennél a ${e.circ?'körnél':'párnál'})</label>`:''}
       <p class="small muted" style="margin:0">A módosítás csak nálad érvényes, és a következő edzéseken is megmarad. Cserélt gyakorlatnál a súlyjavaslat külön, az új gyakorlat eredményeiből számolódik.</p>
     </div></details>`;
 }
