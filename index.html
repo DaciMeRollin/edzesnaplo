@@ -886,6 +886,9 @@ function coreGym(prog,e,t,phase,last){
   const E=Math.max(...caps.map(c=>c.e1));
   const drops=caps.map(c=>Math.max(0,caps[0].capAtW0-c.capAtW0));
   const repsAt=(w,rir=rirT)=>30*(E/w-1)-rir;
+  // a leggyengébb (legfáradtabb) szett is elérje a tartomány alját
+  const maxDrop=Math.max(...Array.from({length:n},(_,i)=>drops[Math.min(i,drops.length-1)]||0));
+  const fitsAt=w=>Math.round(Math.min(hi,Math.round(repsAt(w)))-maxDrop)>=lo;
   const step=stepFor(prog,e.id);
   const allTop=sets.length>=Math.min(lt.sets,sets.length)&&sets.every(q=>q.r>=hi);
   let w=w0, kind='same', why;
@@ -893,13 +896,17 @@ function coreGym(prog,e,t,phase,last){
   if(phase==='deload'){
     w=w0; kind='deload';
     why=`${lastTxt} Deload: a súly marad (vagy −10%: ${fmt(Math.floor(w0*0.9/step)*step)} kg), fele szett, kényelmes tempó RIR 3–4-gyel.`;
+  } else if((allTop || repsAt(w0)>=hi+1) && !fitsAt(w0+step)){
+    kind='same';
+    why=`${lastTxt} ${allTop?`Minden szett elérte a felső határt (${hi})`:'Sok volt a tartalék'}, de +${fmt(step)} kg-mal a szettek közti fáradás miatt az utolsó szett ${lo} ismétlés alá esne → marad a súly, ugyanígy. Ha többször is így jön ki, válts kisebb súlylépcsőre (lépcső gomb).`;
   } else if(allTop || repsAt(w0)>=hi+1){
-    w=w0+step; let k=0; while(repsAt(w+step)>=hi && k<3){ w+=step; k++; }
+    w=w0+step; let k=0; while(repsAt(w+step)>=hi && fitsAt(w+step) && k<3){ w+=step; k++; }
     kind='up';
     why= allTop ? `${lastTxt} Minden szett elérte a felső határt (${hi}) → +${fmt(w-w0)} kg. Az új súlyon ~${Math.max(1,Math.round(repsAt(w)))} ismétlés várható RIR ${t.rir} mellett.`
                 : `${lastTxt} Sok volt a tartalék: ${fmt(w0)} kg-mal RIR ${t.rir} mellett ~${Math.floor(repsAt(w0))} ism. menne, ez a tartomány fölött van → +${fmt(w-w0)} kg.`;
   } else if(repsAt(w0)<lo-0.5){
     w=Math.max(step,Math.floor(E/(1+(lo+1+rirT)/30)/step)*step); kind='down';
+    while(!fitsAt(w) && w-step>=step) w-=step;
     why=`${lastTxt} A cél-RIR mellett ezen a súlyon csak ~${Math.max(0,Math.round(repsAt(w0)))} ism. jönne ki, ez a tartomány (${lo}–${hi}) alatt van → kisebb súly, hogy legalább ${lo} ismétlés tisztán meglegyen.`;
   } else {
     kind='same';
