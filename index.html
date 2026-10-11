@@ -534,8 +534,8 @@ const BUILTIN = {
   },
   AB: {
     title:'Full-body A/B', label:'A/B · heti 3', short:'A/B', pain:true,
-    days:{A:{sub:'guggolás + fekvenyomás (erő) · húzódzkodás · váll-kar szuperszett',col:'blue'},
-          B:{sub:'hack guggolás · ferde nyomás · evezés · RDL · váll-kar szuperszett',col:'green'}},
+    days:{A:{sub:'guggolás + fekvenyomás (erő) · asszisztált húzódzkodás · váll-kar szuperszett · vádli',col:'blue'},
+          B:{sub:'hack guggolás · ferde nyomás · evezés · RDL · váll-kar szuperszett · hátsó váll · has',col:'green'}},
     weeks:[['A','B','A'],['B','A','B'],['A','B','A'],['B','A','B'],['A','B']],
     phases:['intro','normal','normal','normal','deload'],
     rules:{
@@ -551,8 +551,7 @@ const BUILTIN = {
         ['A4','Ülő lábhajlítás',4,'8–12','0',90,'Fekvő lábhajlítás','Fő combhajlító-gyakorlat. Ülve a combhajlító hosszabb izomhosszon dolgozik, mint fekve (Maeo 2021: ~+55% növekedés). Dőlj előre a párna fölé a nagyobb nyújtásért. Minden szett bukásig.'],
         ['A6b','Tricepsznyújtás fej fölött kábellel',3,'10–15','0',30,'Francia nyomás kézisúlyzóval','SZUPERSZETT az oldalemeléssel (egy helyben, a kábelnél). Fej fölött a hosszú fej megnyúlik → kb. 40%-kal nagyobb növekedés, mint letolásnál (Maeo 2023). Minden szett bukásig.',{lab:'A5a',ss:'A6a'}],
         ['A6a','Oldalemelés kábelen',3,'8–15','0',75,'Gépi oldalemelés','SZUPERSZETT 2. tagja. Csiga kb. comb-magasságban → a nyújtott kiinduló helyzetben a legnagyobb a feszülés; kisujj enyhén fel. Ha az alkar fárad előbb: csuklómandzsetta. A gépen 9 kg a legkisebb súly → 8–15 ism., progresszió ismétléssel. Minden szett bukásig.',{lab:'A5b',ss:null}],
-        ['ARPD','Fordított tárogatás gépen (reverse pec deck)',2,'12–20','0',75,'Kábeles fordított tárogatás / face pull','Hátsó váll közvetlen munka — a húzásoknál a lats és a trapéz dominál, ezért kell izoláció. Nagy félkörben vidd ki a karokat, ne a lapockát húzd össze. Minden szett bukásig.',{lab:'A6'}],
-        ['A7b','Álló vádliemelés',3,'8–12','0',75,'Lábtolón vádli','Térd nyújtva → a gastrocnemius is dolgozik (álló > ülő: 2,6× növekedés, Kinoshita 2023). Alul 1–2 mp megállás nyújtott helyzetben. Minden szett bukásig.',{lab:'A7',ss:null}]],
+        ['A7b','Álló vádliemelés',3,'8–12','0',75,'Lábtolón vádli','Térd nyújtva → a gastrocnemius is dolgozik (álló > ülő: 2,6× növekedés, Kinoshita 2023). Alul 1–2 mp megállás nyújtott helyzetben. Minden szett bukásig.',{lab:'A6',ss:null}]],
       B:[
         ['B1','Hack guggolás',3,'8–12','1–2',120,'Lábtoló / Smith guggolás','Nehéz gép: nagy mechanikai feszülés tengelyirányú gerinc-terhelés nélkül. Mély ROM, hát és far végig a párnán. Compound → RIR 1–2.'],
         ['B2','Ferde nyomás kézisúlyzóval (30°)',3,'6–10','1–2',120,'Ferde gépi nyomás / Smith ferde nyomás','Felső mell hangsúly; a kézisúlyzó mélyebb nyújtást enged, mint a rúd. 1 mp megállás alul feszülés alatt. RIR 1–2.'],
@@ -561,7 +560,8 @@ const BUILTIN = {
         ['B6b','Lábnyújtás (hátradöntött háttámlával)',2,'12–15','0',75,'Reverse nordic / sissy guggolás','A rectus femorist a guggolás alig terheli (két ízületen át fut) → kell az izoláció; hátradöntött háttámlánál meg is nyúlik. Kapaszkodj erősen, hogy a far a párnán maradjon. Minden szett bukásig.',{lab:'B5',ss:null}],
         ['B7a','Oldalemelés kézisúlyzóval / gépen',3,'12–20','0',30,'Kábeles oldalemelés','SZUPERSZETT a ferde padon curllal (egy helyben). Kisujj enyhén fel, a negatívot fékezd, alul ne pihenj. Minden szett bukásig.',{lab:'B6a',ss:'B8a'}],
         ['B8a','Bicepsz curl ferde padon',3,'8–12','0',75,'Bayesian kábeles curl','SZUPERSZETT 2. tagja. Ferde padon a kar a test mögött → a bicepsz hosszú feje nyújtott helyzetben dolgozik. Kontrollált negatív, teljes nyújtás alul. Minden szett bukásig.',{lab:'B6b',ss:null}],
-        ['BCR','Kábeles crunch',2,'10–15','0',60,'Súlytárcsás crunch / gépi crunch','A guggolás és a felhúzás alig dolgoztatja az egyenes hasizmot → direkt munka kell. A gerinc görbüljön (bordák a medence felé), ne a csípőből hajolj; a kar csak tart. Minden szett bukásig.',{lab:'B7'}]]
+        ['ARPD','Fordított tárogatás gépen (reverse pec deck)',2,'12–20','0',75,'Kábeles fordított tárogatás / face pull','Hátsó váll közvetlen munka — a húzásoknál a lats és a trapéz dominál, ezért kell izoláció. Nagy félkörben vidd ki a karokat, ne a lapockát húzd össze. Minden szett bukásig.',{lab:'B7'}],
+        ['BCR','Kábeles crunch',2,'10–15','0',60,'Súlytárcsás crunch / gépi crunch','A guggolás és a felhúzás alig dolgoztatja az egyenes hasizmot → direkt munka kell. A gerinc görbüljön (bordák a medence felé), ne a csípőből hajolj; a kar csak tart. Minden szett bukásig.',{lab:'B8'}]]
     }
   },
   UL: {
