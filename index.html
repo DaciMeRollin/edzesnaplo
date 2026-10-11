@@ -534,34 +534,83 @@ const BUILTIN = {
   },
   AB: {
     title:'Full-body A/B', label:'A/B · heti 3', short:'A/B', pain:true,
-    days:{A:{sub:'guggolás + fekvenyomás (erő-fókusz) · vállkör',col:'blue'},
-          B:{sub:'hack guggolás · ferde nyomás · húzódzkodás · derékkímélő csípő-munka',col:'green'}},
+    days:{A:{sub:'guggolás + fekvenyomás (erő) · húzódzkodás · váll-kar szuperszett',col:'blue'},
+          B:{sub:'hack guggolás · ferde nyomás · evezés · RDL · váll-kar szuperszett',col:'green'}},
     weeks:[['A','B','A'],['B','A','B'],['A','B','A'],['B','A','B'],['A','B']],
-    phases:['intro','normal','normal','peak','deload'],
-    // az azonos gyakorlatok régi azonosítója megmaradt (A5a, A7b), hogy az előzmények és a súlyjavaslat folytatódjon; a kijelzett jel a lab
+    phases:['intro','normal','normal','normal','deload'],
+    rules:{
+      intro:'Program RIR +1 (izolációk RIR 1, compoundok RIR 2–3). Súlyok és gépbeállítások belövése — írd fel az ülésmagasságot! Edzés után 30 perc könnyű kardió (inkább kerékpár).',
+      normal:'Compoundok RIR 1–2 (rudas guggolás RIR 2), izolációk MINDEN szettje bukásig (RIR 0). Kettős progresszió: ha minden szett eléri a tartomány tetejét → +1 súlylépcső; ha a nagyobb súllyal a tartomány alá esnél, marad a súly. Edzés után 30 perc könnyű kardió (inkább kerékpár).',
+      deload:'Fele szettszám, RIR 3–4, a súly marad vagy −10%. Utána új blokk a 4. heti súlyokból; 1–2 izoláció cserélhető. A kardió maradhat, könnyedén.'},
+    // a megmaradt gyakorlatok régi azonosítója nem változott (pl. A3 = evezés, most a B napon), hogy az előzmények és a súlyjavaslat folytatódjon; a kijelzett jel a lab
     ex:{
       A:[
-        ['A1','Guggolás rúddal (back squat)',3,'6–8','3',150,'Smith guggolás sarokemeléssel / hack guggolás','TECHNIKA-FÓKUSZ az 1. blokkban (gyenge mobilitás + derék-előzmény). Sarok alá 1,5–2,5 cm emelés (tárcsa/ék) → kisebb bokahajlítás-igény, függőlegesebb törzs, a medence később billen. 2–3 mp negatív, SZÜNET NÉLKÜL (max 1 mp, ha a medence semleges). Mélység: amíg a medence nem billen hátra — első alkalmakkor videó oldalról. 50–60 kg, a mélység fokozatosan nő. A 4–6-os erő-tartomány a 2. blokkban jön vissza. A variációt írd be a Gépbeállítás / variáció mezőbe (más tempónál az e1RM nem összevethető).'],
-        ['A2','Fekvenyomás rúddal',3,'4–6','2',180,'Gépi mellnyomás','ERŐ-gyakorlat. Lapockák hátra-le, kontrollált (≥2 mp) negatív, érintés a mellen. Hosszú pihenő → a volumen-terhelés (kg×ism.) szettről szettre tartható.'],
-        ['A3','Mellkas-támaszos evezés (T-rúd vagy gép)',3,'8–10','1–2',120,'Ülő gépi evezés','A mellkas-támasz kiveszi a derekat a láncból (nincs gerincmerevítési igény) → tisztább hát-inger, a derekat kíméli.'],
-        ['A4','Ülő lábhajlítás (seated leg curl)',3,'8–12','1',90,'Fekvő lábhajlítás','Ülő helyzetben a csípő flexiós → a combhajlító hosszabb izomhosszon dolgozik, mint fekve; ez nagyobb hipertrófiát adott (Maeo et al. 2021). Gerinc-terhelés nulla — ezért váltja most az RDL-t.'],
-        ['A5a','Tárogatás gépen / kábelen (pec deck)',2,'10–15','0–1',90,'Kábeles keresztbehúzás','Most egyedül megy (a korábbi párja, a mellhez húzás átkerült a körbe). Hangsúly a nyújtott pozíción.',{lab:'A5',ss:null}],
-        ['A6a','Oldalemelés kábelen',3,'8–15','0–1',30,'Gépi oldalemelés','KÖR 1. tagja (A6a → A6b → A6c → A6d, majd újra). Csiga kb. comb-magasságban → a nyújtott kiinduló helyzetben a legnagyobb a feszülés. Ha az alkar fárad előbb, mint a váll: csuklómandzsetta. A gépen 9 kg a legkisebb súly → 8–15 ism. (a hipertrófia kb. 6–30 ism. között hasonló, ha a szett közel van a bukáshoz); progresszió ismétléssel 15-ig.',{ss:'A6b',circ:true}],
-        ['A6b','Tricepsznyújtás fej fölött kábellel',3,'10–15','0–1',30,'Francia nyomás kézisúlyzóval','KÖR 2. tagja. Fej fölötti karhelyzetben a hosszú fej megnyúlik → ~1,5× nagyobb tricepsz-növekedés (Maeo et al. 2023). Ugyanaz a kötél, mint a face pullnál → nincs átszerelés.',{ss:'A6c',circ:true}],
-        ['A6c','Face pull kötéllel',3,'12–20','0–1',30,'Kábeles fordított tárogatás / reverse pec deck','KÖR 3. tagja. Felső csiga, húzás szemmagasságba, könyök kifelé, a végén külső rotáció. Hátsó váll + középső csuklyás + rotátorköpeny: kevésbé izolált, mint a fordított tárogatás, de a sok nyomás mellett a külső rotátor munka hasznos.',{ss:'A6d',circ:true}],
-        ['A6d','Egykezes kábeles lehúzás',2,'10–12','1',30,'Mellhez húzás, semleges fogás (gép)','KÖR 4. tagja — csak 2 szett, a 3. körben kimarad. Felső csiga, D-fogantyú, térdelve; teljes nyújtás fent, könyököt a csípő felé. A face pull után jön: a hátsó váll közös, de itt a lats és a fogás korlátoz. Ha a fogás a szűk keresztmetszet → heveder.',{ss:null,circ:true}],
-        ['A7b','Álló vádliemelés',3,'8–12','0–1',75,'Lábtolón vádli','Egyedül végezve. Alul 1–2 mp megállás nyújtott helyzetben (kiveszi az Achilles-ín rugóhatását, a nyújtott pozíció a fő inger).',{lab:'A7',ss:null}]],
+        ['A1','Guggolás rúddal, sarokemeléssel',3,'6–8','2',150,'Smith guggolás sarokemeléssel / hack guggolás','Erő + technika. Sarok alá 1,5–2,5 cm emelés (tárcsa/ék) → kisebb bokahajlítás-igény, függőlegesebb törzs, a medence később billen. 2–3 mp negatív, alul nincs szünet. Mélység: amíg a medence nem billen hátra (videó oldalról). A mobilitás javulásával a mélység nő; a 4–6-os tartomány akkor jön vissza, ha a technika stabil. Compound → RIR 2, soha bukásig.'],
+        ['A2','Fekvenyomás rúddal',3,'4–6','1–2',180,'Gépi mellnyomás / Smith fekvenyomás','ERŐ-gyakorlat. Lapockák hátra-le, kontrollált (≥2 mp) negatív, érintés a mellen, robbanékony nyomás. 3 perc pihenő, hogy a súly szettről szettre tartható legyen. RIR 1–2 — biztonság miatt nem bukásig.'],
+        ['APU','Asszisztált húzódzkodás (gép)',3,'6–10','1–2',120,'Mellhez húzás, semleges fogás','A SÚLY MEZŐBE A SEGÍTSÉG KERÜL (kg) — itt a kevesebb a jobb, a javaslat is így számol. Teljes lelógás alul (lats nyújtott helyzetben), könyököt a csípő felé húzd, áll a rúd fölé. Cél: 3×10 tisztán → kevesebb segítség; segítség nélkül 3×8 → testsúlyos, majd súlyöv. Ha megadod a testsúlyodat, a Haladás fül a (testsúly − segítség) alapján becsül erőt.',{lab:'A3',assist:true}],
+        ['A4','Ülő lábhajlítás',4,'8–12','0',90,'Fekvő lábhajlítás','Fő combhajlító-gyakorlat. Ülve a combhajlító hosszabb izomhosszon dolgozik, mint fekve (Maeo 2021: ~+55% növekedés). Dőlj előre a párna fölé a nagyobb nyújtásért. Minden szett bukásig.'],
+        ['A6b','Tricepsznyújtás fej fölött kábellel',3,'10–15','0',30,'Francia nyomás kézisúlyzóval','SZUPERSZETT az oldalemeléssel (egy helyben, a kábelnél). Fej fölött a hosszú fej megnyúlik → kb. 40%-kal nagyobb növekedés, mint letolásnál (Maeo 2023). Minden szett bukásig.',{lab:'A5a',ss:'A6a'}],
+        ['A6a','Oldalemelés kábelen',3,'8–15','0',75,'Gépi oldalemelés','SZUPERSZETT 2. tagja. Csiga kb. comb-magasságban → a nyújtott kiinduló helyzetben a legnagyobb a feszülés; kisujj enyhén fel. Ha az alkar fárad előbb: csuklómandzsetta. A gépen 9 kg a legkisebb súly → 8–15 ism., progresszió ismétléssel. Minden szett bukásig.',{lab:'A5b',ss:null}],
+        ['ARPD','Fordított tárogatás gépen (reverse pec deck)',2,'12–20','0',75,'Kábeles fordított tárogatás / face pull','Hátsó váll közvetlen munka — a húzásoknál a lats és a trapéz dominál, ezért kell izoláció. Nagy félkörben vidd ki a karokat, ne a lapockát húzd össze. Minden szett bukásig.',{lab:'A6'}],
+        ['A7b','Álló vádliemelés',3,'8–12','0',75,'Lábtolón vádli','Térd nyújtva → a gastrocnemius is dolgozik (álló > ülő: 2,6× növekedés, Kinoshita 2023). Alul 1–2 mp megállás nyújtott helyzetben. Minden szett bukásig.',{lab:'A7',ss:null}]],
       B:[
-        ['B1','Hack guggolás (vagy lábtoló)',3,'6–10','1–2',150,'Lábtoló / Smith guggolás','Közepes tartomány nehéz géppel: nagy mechanikai feszülés tengelyirányú gerinc-terhelés nélkül. Mély ROM.'],
-        ['B2','Ferde nyomás kézisúlyzóval (30°)',3,'6–10','1–2',150,'Ferde fekvenyomás rúddal / Smith','Felső mell hangsúly; a kézisúlyzó mélyebb nyújtást enged, mint a rúd. Támogatja a fekvenyomás-erőt is.'],
-        ['B3','Húzódzkodás (súllyal) / mellhez húzás',3,'5–8','2',150,'Mellhez húzás (nehéz)','ERŐ-jellegű húzás. Teljes lelógás alul. Ha 8 tiszta ism. megy testsúllyal → övvel plusz súly.'],
-        ['B4','45°-os csípőfeszítés (hip extension)',3,'10–15','2',120,'Kábeles pull-through / hip thrust','A csípőfeszítést CSÍPŐBŐL csináld, semleges / enyhén kerek felső háttal — nem a derék hajlik. Fájdalom-monitorozás. Ez a híd az RDL visszavezetéséhez.'],
-        ['B6a','Fekvő lábhajlítás',3,'10–15','0–1',0,'Ülő lábhajlítás','Szuperszett a B6b-vel (antagonisták).'],
-        ['B6b','Lábnyújtás (hátradöntött háttámlával)',2,'12–15','0–1',90,'—','Hátradöntött ülésnél a rectus femoris megnyúlik (csípő-extenzió) → jobb inger ennek a fejnek.'],
-        ['B7a','Oldalemelés kézisúlyzóval / gépen',4,'12–20','0–1',60,'Kábeles oldalemelés','Szuperszett a B7b-vel (az utolsó 1–2 szettet egyedül).'],
-        ['B7b','Ülő vádliemelés',3,'12–20','0–1',60,'—','Ülve a soleus dolgozik dominánsan (térd flexióban a gastrocnemius rövidül).'],
-        ['B8a','Bicepsz curl ferde padon',3,'8–12','0–1',0,'Bayesian kábeles curl','Szuperszett a B8b-vel. Ferde padon a váll extenzióban → a bicepsz hosszú feje nyújtott helyzetben dolgozik.'],
-        ['B8b','Tricepsz letolás kábelen',2,'10–15','0–1',90,'Gépi tricepsz','Kiegészíti a fej fölötti nyújtást (laterális / mediális fej).']]
+        ['B1','Hack guggolás',3,'8–12','1–2',120,'Lábtoló / Smith guggolás','Nehéz gép: nagy mechanikai feszülés tengelyirányú gerinc-terhelés nélkül. Mély ROM, hát és far végig a párnán. Compound → RIR 1–2.'],
+        ['B2','Ferde nyomás kézisúlyzóval (30°)',3,'6–10','1–2',120,'Ferde gépi nyomás / Smith ferde nyomás','Felső mell hangsúly; a kézisúlyzó mélyebb nyújtást enged, mint a rúd. 1 mp megállás alul feszülés alatt. RIR 1–2.'],
+        ['A3','Mellkas-támaszos evezés (T-rúd vagy gép)',3,'8–12','1–2',120,'Ülő gépi evezés','A mellkas-támasz kiveszi a derekat a láncból → tisztább hát-inger. Elöl teljes nyújtás, könyök kb. 45°-ban kifelé, hátul szorítsd össze a lapockákat. RIR 1–2.',{lab:'B3'}],
+        ['BRDL','Román felhúzás (RDL) — visszavezetés',3,'8','3–4',120,'45°-os csípőfeszítés (ha fáj, vagy a BAB hét 2. B napján — ⇄ Csere)','DERÉK-PROTOKOLL 1. fázis: a korábbi munkasúly ~50%-a, 3 mp negatív, RIR 3–4, SOHA bukásig. ROM csak addig, amíg a medence még előre billen („csípő hátra”, nem „rúd le”); felül far összeszorít, bordák le, nincs hátradőlés. Videózd oldalról és hátulról. Heti 1× elég: a BAB héten a 2. B napon cseréld 45°-os csípőfeszítésre. 2 tünetmentes hét után (≤3/10, másnap nincs rosszabbodás) → 2. fázis: heti +2,5–5 kg, RIR 2–3, max 8 ism.',{lab:'B4'}],
+        ['B6b','Lábnyújtás (hátradöntött háttámlával)',2,'12–15','0',75,'Reverse nordic / sissy guggolás','A rectus femorist a guggolás alig terheli (két ízületen át fut) → kell az izoláció; hátradöntött háttámlánál meg is nyúlik. Kapaszkodj erősen, hogy a far a párnán maradjon. Minden szett bukásig.',{lab:'B5',ss:null}],
+        ['B7a','Oldalemelés kézisúlyzóval / gépen',3,'12–20','0',30,'Kábeles oldalemelés','SZUPERSZETT a ferde padon curllal (egy helyben). Kisujj enyhén fel, a negatívot fékezd, alul ne pihenj. Minden szett bukásig.',{lab:'B6a',ss:'B8a'}],
+        ['B8a','Bicepsz curl ferde padon',3,'8–12','0',75,'Bayesian kábeles curl','SZUPERSZETT 2. tagja. Ferde padon a kar a test mögött → a bicepsz hosszú feje nyújtott helyzetben dolgozik. Kontrollált negatív, teljes nyújtás alul. Minden szett bukásig.',{lab:'B6b',ss:null}],
+        ['BCR','Kábeles crunch',2,'10–15','0',60,'Súlytárcsás crunch / gépi crunch','A guggolás és a felhúzás alig dolgoztatja az egyenes hasizmot → direkt munka kell. A gerinc görbüljön (bordák a medence felé), ne a csípőből hajolj; a kar csak tart. Minden szett bukásig.',{lab:'B7'}]]
+    }
+  },
+  UL: {
+    title:'Upper/Lower', label:'U/L · heti 4', short:'U/L', pain:true,
+    days:{U1:{name:'Upper 1',sub:'felsőtest · erő-fókusz (fekvenyomás, húzódzkodás)',col:'red'},
+          L1:{name:'Lower 1',sub:'alsótest · erő-fókusz (guggolás) · combhajlító',col:'yellow'},
+          U2:{name:'Upper 2',sub:'felsőtest · hipertrófia (ferde nyomás, lehúzás, tolódzkodás)',col:'blue'},
+          L2:{name:'Lower 2',sub:'alsótest · hipertrófia (hack, RDL) · far',col:'green'}},
+    weeks:[['U1','L1','U2','L2'],['U1','L1','U2','L2'],['U1','L1','U2','L2'],['U1','L1','U2','L2'],['U1','L1','U2','L2']],
+    phases:['intro','normal','normal','normal','deload'],
+    rules:{
+      intro:'Program RIR +1 (izolációk RIR 1, compoundok RIR 2–3). Súlyok és gépbeállítások belövése. Nincs szuperszett — egyenes szettek. Edzés után 30 perc könnyű kardió (inkább kerékpár).',
+      normal:'Compoundok RIR 1–2 (rudas guggolás RIR 2), izolációk MINDEN szettje bukásig (RIR 0). Kettős progresszió: ha minden szett eléri a tartomány tetejét → +1 súlylépcső; ha a nagyobb súllyal a tartomány alá esnél, marad a súly. Gördülő sorrend: ha kimarad egy nap, ott folytatod. Edzés után 30 perc könnyű kardió (inkább kerékpár).',
+      deload:'Fele szettszám, RIR 3–4, a súly marad vagy −10%. Utána új blokk a 4. heti súlyokból; 1–2 izoláció cserélhető.'},
+    ex:{
+      U1:[
+        ['U11','Fekvenyomás rúddal',3,'4–6','1–2',180,'Gépi mellnyomás / Smith fekvenyomás','ERŐ-gyakorlat. Lapockák hátra-le, kontrollált (≥2 mp) negatív, érintés a mellen, robbanékony nyomás. 3 perc pihenő. RIR 1–2 — biztonság miatt nem bukásig.'],
+        ['U12','Asszisztált húzódzkodás (gép)',3,'6–10','1–2',120,'Mellhez húzás, semleges fogás','A SÚLY MEZŐBE A SEGÍTSÉG KERÜL (kg) — itt a kevesebb a jobb, a javaslat is így számol. Teljes lelógás alul, könyököt a csípő felé, áll a rúd fölé. 3×10 tisztán → kevesebb segítség; segítség nélkül 3×8 → testsúlyos, majd súlyöv.',{assist:true}],
+        ['U13','Mellkas-támaszos evezés (T-rúd vagy gép)',2,'8–12','1–2',120,'Ülő gépi evezés','Mellkas-támasz → a derék kimarad. Elöl teljes nyújtás, könyök kb. 45°-ban kifelé, hátul lapocka össze. RIR 1–2.'],
+        ['U14','Oldalemelés kábelen',3,'8–15','0',75,'Gépi oldalemelés','Csiga kb. comb-magasságban → a nyújtott helyzetben a legnagyobb a feszülés; kisujj enyhén fel. 9 kg a legkisebb súly → progresszió ismétléssel. Minden szett bukásig.'],
+        ['U15','Tricepsznyújtás fej fölött kábellel',2,'10–15','0',75,'Francia nyomás kézisúlyzóval','Fej fölött a hosszú fej megnyúlik → nagyobb növekedés, mint letolásnál (Maeo 2023). Minden szett bukásig.'],
+        ['U16','Bayesian kábeles curl',2,'10–15','0',75,'Bicepsz curl ferde padon','Csiga csuklómagasságban, lépj el két lépést: a kar a test mögött → a bicepsz nyújtott helyzetből indul. A gyengébb karral kezdj. Minden szett bukásig.'],
+        ['U17','Fordított tárogatás gépen (reverse pec deck)',2,'12–20','0',75,'Kábeles fordított tárogatás / face pull','Hátsó váll izoláció. Nagy félkörben vidd ki a karokat. Minden szett bukásig.']],
+      L1:[
+        ['L11','Guggolás rúddal, sarokemeléssel',3,'6–8','2',150,'Smith guggolás sarokemeléssel / hack guggolás','Erő + technika. Sarok alá 1,5–2,5 cm emelés → függőlegesebb törzs, a medence később billen. 2–3 mp negatív. Mélység: amíg a medence nem billen hátra. RIR 2, soha bukásig.'],
+        ['L12','Ülő lábhajlítás',3,'8–12','0',90,'Fekvő lábhajlítás','Fő combhajlító-gyakorlat: ülve hosszabb izomhosszon dolgozik (Maeo 2021). Dőlj előre a párna fölé. Minden szett bukásig.'],
+        ['L13','Lábtoló (közepes lábállás)',2,'10–15','1–2',120,'Hack guggolás / egylábas lábtoló','Mélység csak addig, amíg a medence a háttámlán marad — ha a far felemelkedik, a derék flexióba megy terhelés alatt. RIR 1–2.'],
+        ['L14','Fekvő lábhajlítás',2,'10–15','0',75,'Ülő lábhajlítás','Második combhajlító-gyakorlat, más ellenállás-görbével. A csípő maradjon a padon. A combhajlító a guggolásból alig kap ingert, ezért kell a két lábhajlítás. Minden szett bukásig.'],
+        ['L15','Csípő-abdukció gép',2,'12–20','0',75,'Kábeles csípő-abdukció','A gluteus medius / minimus fő funkciója az abdukció — ezt a guggolás nem fedi le. Enyhe előredőléssel több a far. Minden szett bukásig.'],
+        ['L16','Álló vádliemelés',3,'8–12','0',75,'Lábtolón vádli','Térd nyújtva → gastrocnemius. Alul 1–2 mp megállás nyújtott helyzetben. Minden szett bukásig.'],
+        ['L17','Fordított tárogatás gépen (reverse pec deck)',2,'12–20','0',75,'Kábeles fordított tárogatás','A hátsó váll 2. heti ingere — ülve, egy gépen, gyorsan megvan. Minden szett bukásig.'],
+        ['L18','Kábeles crunch',2,'10–15','0',60,'Súlytárcsás crunch / gépi crunch','Gerinc görbüljön (bordák a medence felé), a kar csak tart. Minden szett bukásig.']],
+      U2:[
+        ['U21','Ferde nyomás kézisúlyzóval (30°)',3,'8–12','1–2',120,'Ferde gépi nyomás / Smith ferde nyomás','Felső mell hangsúly, mély nyújtás alul, 1 mp megállás feszülés alatt. RIR 1–2.'],
+        ['U22','Mellhez húzás, semleges fogás',3,'8–12','1–2',120,'Gépi lehúzás / egykezes kábeles lehúzás','Semleges, szűkebb fogás → több lats, kevesebb középső trapéz. Fent teljes nyújtás, könyököt LE a csípő felé. RIR 1–2.'],
+        ['U23','Tolódzkodás (korlát)',2,'6–12','1–2',120,'Gépi tolódzkodás / szűk fogású fekvenyomás','Vállak le-hátra, enyhe előredőlés, lent a váll kb. könyökmagasságig. Testsúllyal (súly mező üres); 2×12 RIR 1–2-vel → súlyöv +2,5 kg.'],
+        ['U24','Ülő kábeles evezés',2,'10–12','1',90,'Gépi evezés','Elöl hagyd előremenni a lapockát (nyújtás), hátul szorítsd össze; a törzs ne lendüljön. RIR 1.'],
+        ['U25','Tárogatás gépen (pec deck)',2,'10–15','0',75,'Kábeles keresztbehúzás','A nyújtott pozíció a fő inger: karok hátul, amennyire a váll fájdalommentesen engedi. Minden szett bukásig.'],
+        ['U26','Gépi oldalemelés',3,'12–20','0',75,'Oldalemelés kézisúlyzóval / kábelen','A negatívot fékezd, alul ne pihenj. Minden szett bukásig.'],
+        ['U27','Bicepsz curl ferde padon',2,'8–12','0',75,'Bayesian kábeles curl','Kar a test mögött → a hosszú fej nyújtott helyzetben dolgozik. Minden szett bukásig.'],
+        ['U28','Tricepsz letolás kábelen',2,'10–15','0',75,'Gépi tricepsz','A laterális és mediális fej kiegészítése a fej fölötti nyújtás mellett. Minden szett bukásig.']],
+      L2:[
+        ['L21','Hack guggolás',3,'8–12','1–2',120,'Lábtoló / Smith guggolás','Mély ROM, hát és far végig a párnán; tengelyirányú gerinc-terhelés nélkül. RIR 1–2.'],
+        ['L22','Román felhúzás (RDL) — visszavezetés',3,'8','3–4',120,'45°-os csípőfeszítés (ha fáj — ⇄ Csere)','DERÉK-PROTOKOLL 1. fázis: a korábbi munkasúly ~50%-a, 3 mp negatív, RIR 3–4, SOHA bukásig. ROM csak addig, amíg a medence még előre billen; felül far összeszorít, bordák le. Videózd oldalról és hátulról. 2 tünetmentes hét után → 2. fázis: heti +2,5–5 kg, RIR 2–3, max 8 ism.'],
+        ['L23','Fekvő lábhajlítás',2,'10–15','0',75,'Ülő lábhajlítás','A térdhajlítás a combhajlító rövid fejét is eléri, amit az RDL nem. Minden szett bukásig.'],
+        ['L24','Lábnyújtás (hátradöntött háttámlával)',2,'12–15','0',75,'Reverse nordic / sissy guggolás','A rectus femoris direkt munkája; hátradöntve meg is nyúlik. Minden szett bukásig.'],
+        ['L25','Hip thrust gép',2,'10–15','1',90,'Smith hip thrust / farizom-gép','A far a csípő teljes nyújtásánál dolgozik a legerősebben — ezt a guggolás nem terheli. Felül „bordák le, far összeszorít”, ne a derék feszítsen túl. RIR 1.'],
+        ['L26','Ülő vádliemelés',3,'12–20','0',75,'Lábtolón vádli','Ülve a soleus dolgozik dominánsan. Alul 1–2 mp megállás. Minden szett bukásig.'],
+        ['L27','Oldalemelés kábelen',2,'8–15','0',75,'Gépi oldalemelés','Az oldalsó váll 2. heti ingere — egy helyben, gyorsan megvan. Minden szett bukásig.']]
     }
   },
   CAL: {
@@ -643,7 +692,7 @@ for (const key in BUILTIN){ const P=BUILTIN[key];
     const [id,name,sets,reps,rir,rest,alt,tip,o={}]=t; const kieg=name.startsWith('+ ');
     const ss = o.ss!==undefined ? o.ss : (rest===0 && /a$/.test(id) ? id.slice(0,-1)+'b' : null);
     return {id,lab:o.lab||id,circ:!!o.circ,name:kieg?name.slice(2):name,kieg,sets,reps,rir,rest,alt,tip,ss,cali:!!P.cali,unit:o.unit||'reps',lo:o.lo,hi:o.hi,
-      plus:!!o.plus,weighted:!!o.weighted,skill:!!o.skill,test:!!o.test,explosive:!!o.explosive,total:o.total||null};
+      plus:!!o.plus,weighted:!!o.weighted,assist:!!o.assist,skill:!!o.skill,test:!!o.test,explosive:!!o.explosive,total:o.total||null};
   });}
   finalize(P);
 }
@@ -692,7 +741,7 @@ function draftFrom(k){
 /* ===================== STATE ===================== */
 const LS='edzesnaplo.v1';
 const defSettings=()=>({program:'PPL',prog:{},machine:{},step:{},activeId:null});
-function normSettings(d){ d=d||{}; const s=Object.assign(defSettings(),d); s.prog=Object.assign({PPL:{block:1,pos:0},AB:{block:1,pos:0},CAL:{block:1,pos:0}},d.prog||{}); s.machine=d.machine||{}; s.step=d.step||{}; return s; }
+function normSettings(d){ d=d||{}; const s=Object.assign(defSettings(),d); s.prog=Object.assign({PPL:{block:1,pos:0},AB:{block:1,pos:0},UL:{block:1,pos:0},CAL:{block:1,pos:0}},d.prog||{}); s.machine=d.machine||{}; s.step=d.step||{}; return s; }
 function loadLocal(key){ try{ const raw=localStorage.getItem(key); if(raw){ const d=JSON.parse(raw); if(d&&d.settings) return {settings:normSettings(d.settings),sessions:d.sessions||{},programs:d.programs||{},mob:d.mob||{}}; } }catch(e){} return null; }
 let LSK=LS; try{ const u=localStorage.getItem(LS+'.uid'); if(u&&localStorage.getItem(LS+'.'+u)) LSK=LS+'.'+u; }catch(e){}
 let S = loadLocal(LSK) || {settings:normSettings(),sessions:{},programs:{},mob:{}};
@@ -793,7 +842,8 @@ const num=v=>{ if(v===''||v==null) return null; const n=parseFloat(String(v).rep
 const fmt=n=>n==null?'':(Math.round(n*10)/10).toString().replace('.',',');
 const e1rm=s=>s.w&&s.r? s.w*(1+(s.r+(s.rir??0))/30) : null;
 // calisthenics: teljes terhelés = testsúly + plusz súly; az e1RM-et plusz súlyként adjuk vissza
-function e1rmX(q,e,bw){ if(!e||!e.cali) return e1rm(q); if(unitOf(e)!=='reps'||!q.r||!bw) return null; const tot=bw+(q.w||0); return tot*(1+(q.r+(q.rir??0))/30)-bw; }
+function e1rmX(q,e,bw){ if(e&&e.assist){ if(unitOf(e)!=='reps'||!q.r||!bw) return null; const tot=bw-(q.w||0); return tot>0? tot*(1+(q.r+(q.rir??0))/30) : null; }
+  if(!e||!e.cali) return e1rm(q); if(unitOf(e)!=='reps'||!q.r||!bw) return null; const tot=bw+(q.w||0); return tot*(1+(q.r+(q.rir??0))/30)-bw; }
 const todayStr=()=>{ const d=new Date(); return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0'); };
 const huDate=(s,o={month:'short',day:'numeric'})=>{ const [y,m,d]=s.split('-').map(Number); return new Date(y,m-1,d).toLocaleDateString('hu-HU',o); };
 const restTxt=s=>s>=120&&s%60===0? (s/60)+' perc' : s===150? '2–3 perc' : s+' mp';
@@ -815,7 +865,7 @@ function sessExList(s){
    Ismétlés bukásig egy súlyon = ism. + RIR  →  e1RM = súly × (1 + (ism.+RIR)/30)
    Fordítva: adott súlyon a cél-RIR mellett várható ism. = 30 × (e1RM/súly − 1) − cél-RIR
    A szettek közti fáradást (ismétlés-esést) a múltkori szettekből vesszük át. */
-const DEFAULT_STEP={L1:5,L2:5,L4:5,L6:5,A1:5,B1:5,B2:2,B7a:2,B8a:2};
+const DEFAULT_STEP={L1:5,L2:5,L4:5,L6:5,A1:5,B1:5,B2:2,B7a:2,B8a:2,APU:5,U12:5,L11:5,L13:5,L21:5,L25:5,U21:2,U27:2};
 const STEPS=[1,1.25,2,2.5,5,10];
 const stepFor=(prog,id)=> S.settings.step&&S.settings.step[prog+':'+id] || (prog==='CAL'?2.5:DEFAULT_STEP[id]) || 2.5;
 const mid=s=>{ if(!isNumRir(s)) return 2; const [a,b]=rng(s); return (a+b)/2; };
@@ -824,6 +874,7 @@ function recommendBase(prog,e,phase,excludeId){
   const t=target(e,phase); if(t.lo==null) return null;
   const last=lastFor(prog,e.id,excludeId,phase!=='deload')||lastFor(prog,e.id,excludeId,false);
   if(u==='sec') return recSec(e,t,phase,last);
+  if(e.assist) return recAssist(prog,e,t,phase,last);
   if(e.cali) return recCali(prog,e,t,phase,last);
   if(!last) return {kind:'new', why:`Első alkalom: válassz olyan súlyt, amivel ${t.lo}–${t.hi} ismétlés megy úgy, hogy kb. ${t.rir} ismétlés maradjon tartalékban. Ebből számolom a következőt.`};
   return coreGym(prog,e,t,phase,last);
@@ -844,6 +895,24 @@ function recSec(e,t,phase,last){
   }
   if(secs.length>=n&&secs.every(x=>x>=hi)) return {kind:'up',unit:'sec',reps:Array(n).fill(lo),why:`${lastTxt} Minden szett elérte a ${hi} mp-et → következő lépcső: ${altTxt(e)}. Az új változattal ~${lo} mp-cel kezdd.`};
   return {kind:'same',unit:'sec',reps:fillTo(secs,n).map(x=>Math.min(hi,x+3)),why:`${lastTxt} Izometrikus progresszió: +2–3 mp szettenként, amíg minden szett el nem éri a ${hi} mp-et.`};
+}
+/* Asszisztált (gépi) húzódzkodás: a súly mező a SEGÍTSÉG — kevesebb segítség = haladás.
+   Kettős progresszió fordítva: ha minden szett eléri a tartomány tetejét → −1 lépcső segítség, vissza az aljára. */
+function recAssist(prog,e,t,phase,last){
+  const {lo,hi,sets:n}=t, step=stepFor(prog,e.id);
+  if(!last) return {kind:'new',why:`Első alkalom: állíts be akkora segítséget, amivel ${lo}–${hi} tiszta ismétlés megy kb. ${t.rir} ismétlés tartalékkal. A súly mezőbe a SEGÍTSÉG kerül (kg) — itt a kevesebb a jobb.`};
+  const sets=last.sets.filter(q=>q.r); if(!sets.length) return null;
+  const a0=Math.max(0,...sets.map(q=>q.w||0));
+  const lastTxt=`Múltkor ${a0?fmt(a0)+' kg segítséggel':'segítség nélkül'} × ${sets.map(q=>q.r).join('/')}.`;
+  if(phase==='deload') return {kind:'deload',w:a0||null,reps:Array.from({length:n},(_,i)=>Math.max(1,sets[Math.min(i,sets.length-1)].r-2)),step,why:`${lastTxt} Deload: ugyanannyi segítség, fele szett, 2 ismétléssel kevesebb (RIR 3–4).`};
+  if(sets.every(q=>q.r>=hi)){
+    if(a0<=0) return {kind:'up',w:null,reps:Array(n).fill(lo),why:`${lastTxt} Segítség nélkül is megvan a ${hi} → következő lépcső: súlyöv +2,5 kg, vagy lassú (3–5 mp) negatív.`};
+    const a=Math.max(0,a0-step);
+    return {kind:'up',w:a||null,reps:Array(n).fill(lo),step,why:`${lastTxt} Minden szett elérte a ${hi}-et → ${fmt(step)} kg-mal kevesebb segítség (${a?fmt(a)+' kg':'segítség nélkül'}), vissza ${lo} ismétlésre.`};
+  }
+  if(sets[0].r<lo-1) return {kind:'down',w:a0+step,reps:Array(n).fill(lo),step,why:`${lastTxt} A tartomány alja (${lo}) sem jött ki → +${fmt(step)} kg segítség, hogy legalább ${lo} tiszta ismétlés meglegyen.`};
+  const reps=Array.from({length:n},(_,i)=>Math.min(hi,sets[Math.min(i,sets.length-1)].r+1));
+  return {kind:'same',w:a0||null,reps,step,why:`${lastTxt} Marad a segítség, szettenként +1 ismétlés a cél. Ha minden szett eléri a ${hi}-et → kevesebb segítség.`};
 }
 /* Calisthenics ismétléses gyakorlatok: lineáris ismétlés-progresszió → következő lépcső / +2,5 kg.
    Ha van plusz súly és ismert a testsúly, a terhelés = testsúly + plusz, és a súlyzós motor számol vele. */
@@ -1165,6 +1234,7 @@ function fSugg(s,e,i,rc){
 }
 function recoLbl(e,rc){
   return rc.unit==='sec'? {up:'↑ következő lépcső',same:'= +2–3 mp',deload:'deload',new:'első alkalom',down:'↓ könnyebb'}[rc.kind]
+    : e.assist? ({up:'↑ kevesebb segítség',down:'↓ több segítség',same:'= +1 ismétlés',deload:'deload',new:'első alkalom'}[rc.kind]||'')
     : e.cali&&!rc.w&&rc.kind==='up'? '↑ következő lépcső' : e.cali&&!rc.w&&rc.kind==='down'? '↓ könnyebb variáció'
     : {up:'↑ súlyemelés',down:'↓ súlycsökkentés',same:'= +1 ismétlés',deload:'deload',new:'első alkalom'}[rc.kind]||'';
 }
@@ -1278,9 +1348,10 @@ function fAction(act,b,s){
 function recoBox(prog,e,rc,t){
   if(!rc) return '';
   const lbl= rc.unit==='sec'? {up:'↑ következő lépcső',same:'= +2–3 mp',deload:'deload',new:'első alkalom'}[rc.kind]
+    : e.assist? {up:'↑ kevesebb segítség',down:'↓ több segítség',same:'= +1 ismétlés',deload:'deload',new:'első alkalom'}[rc.kind]
     : e.cali&&!rc.w&&rc.kind==='up'? '↑ következő lépcső' : e.cali&&!rc.w&&rc.kind==='down'? '↓ könnyebb variáció'
     : {up:'↑ súlyemelés',down:'↓ súlycsökkentés',same:'= +1 ismétlés',deload:'deload',new:'első alkalom'}[rc.kind];
-  const val= rc.reps ? `${rc.w?(e.cali?'+':'')+fmt(rc.w)+' kg × ':''}${rc.reps.join(' / ')}${rc.unit==='sec'?' mp':''}` : '';
+  const val= rc.reps ? `${rc.w?(e.cali?'+':'')+fmt(rc.w)+(e.assist?' kg segítség × ':' kg × '):''}${rc.reps.join(' / ')}${rc.unit==='sec'?' mp':''}` : '';
   const key=prog+':'+e.id;
   return `<div class="reco"><div class="rhead"><span class="lab">Javaslat</span><span class="k ${rc.kind}">${lbl}</span>${rc.w?`<button class="stepb" data-act="step" data-key="${esc(key)}" aria-label="Súlylépcső váltása">lépcső ${fmt(rc.step)} kg</button>`:''}</div>
     ${val?`<div class="val">${val} <span class="small muted" style="font-family:var(--f-body);font-weight:600">${rirLbl(t.rir)?'@ '+esc(rirLbl(t.rir)):''}</span></div>`:''}
@@ -1325,6 +1396,7 @@ function metricOf(e){
   const u=unitOf(e);
   if(u==='sec') return {label:'Leghosszabb tartás (mp)',unit:'mp',k:'Tartás'};
   if(u==='cm') return {label:'Doboz magassága (cm) — kisebb = jobb',unit:'cm',k:'Magasság',low:true};
+  if(e.assist) return lastBw()!=null ? {label:'Becsült 1RM (testsúly − segítség, kg)',unit:'kg',e1:true,k:'e1RM'} : {label:'Legtöbb ismétlés egy szettben (add meg a testsúlyod az erőbecsléshez)',unit:'ism.',k:'Ismétlés'};
   if(e.cali) return (e.weighted||e.test&&e.plus)&&lastBw()!=null ? {label:'Becsült 1RM plusz súly (kg)',unit:'kg',e1:true,k:'e1RM +kg'} : {label:'Legtöbb ismétlés egy szettben',unit:'ism.',k:'Ismétlés'};
   return {label:'Becsült 1RM edzésenként (kg)',unit:'kg',e1:true,k:'e1RM'};
 }
@@ -1332,7 +1404,7 @@ function progressData(prog,e){
   const m=metricOf(e);
   return finished().filter(s=>s.program===prog&&s.ex[e.id]).map(s=>{
     const bw=s.bw??lastBw();
-    const sets=s.ex[e.id].sets.filter(t=>t.done&&t.r!=null&&(!m.e1||(t.r&&(e.cali||t.w)))); if(!sets.length) return null;
+    const sets=s.ex[e.id].sets.filter(t=>t.done&&t.r!=null&&(!m.e1||(t.r&&(e.cali||e.assist||t.w)))); if(!sets.length) return null;
     const val=t=> m.e1? (e1rmX(fillRir(t,e,s.phase),e,bw)??-Infinity) : t.r;
     let best=sets[0]; for(const t of sets){ if(m.low? val(t)<val(best) : val(t)>val(best)) best=t; }
     const v=val(best); if(!isFinite(v)) return null;
