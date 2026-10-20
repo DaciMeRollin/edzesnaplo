@@ -465,6 +465,62 @@ input[type=checkbox]{width:20px;height:20px;accent-color:var(--day);flex:none}
 .selhead{display:flex;justify-content:space-between;align-items:baseline;gap:8px;flex-wrap:wrap}
 .selhead .v{font-family:var(--f-display);font-weight:700;font-size:26px;text-transform:uppercase}
 @media (max-width:370px){.exl button{grid-template-columns:34px minmax(0,1fr) 64px 52px}.exl svg{width:64px}}
+
+/* ==== Újratervezés 1a/2a: tiszta, keret nélküli kártyák ==== */
+:root{--bg:#f4f5f7;--surface:#fff;--surface2:#eef1f4;--line:#e4e7eb;--muted:#5f6873;--red:#d0402f;--blue:#2a62c9;--r:18px}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--bg:#0f1216;--surface:#181c22;--surface2:#222830;--line:#262c34}}
+:root[data-theme="dark"]{--bg:#0f1216;--surface:#181c22;--surface2:#222830;--line:#262c34}
+.top{border-bottom:0}
+.card,.stat{border:0;box-shadow:0 1px 3px rgb(0 0 0 / .05)}
+.btn{border-radius:12px}
+.btn.big{border-radius:14px}
+.hello{border:0;background:none;padding:0;font-family:var(--f-display);font-weight:700;font-size:28px;line-height:1.1;text-transform:uppercase;text-align:left;color:var(--fg);min-height:0}
+.hello.empty-name{color:var(--muted);font-size:20px}
+.hgreet{display:flex;flex-direction:column;min-width:0}
+.progbtn{border:0;box-shadow:0 1px 2px rgb(0 0 0 / .06)}
+.wk{border:0;background:var(--surface2);text-align:left;align-items:flex-start;padding:8px}
+.wk b{color:var(--day)}
+.wk.done{background:var(--surface2);border:0}
+.wk.done span{color:var(--muted)}
+.wk.now{border:0;background:var(--day)}
+.wk.now b,.wk.now span{color:var(--on-day)}
+.wk .bar{display:none}
+.hero{border-top:0;border-radius:20px;padding:18px;gap:14px}
+.dayname{font-size:56px;line-height:.95}
+.facts{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:4px}
+.fact{background:none;padding:0;flex-direction:column;gap:0;font-size:11px;font-weight:500}
+.fact b{font-size:22px;font-weight:600}
+.hero .btn.fin{background:var(--day);border-color:var(--day);color:var(--on-day)}
+.rule{border:0;background:var(--surface2)}
+.alt .chip{border:0;background:var(--surface2);color:var(--day)}
+.alt .chip .dot{display:none}
+.backup{border-left:0}
+.fhead{background:var(--day);color:var(--on-day);border-bottom:0;border-radius:0 0 18px 18px}
+.fhead .sub,.fhead .count{color:inherit;opacity:.85}
+.fhead .day i{background:var(--on-day)}
+.fstrip button{background:color-mix(in srgb,var(--on-day) 28%,transparent)}
+.fstrip button.cur{background:color-mix(in srgb,var(--on-day) 60%,transparent)}
+.fstrip button.done{background:var(--on-day)}
+.frest{border:0;color:var(--fg)}
+.fcard{border:0;border-radius:18px;box-shadow:0 2px 10px rgb(0 0 0 / .07)}
+.fold{border:0;border-radius:14px}
+.fold.done{background:var(--surface);border:0;opacity:.8}
+.fmach{border-radius:10px}
+.stp{border:0;background:var(--surface2);border-radius:12px}
+.stp button{background:transparent}
+.stp.val{box-shadow:inset 0 0 0 1.5px var(--fg)}
+.stp.sugg{box-shadow:inset 0 0 0 1.5px var(--line);background:transparent}
+.fdone{border:0}
+.hist{border-left:0}
+.opt{border:0;background:var(--surface2)}
+.sheet{border-radius:20px 20px 0 0}
+.tabs{background:color-mix(in srgb,var(--surface) 92%,transparent);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px)}
+body.in-session .tabs{display:none}
+body.in-session .timer{bottom:env(safe-area-inset-bottom,0px)}
+body.in-session #toast{bottom:calc(env(safe-area-inset-bottom,0px) + 14px)}
+body.in-session .wrap{padding-bottom:100px}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .card,:root:not([data-theme="light"]) .stat,:root:not([data-theme="light"]) .fcard,:root:not([data-theme="light"]) .progbtn{box-shadow:none}}
+:root[data-theme="dark"] .card,:root[data-theme="dark"] .stat,:root[data-theme="dark"] .fcard,:root[data-theme="dark"] .progbtn{box-shadow:none}
 </style>
 </head>
 <body>
@@ -1014,7 +1070,7 @@ function render(){
   const P0=PROGRAMS[prog];
   const day=activeOk? active.day : curSlot(prog).day;
   const c=(P0.days[day]||{}).col||'blue';
-  $('#app').dataset.col=c; document.body.dataset.col=c;
+  $('#app').dataset.col=c; document.body.dataset.col=c; document.body.classList.toggle('in-session', !!(ui.tab==='edzes'&&activeOk));
   $('#progLabel').textContent=P0.short||'';
   document.querySelectorAll('.tabs button').forEach(b=>b.setAttribute('aria-current',b.dataset.tab===ui.tab?'page':'false'));
   const v=$('#view');
@@ -1078,7 +1134,7 @@ function viewHome(){
       <div class="lastbox"><div class="mini"><b class="num">${m??'–'}</b><span>perc</span></div><div class="mini"><b class="num">${p.cali? n : Math.round(v).toLocaleString('hu-HU')}</b><span>${p.cali?'szett':'kg volumen'}</span></div><div class="mini"><b class="num">${lastD.back!=null?lastD.back+'/10':'–'}</b><span>${p.cali?'fájdalom':'derék'}</span></div></div></section>`; })() : '';
   return `
   <div class="stack" style="margin-top:14px">
-    <div class="hrow2"><span class="eyebrow">${ps.block}. blokk · ${slot.week}. hét · ${ph.label}</span><button class="progbtn" data-act="psheet" aria-haspopup="dialog">${esc(p.label)}<svg viewBox="0 0 12 12" aria-hidden="true"><path d="M2 4l4 4 4-4"/></svg></button></div>
+    <div class="hrow2"><div class="hgreet"><span class="eyebrow">${ps.block}. blokk · ${slot.week}. hét · ${ph.label}</span>${S.settings.name?`<button class="hello" data-act="setname">Szia, ${esc(S.settings.name)}</button>`:`<button class="hello empty-name" data-act="setname">+ Add meg a neved</button>`}</div><button class="progbtn" data-act="psheet" aria-haspopup="dialog">${esc(p.label)}<svg viewBox="0 0 12 12" aria-hidden="true"><path d="M2 4l4 4 4-4"/></svg></button></div>
     ${wk.length>1?`<div class="week" style="grid-template-columns:repeat(${wk.length},minmax(0,1fr))">${tiles}</div>`:''}
     <section class="card hero">
       <div>
@@ -1092,10 +1148,10 @@ function viewHome(){
       ${others?`<div class="alt"><span>Ma inkább:</span>${others}</div>`:''}
     </section>
     ${lastBox}
-    ${needsBackup()?`<section class="card backup row" style="justify-content:space-between"><span class="small"><b>Biztonsági mentés esedékes</b><br><span class="muted">${backupAge()==null?'Még egyszer sem mentettél.':backupAge()+' napja mentettél utoljára.'}</span></span><button class="btn sm" data-act="backup">Mentés most</button></section>`:''}
     ${lastS?`<p class="small muted" style="margin:0">Utolsó edzés: ${huDate(lastS.date,{month:'long',day:'numeric'})} · ${esc(dn(lastS.program,lastS.day))}</p>`:''}
     <div class="row" style="justify-content:space-between;margin-top:6px"><h2 style="margin:0">Mai terv</h2><span class="small muted">javaslat</span></div>
     <section class="card" style="padding-block:4px"><ul class="tplan">${rows}</ul></section>
+    ${needsBackup()?`<section class="card backup row" style="justify-content:space-between"><span class="small"><b>Biztonsági mentés esedékes</b><br><span class="muted">${backupAge()==null?'Még egyszer sem mentettél.':backupAge()+' napja mentettél utoljára.'}</span></span><button class="btn sm" data-act="backup">Mentés most</button></section>`:''}
   </div>${ui.psheet?progSheet():''}`;
 }
 
@@ -1724,7 +1780,7 @@ document.addEventListener('visibilitychange',keepAwake);
 let sampleFn=null;
 const AI_GOALS={hyp:'Izomépítés (hipertrófia)',str:'Erőnövelés',mix:'Erő + izomépítés',fit:'Általános fittség, egészség',cut:'Fogyás izommegtartással'};
 const AI_EXP={beg:'Kezdő (< 1 év)',mid:'Középhaladó (1–3 év)',adv:'Haladó (3+ év)'};
-const AI_EQ={gym:'Teljes edzőterem (gépek, kábelek, szabadsúly)',mach:'Főleg gépek és kábelek',free:'Főleg szabadsúly (rúd, kézisúlyzó)',home:'Otthon (kézisúlyzó, gumiszalag, saját testsúly)'};
+const AI_EQ={gym:'Teljes edzőterem (gépek, kábelek, szabadsúly)',mach:'Főleg gépek és kábelek',free:'Főleg szabadsúly (rúd, kézisúlyzó)'};
 const aiDefaults=()=>({goal:'hyp',perWeek:3,minutes:60,exp:'mid',equip:'gym',focus:'',limits:'',likes:'',extra:'',useHistory:finished().length>0});
 function historySummary(){
   const list=finished(); if(!list.length) return '';
@@ -2578,6 +2634,7 @@ document.addEventListener('click',ev=>{
     try{ const f=ui.ai.form; if(r&&r.perWeek) f.perWeek=Math.max(1,Math.min(7,parseInt(r.perWeek,10)||f.perWeek)); const {draft,note}=draftFromAI(r,f); ui.ai=null; ui.edit={key:null,draft,note}; render(); window.scrollTo(0,0); }
     catch(e){ toast('Nem sikerült beolvasni — a teljes kódot másold be'); }
     return; }
+  if(act==='setname'){ const n=prompt('Hogy szólítsalak?', S.settings.name||''); if(n!=null){ S.settings.name=n.trim().slice(0,24); queue(); render(); } return; }
   if(act==='psheet'){ ui.psheet=true; render(); return; }
   if(act==='psheet-x'){ ui.psheet=false; render(); return; }
   if(act==='spain'||act==='sfeel'||act==='ssave'||act==='scool'){ const ss=ui.summary&&S.sessions[ui.summary]; if(!ss) return;
