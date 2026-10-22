@@ -547,7 +547,66 @@ body.in-session .wrap{padding-bottom:100px}
 <script>
 /* ===================== PROGRAM DATA (from AB_edzesprogram.xlsx + PPL_gepes_program.xlsx) ===================== */
 // [id, név, szett, ismétlés, RIR, pihenő mp (0 = szuperszett 'a' tag), alternatíva, végrehajtás]
+// Kardió: minden F/A-nap végén; a javaslat edzésről edzésre lép (recCardio)
+const KARDIO_T=['KARDIO','Kardió — szobabicikli, zóna 2',1,'10–25 perc','–',0,'Elliptikus tréner / gyors séta emelkedőn','A súlyzós edzés UTÁN, kerékpáron: 105 kg-nál ízületkímélőbb, és kevésbé zavarja az izomépítést, mint a futás (Schoenfeld). Zóna 2 = teljes mondatokban tudsz beszélni, RPE 3–4/10. Az ellenállást (W vagy szint) írd be. Szabály: ha megvolt a tervezett idő, RPE ≤ 4, a pulzus a max. 70%-a alatt és tudtál beszélni → következő alkalommal +1 perc (25 percig), utána +5 W. Ha nem → ugyanaz még egyszer. RPE ≥ 7 → egy lépés vissza.',{lab:'K',unit:'cardio'}];
 const BUILTIN = {
+  FA: {
+    title:'Upper/lower + street workout', label:'F/A · heti 4', short:'F/A', pain:true,
+    labels:{peak:'Terhelő +szett'},
+    rules:{
+      intro:'Program RIR +1 (izoláció 2, compound +1). Súlyok és gépbeállítások belövése, sarokék a hack guggoláshoz; dip és fekvőtámasz kiinduló szintje. A kardió 10 perccel indul.',
+      normal:'Kettős progresszió: ha minden szett eléri a tartomány tetejét a cél-RIR-rel → +1 súlylépcső (dip: +2,5 kg öv; asszisztált: −5 kg segítség; fekvőtámasz: mellény / deficit). Izolációknál csak az UTOLSÓ szett bukásig. Kardió: sikeres alkalom után +1 perc.',
+      peak:'Mint a terhelő hét, de 4 gyakorlaton +1 szett (lehúzás, ferde nyomás, lábnyújtás, kitörés) — fokozatos volumenemelés a blokk alatt (Schoenfeld).',
+      deload:'Fele szettszám, RIR 3–4, a súly marad vagy −10%. A hét végén teszt: max húzódzkodás, max dip, max fekvőtámasz (írd a megjegyzésbe). Utána új blokk a 4. heti súlyokból.'},
+    info:[
+      'Heti 4 edzés: Felső 1 → Alsó 1 → Felső 2 → Alsó 2 (pl. H, K, Cs, P). Ha kimarad egy, ott folytatod, ahol abbamaradt.',
+      'Izolációk: az első szettek RIR 1, csak az UTOLSÓ szett bukásig. Dip, evezés, lehúzás, hack, kitörés: RIR 1–2. Guggolás RIR 2–3, RDL RIR 3–4 (Muscle Ladder, Schoenfeld).',
+      'Húzódzkodás max 3 ismétlésnél: F1-en negatív (5–8 mp leengedés), F2-n asszisztált 3 × 5–8. Ha segítség nélkül 3 × 5 megy → testsúlyos húzódzkodás (Overcoming Gravity).',
+      'Dip, fekvőtámasz, asszisztált húzódzkodás: az edzés végén add meg a testsúlyod — ebből számol a becsült 1RM (dip: testsúly + öv; asszisztált: testsúly − segítség).',
+      'Kardió minden edzés után (szobabicikli, zóna 2): 10 percről indul; ha megvolt az idő, RPE ≤ 4, a pulzus a max. 70%-a alatt és tudtál beszélni → +1 perc, 25 perc után +5 W. Ha nem → ugyanaz; RPE ≥ 7 → egy lépés vissza.',
+      '3–4. hét: +1 szett a lehúzáson, a ferde nyomáson, a lábnyújtáson és a kitörésen. 5. hét deload, a végén teszt.'],
+    days:{F1:{name:'Felső 1',sub:'negatív húzódzkodás · korlát-dip · hát · kar/váll + kardió',col:'blue'},
+          A1:{name:'Alsó 1',sub:'guggolás-technika · combhajlító · quad · has + kardió',col:'yellow'},
+          F2:{name:'Felső 2',sub:'asszisztált húzódzkodás · ferde nyomás · fekvőtámasz · kar + kardió',col:'red'},
+          A2:{name:'Alsó 2',sub:'hack · RDL-visszavezetés · kitörés · térdemelés + kardió',col:'green'}},
+    weeks:[['F1','A1','F2','A2'],['F1','A1','F2','A2'],['F1','A1','F2','A2'],['F1','A1','F2','A2'],['F1','A1','F2','A2']],
+    phases:['intro','normal','peak','peak','deload'],
+    ex:{
+      F1:[
+        ['F1.1','Húzódzkodás — csak negatív (lefelé)',3,'2–3','–',120,'Hosszabb leengedés (5 → 8 mp) → 4 szett → negatív súlymellénnyel → testsúlyos húzódzkodás','Max 3 húzódzkodásnál ez a leghatékonyabb út (Overcoming Gravity): ugorj vagy lépj fel, áll a rúd fölött, lapockák lent, majd 5–8 mp EGYENLETES leengedés teljes lógásig. Könyök a test előtt, nem szélesen. A szett ott ér véget, ahol már nem tudod 3 mp-nél tovább fékezni. A leengedés idejét írd a Variáció mezőbe (pl. 6 mp). Frissen, az edzés elején.',{bw:true,plus:true,ecc:true}],
+        ['F1.2','Korlát-tolódzkodás (dip) — testsúly, majd súlyöv',4,'5–8','1–2',120,'Asszisztált dip gép (ha 5 sem megy, vagy fáj a váll) / gépi mellnyomás','A fekvenyomás HELYETT (street workout alap). Lapocka lent (ne húzd fel a vállad), törzs enyhén előre → több mell. 2–3 mp lefelé, mélység: felkar kb. vízszintesig, ameddig a váll eleje nem fáj — 105 kg-nál a vállízület terhelése nagy. Kettős progresszió: 4 × 8 RIR 1–2 → +2,5 kg súlyöv, vissza 5-re.',{bw:true,plus:true,weighted:true}],
+        ['F1.3','Mellkas-támaszos T-rúd evezés',3,'8–12','1–2',120,'Gépi evezés mellkas-támasszal','A mellkas-támasz kiveszi a derekat a láncból. Elöl teljes nyújtás, könyök kb. 45°, hátul lapockák össze. Nem bukásig (Ultimate Exercise Guide: középső hát #1).'],
+        ['F1.4','Lehúzás szűk, semleges fogással',3,'8–12','1–2',120,'Egykezes kábeles lehúzás','Fent teljes nyújtás, a könyököt LEFELÉ húzd, ne hátra; ne dőlj hátra lendületből. Ez építi testsúly nélkül a húzódzkodáshoz kellő lats-erőt (Exercise Guide: lats #1). 3–4. héten +1 szett.',{xs:1}],
+        ['F1.5a','Tricepsznyújtás fej fölött kábellel',3,'10–15','1',0,'Francia nyomás kézisúlyzóval','Szuperszett az oldalemeléssel, ugyanannál a kábelnél. Fej fölött a hosszú fej megnyúlik (~40% több növekedés, Maeo 2023). Az első szettek RIR 1, csak az utolsó bukásig.',{lastFail:true}],
+        ['F1.5b','Oldalemelés kábelen',4,'8–15','1',75,'Döntött kézisúlyzós oldalemelés','Szuperszett 2. tagja; a 4. kör csak oldalemelés. Csiga comb-magasságban, csuklómandzsetta, ha az alkar fárad előbb. 9 kg a legkisebb súly → progresszió ismétléssel. RIR 1, az utolsó szett bukásig.',{lastFail:true}],
+        KARDIO_T],
+      A1:[
+        ['A1.1','Guggolás rúddal, sarokemeléssel',3,'6–8','2–3',150,'Smith guggolás sarokemeléssel','Erő + technika. Sarok alá 1,5–2,5 cm ék → kisebb bokahajlítás-igény (jobb boka), függőlegesebb törzs. 2–3 mp negatív. Mélység: amíg a medence nem billen hátra (videó oldalról). RIR 2–3, soha bukásig (Muscle Ladder: fő compound RPE 6–8).'],
+        ['A1.2','Ülő lábhajlítás',4,'8–12','1',90,'Fekvő lábhajlítás','Fő combhajlító-gyakorlat; dőlj előre a párna fölé a nagyobb nyújtásért (+55% vs fekvő, Maeo 2021). RIR 1, az utolsó szett bukásig (+ nyújtott parciálisok).',{lastFail:true}],
+        ['A1.3','45°-os csípőfeszítés (far-hangsúly)',2,'10–15','1–2',90,'Csípőemelés (hip thrust) gépen','Far-hangsúly: enyhén kerek felső hát, a mozgás a csípőből jön; felül far összeszorít, NEM hátrafeszítés a derékból. A derék-protokoll része.'],
+        ['A1.4','Lábnyújtás (hátradöntött háttámlával)',3,'10–15','1',75,'Reverse nordic','A rectus femorist a guggolás alig nyújtja → izoláció kell; hátradöntve meg is nyúlik. Kapaszkodj, a far maradjon a párnán. 3–4. héten +1 szett.',{lastFail:true,xs:1}],
+        ['A1.5','Álló vádliemelés',3,'8–12','1',75,'Lábtolón vádli','Térd nyújtva (álló > ülő: 2,6×, Kinoshita 2023), alul 1–2 mp megállás nyújtásban. Az utolsó szett bukásig, utána nyújtott parciálisok.',{lastFail:true}],
+        ['A1.6','Kábeles crunch',3,'10–15','1',60,'Súlytárcsás crunch','A gerinc görbüljön (bordák a medence felé), ne a csípőből hajolj; a kar csak tart. Az utolsó szett bukásig.',{lastFail:true}],
+        KARDIO_T],
+      F2:[
+        ['F2.1','Asszisztált húzódzkodás (gép) — súly = segítség',3,'5–8','1–2',120,'Gumiszalagos húzódzkodás','A SÚLY MEZŐBE A SEGÍTSÉG KERÜL (kg) — a kevesebb a jobb, a javaslat is így számol. Vállszéles vagy semleges fogás, könyök a test mellett, alul teljes lógás. Kettős progresszió: 3 × 8 → −5 kg segítség, vissza 5-re. Cél: segítség nélkül 3 × 5 (Overcoming Gravity: asszisztált koncentrikus 3 × 5–8).',{assist:true}],
+        ['F2.2','Ferde nyomás kézisúlyzóval (30°)',3,'6–10','1–2',120,'Ferde gépi nyomás','Felső mell hangsúly; a kézisúlyzó mélyebb nyújtást enged, mint a rúd, és kíméli a vállat. Alul 1 mp megállás. 3–4. héten +1 szett.',{xs:1}],
+        ['F2.3','Fekvőtámasz (street workout)',3,'12–20','1–2',90,'Súlymellény / emelt láb (deficit); könnyítés: emelt kéz padon','Test egyenes (has, far feszes), könyök kb. 45°, mellkas a földig. Ha 3 × 20 megy RIR 1–2-vel → súlymellény vagy emelt láb, vissza 12-re (Overcoming Gravity; Schoenfeld: 5–30 ism. egyaránt hipertrófiás).',{bw:true,plus:true}],
+        ['F2.4','Ülő kábeles evezés (semleges markolat)',3,'10–12','1–2',90,'Egykezes kézisúlyzós evezés','Elöl engedd előre a lapockát (nyújtás), hátul könyök a csípő felé. Törzs stabil, nincs hintázás.'],
+        ['F2.5','Fordított tárogatás gépen (reverse pec deck)',3,'12–20','1',75,'Kábeles fordított tárogatás','Hátsó váll: nagy félkörben vidd ki a karokat, ne a lapockát húzd össze. Az utolsó szett bukásig.',{lastFail:true}],
+        ['F2.6a','Bicepsz curl ferde padon',3,'8–12','1',0,'Bayesian kábeles curl','Szuperszett a döntött oldalemeléssel — mindkettő a kézisúlyzó-állványnál. Kar a test mögött → nyújtott bicepsz. Gyengébb karral kezdj. Az utolsó szett bukásig.',{lastFail:true}],
+        ['F2.6b','Döntött kézisúlyzós oldalemelés',4,'12–20','1',75,'Kábeles oldalemelés','Szuperszett 2. tagja; a 4. kör csak oldalemelés. Dőlj neki a padnak → már alul is feszül a váll. Az utolsó szett bukásig.',{lastFail:true}],
+        KARDIO_T],
+      A2:[
+        ['A2.1','Hack guggolás (sarokék / magasabb lábállás)',3,'8–12','1–2',120,'Lábtoló','A jobb sarkad a negatív fázisban felemelkedik → ék a sarok alá vagy feljebb a láb a platformon; azt a lábállást keresd, ahol a sarok lent marad. Hát és far végig a párnán (Exercise Guide: quad #1).'],
+        ['A2.2','Román felhúzás (RDL) — visszavezetés',3,'8','3–4',120,'45°-os csípőfeszítés (ha fáj)','DERÉK-PROTOKOLL 1. fázis: a korábbi munkasúly ~50%-a, 3 mp negatív, RIR 3–4, SOHA bukásig. ROM csak addig, amíg a medence előre billen („csípő hátra”); felül far összeszorít, bordák le. Heti 1×, csak itt. A derékfájdalmat az edzés végén rögzítsd.'],
+        ['A2.3','Hátralépéses kitörés kézisúlyzóval',3,'8–12','1–2',90,'Bolgár guggolás / csípőemelés','Lábanként ennyi ismétlés. Közepes-hosszú lépés hátra, törzs enyhén előre → több far-nyújtás (Exercise Guide: far #1). A hátralépés kevesebb bokahajlítást kér. Gyengébb lábbal kezdj. 3–4. héten +1 szett.',{xs:1}],
+        ['A2.4','Fekvő lábhajlítás',3,'10–15','1',75,'Ülő lábhajlítás','Változatosság az ülő mellé. Csípő a párnán, lassú negatív. Az utolsó szett bukásig.',{lastFail:true}],
+        ['A2.5','Vádli lábtolón (toe press)',3,'10–15','1',75,'Álló vádliemelés','Térd nyújtva = álló vádli megfelelője. Alul megállás nyújtásban. Az utolsó szett bukásig.',{lastFail:true}],
+        ['A2.6','Függő térdemelés (street workout)',3,'8–15','1–2',60,'Nyújtott lábbal (L) → lábemelés a rúdig','Lógásból medence-billentéssel húzd a térdet a mellkas felé, lassan le, lendület nélkül. 3 × 15 után → nyújtott láb.',{bw:true}],
+        KARDIO_T]
+    }
+  },
   PPL: {
     title:'Gördülő PPL', label:'PPL · heti 4', short:'PPL', pain:true,
     days:{Push:{sub:'mell · váll · tricepsz (+ combhajlító, vádli)',col:'red'},
@@ -747,8 +806,9 @@ for (const key in BUILTIN){ const P=BUILTIN[key];
   for (const day in P.ex){ P.ex[day]=P.ex[day].map(t=>{
     const [id,name,sets,reps,rir,rest,alt,tip,o={}]=t; const kieg=name.startsWith('+ ');
     const ss = o.ss!==undefined ? o.ss : (rest===0 && /a$/.test(id) ? id.slice(0,-1)+'b' : null);
-    return {id,lab:o.lab||id,circ:!!o.circ,name:kieg?name.slice(2):name,kieg,sets,reps,rir,rest,alt,tip,ss,cali:!!P.cali,unit:o.unit||'reps',lo:o.lo,hi:o.hi,
-      plus:!!o.plus,weighted:!!o.weighted,assist:!!o.assist,skill:!!o.skill,test:!!o.test,explosive:!!o.explosive,total:o.total||null};
+    return {id,lab:o.lab||id,circ:!!o.circ,name:kieg?name.slice(2):name,kieg,sets,reps,rir,rest,alt,tip,ss,cali:o.gym?false:(!!P.cali||!!o.bw),unit:o.unit||'reps',lo:o.lo,hi:o.hi,
+      plus:!!o.plus,weighted:!!o.weighted,assist:!!o.assist,skill:!!o.skill,test:!!o.test,explosive:!!o.explosive,total:o.total||null,
+      ecc:!!o.ecc,lastFail:!!o.lastFail,xs:o.xs||0,cardio:o.unit==='cardio'?{c0:o.c0||10,step:o.cstep||1,max:o.cmax||25,w:o.wstep||5}:null};
   });}
   finalize(P);
 }
@@ -797,7 +857,7 @@ function draftFrom(k){
 /* ===================== STATE ===================== */
 const LS='edzesnaplo.v1';
 const defSettings=()=>({program:'PPL',prog:{},machine:{},step:{},activeId:null});
-function normSettings(d){ d=d||{}; const s=Object.assign(defSettings(),d); s.prog=Object.assign({PPL:{block:1,pos:0},AB:{block:1,pos:0},UL:{block:1,pos:0},CAL:{block:1,pos:0}},d.prog||{}); s.machine=d.machine||{}; s.step=d.step||{}; return s; }
+function normSettings(d){ d=d||{}; const s=Object.assign(defSettings(),d); s.prog=Object.assign({PPL:{block:1,pos:0},AB:{block:1,pos:0},UL:{block:1,pos:0},FA:{block:1,pos:0},CAL:{block:1,pos:0}},d.prog||{}); s.machine=d.machine||{}; s.step=d.step||{}; return s; }
 function loadLocal(key){ try{ const raw=localStorage.getItem(key); if(raw){ const d=JSON.parse(raw); if(d&&d.settings) return {settings:normSettings(d.settings),sessions:d.sessions||{},programs:d.programs||{},mob:d.mob||{}}; } }catch(e){} return null; }
 let LSK=LS; try{ const u=localStorage.getItem(LS+'.uid'); if(u&&localStorage.getItem(LS+'.'+u)) LSK=LS+'.'+u; }catch(e){}
 let S = loadLocal(LSK) || {settings:normSettings(),sessions:{},programs:{},mob:{}};
@@ -887,7 +947,8 @@ function target(e,phase){
   if(!(e.test||unitOf(e)==='check')){
     if(phase==='deload'){ sets=Math.ceil(sets/2); if(nr) rir='3–4'; }
     else if(phase==='intro'&&nr) rir=shiftR(rir,1);
-    else if(phase==='peak'&&nr&&isIso(e)) lastRir='0';
+    else if((phase==='peak'||phase==='normal')&&nr&&((phase==='peak'&&isIso(e))||e.lastFail)) lastRir='0';
+    if(phase==='peak'&&e.xs) sets+=e.xs;
   }
   return {sets,reps:e.reps,rir,lastRir,lo,hi};
 }
@@ -898,7 +959,7 @@ const num=v=>{ if(v===''||v==null) return null; const n=parseFloat(String(v).rep
 const fmt=n=>n==null?'':(Math.round(n*10)/10).toString().replace('.',',');
 const e1rm=s=>s.w&&s.r? s.w*(1+(s.r+(s.rir??0))/30) : null;
 // calisthenics: teljes terhelés = testsúly + plusz súly; az e1RM-et plusz súlyként adjuk vissza
-function e1rmX(q,e,bw){ if(e&&e.assist){ if(unitOf(e)!=='reps'||!q.r||!bw) return null; const tot=bw-(q.w||0); return tot>0? tot*(1+(q.r+(q.rir??0))/30) : null; }
+function e1rmX(q,e,bw){ if(e&&unitOf(e)==='cardio') return null; if(e&&e.assist){ if(unitOf(e)!=='reps'||!q.r||!bw) return null; const tot=bw-(q.w||0); return tot>0? tot*(1+(q.r+(q.rir??0))/30) : null; }
   if(!e||!e.cali) return e1rm(q); if(unitOf(e)!=='reps'||!q.r||!bw) return null; const tot=bw+(q.w||0); return tot*(1+(q.r+(q.rir??0))/30)-bw; }
 const todayStr=()=>{ const d=new Date(); return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0'); };
 const huDate=(s,o={month:'short',day:'numeric'})=>{ const [y,m,d]=s.split('-').map(Number); return new Date(y,m-1,d).toLocaleDateString('hu-HU',o); };
@@ -921,7 +982,7 @@ function sessExList(s){
    Ismétlés bukásig egy súlyon = ism. + RIR  →  e1RM = súly × (1 + (ism.+RIR)/30)
    Fordítva: adott súlyon a cél-RIR mellett várható ism. = 30 × (e1RM/súly − 1) − cél-RIR
    A szettek közti fáradást (ismétlés-esést) a múltkori szettekből vesszük át. */
-const DEFAULT_STEP={L1:5,L2:5,L4:5,L6:5,A1:5,B1:5,B2:2,B7a:2,B8a:2,APU:5,U12:5,L11:5,L13:5,L21:5,L25:5,U21:2,U27:2};
+const DEFAULT_STEP={L1:5,L2:5,L4:5,L6:5,A1:5,B1:5,B2:2,B7a:2,B8a:2,APU:5,U12:5,L11:5,L13:5,L21:5,L25:5,U21:2,U27:2,'A1.1':5,'A2.1':5,'A2.2':5,'F2.1':5,'F2.2':2,'F2.6a':2,'F2.6b':1,'A2.3':2,KARDIO:5};
 const STEPS=[1,1.25,2,2.5,5,10];
 const stepFor=(prog,id)=> S.settings.step&&S.settings.step[prog+':'+id] || (prog==='CAL'?2.5:DEFAULT_STEP[id]) || 2.5;
 const mid=s=>{ if(!isNumRir(s)) return 2; const [a,b]=rng(s); return (a+b)/2; };
@@ -929,13 +990,42 @@ function recommendBase(prog,e,phase,excludeId){
   const u=unitOf(e); if(u==='check'||u==='cm'||e.test) return null;
   const t=target(e,phase); if(t.lo==null) return null;
   const last=lastFor(prog,e.id,excludeId,phase!=='deload')||lastFor(prog,e.id,excludeId,false);
-  if(u==='sec') return recSec(e,t,phase,last);
+  if(u==='cardio') return recCardio(prog,e,phase,last);
   if(e.assist) return recAssist(prog,e,t,phase,last);
+  if(u==='sec') return recSec(e,t,phase,last);
   if(e.cali) return recCali(prog,e,t,phase,last);
   if(!last) return {kind:'new', why:`Első alkalom: válassz olyan súlyt, amivel ${t.lo}–${t.hi} ismétlés megy úgy, hogy kb. ${t.rir} ismétlés maradjon tartalékban. Ebből számolom a következőt.`};
   return coreGym(prog,e,t,phase,last);
 }
 const altTxt=e=>String(e.alt||'').replace(/\.$/,'');
+/* Kardió: progresszív terhelés edzésről edzésre.
+   Továbblépés: megvolt a tervezett idő, RPE ≤ 4, pulzus ≤ max 70% (ha megadtad), és tudtál beszélni → +1 perc (max 25), utána +5 W.
+   Nem teljesült → ugyanaz; RPE ≥ 7 → egy lépés vissza. */
+function recCardio(prog,e,phase,last){
+  const c=e.cardio||{c0:10,step:1,max:25,w:5}, hrmax=S.settings.hrmax||null, hrTop=hrmax?Math.round(hrmax*0.7):null;
+  if(!last) return {kind:'new',unit:'cardio',w:null,reps:[c.c0],lbl:'első alkalom',why:`Első alkalom: ${c.c0} perc könnyű tempóban (RPE 3–4: még teljes mondatokban tudsz beszélni). Az ellenállást (W vagy szint) írd be — innen lép tovább alkalomról alkalomra.`};
+  const q=last.sets.find(t=>t.done&&t.r>0); if(!q) return null;
+  const pm=q.pm??q.r, w0=q.w??q.pw??null;
+  const lastTxt=`Múltkor ${q.r} perc${w0!=null?' · '+fmt(w0)+' W':''}${q.rpe!=null?' · RPE '+q.rpe:''}${q.hr!=null?' · '+q.hr+'/perc':''}.`;
+  if(q.rpe!=null&&q.rpe>=7){ const m=Math.max(c.c0,pm-c.step); return {kind:'down',unit:'cardio',w:w0,reps:[m],lbl:'↓ egy lépés vissza',why:`${lastTxt} Túl nehéz volt (RPE ${q.rpe}) → egy lépés vissza: ${m} perc.`}; }
+  const why=[]; if(q.r<pm) why.push(`a tervezett ${pm} percből ${q.r} lett`); if(q.rpe!=null&&q.rpe>4) why.push(`RPE ${q.rpe} (cél ≤ 4)`); if(q.hr!=null&&hrTop&&q.hr>hrTop) why.push(`a pulzus ${q.hr} > ${hrTop}`); if(q.talk===false) why.push('nem tudtál beszélni');
+  if(why.length) return {kind:'same',unit:'cardio',w:w0,reps:[pm],lbl:'= ismételd',why:`${lastTxt} Nem lépünk tovább, mert ${why.join(', ')}. Ugyanaz a terv még egyszer.`};
+  if(pm>=c.max){ const w=(w0||0)+c.w; return {kind:'up',unit:'cardio',w,reps:[c.max],lbl:`↑ +${fmt(c.w)} W`,why:`${lastTxt} Megvan a ${c.max} perc könnyen → az idő marad, az ellenállás +${fmt(c.w)} W (vagy +1 szint a gépen).`}; }
+  const m=Math.min(c.max,pm+c.step); return {kind:'up',unit:'cardio',w:w0,reps:[m],lbl:`↑ +${c.step} perc`,why:`${lastTxt} Sikeres alkalom → +${c.step} perc (${m} perc). ${c.max} perc után az ellenállás nő.${hrmax?'':' Ha a Program fülön megadod a max pulzusod, a pulzust is figyelem.'}`};
+}
+/* Asszisztált gyakorlat: a súly = segítség, a kevesebb a jobb. */
+function recAssist(prog,e,t,phase,last){
+  const {lo,hi,sets:n}=t;
+  if(!last) return {kind:'new',why:`Első alkalom: válaszd azt a segítséget (ellensúlyt), amivel ${lo}–${hi} tiszta ismétlés megy úgy, hogy kb. ${t.rir} ismétlés maradjon tartalékban. A kevesebb segítség = nehezebb.`};
+  const sets=last.sets.filter(q=>q.r!=null); if(!sets.length) return null;
+  const a0=sets[0].w||0, step=stepFor(prog,e.id), allTop=sets.every(q=>q.r>=hi);
+  const lastTxt=`Múltkor ${fmt(a0)} kg segítséggel × ${sets.map(q=>q.r).join('/')}${sets[0].rir!=null?' @RIR '+sets.map(q=>q.rir??'?').join('/'):''}.`;
+  if(phase==='deload') return {kind:'deload',w:a0,reps:Array.from({length:n},(_,i)=>Math.max(1,sets[Math.min(i,sets.length-1)].r-2)),step,why:`${lastTxt} Deload: ugyanaz a segítség, fele szett, 2–3 ismétléssel kevesebb.`};
+  if(allTop){ const a1=Math.max(0,a0-step); return {kind:'up',w:a1,reps:Array(n).fill(lo),step,why:`${lastTxt} Minden szett elérte a ${hi}-et → ${a1?fmt(a1)+' kg segítség (−'+fmt(a0-a1)+' kg)':'segítség nélkül'}, vissza ${lo} ismétlésre (kettős progresszió).`}; }
+  if(sets[0].r<lo-1&&(sets[0].rir??2)<=1) return {kind:'down',w:a0+step,reps:Array(n).fill(lo),step,why:`${lastTxt} A tartomány alja (${lo}) sem jött ki → +${fmt(step)} kg segítség, hogy ${lo}+ ismétlés tisztán meglegyen.`};
+  const reps=Array.from({length:n},(_,i)=>{ const q=sets[Math.min(i,sets.length-1)]; return Math.min(hi,q.r+((q.rir??1)>=1?1:0)); });
+  return {kind:'same',w:a0,reps,step,why:`${lastTxt} Marad a segítség, szettenként +1 ismétlés a cél. Ha minden szett eléri a ${hi}-et → −${fmt(step)} kg segítség.`};
+}
 /* Izometria: +2–3 mp szettenként; L-ülésnél az össz-idő (60 mp) a mérce. */
 function recSec(e,t,phase,last){
   const {lo,hi,sets:n}=t;
@@ -952,28 +1042,11 @@ function recSec(e,t,phase,last){
   if(secs.length>=n&&secs.every(x=>x>=hi)) return {kind:'up',unit:'sec',reps:Array(n).fill(lo),why:`${lastTxt} Minden szett elérte a ${hi} mp-et → következő lépcső: ${altTxt(e)}. Az új változattal ~${lo} mp-cel kezdd.`};
   return {kind:'same',unit:'sec',reps:fillTo(secs,n).map(x=>Math.min(hi,x+3)),why:`${lastTxt} Izometrikus progresszió: +2–3 mp szettenként, amíg minden szett el nem éri a ${hi} mp-et.`};
 }
-/* Asszisztált (gépi) húzódzkodás: a súly mező a SEGÍTSÉG — kevesebb segítség = haladás.
-   Kettős progresszió fordítva: ha minden szett eléri a tartomány tetejét → −1 lépcső segítség, vissza az aljára. */
-function recAssist(prog,e,t,phase,last){
-  const {lo,hi,sets:n}=t, step=stepFor(prog,e.id);
-  if(!last) return {kind:'new',why:`Első alkalom: állíts be akkora segítséget, amivel ${lo}–${hi} tiszta ismétlés megy kb. ${t.rir} ismétlés tartalékkal. A súly mezőbe a SEGÍTSÉG kerül (kg) — itt a kevesebb a jobb.`};
-  const sets=last.sets.filter(q=>q.r); if(!sets.length) return null;
-  const a0=Math.max(0,...sets.map(q=>q.w||0));
-  const lastTxt=`Múltkor ${a0?fmt(a0)+' kg segítséggel':'segítség nélkül'} × ${sets.map(q=>q.r).join('/')}.`;
-  if(phase==='deload') return {kind:'deload',w:a0||null,reps:Array.from({length:n},(_,i)=>Math.max(1,sets[Math.min(i,sets.length-1)].r-2)),step,why:`${lastTxt} Deload: ugyanannyi segítség, fele szett, 2 ismétléssel kevesebb (RIR 3–4).`};
-  if(sets.every(q=>q.r>=hi)){
-    if(a0<=0) return {kind:'up',w:null,reps:Array(n).fill(lo),why:`${lastTxt} Segítség nélkül is megvan a ${hi} → következő lépcső: súlyöv +2,5 kg, vagy lassú (3–5 mp) negatív.`};
-    const a=Math.max(0,a0-step);
-    return {kind:'up',w:a||null,reps:Array(n).fill(lo),step,why:`${lastTxt} Minden szett elérte a ${hi}-et → ${fmt(step)} kg-mal kevesebb segítség (${a?fmt(a)+' kg':'segítség nélkül'}), vissza ${lo} ismétlésre.`};
-  }
-  if(sets[0].r<lo-1) return {kind:'down',w:a0+step,reps:Array(n).fill(lo),step,why:`${lastTxt} A tartomány alja (${lo}) sem jött ki → +${fmt(step)} kg segítség, hogy legalább ${lo} tiszta ismétlés meglegyen.`};
-  const reps=Array.from({length:n},(_,i)=>Math.min(hi,sets[Math.min(i,sets.length-1)].r+1));
-  return {kind:'same',w:a0||null,reps,step,why:`${lastTxt} Marad a segítség, szettenként +1 ismétlés a cél. Ha minden szett eléri a ${hi}-et → kevesebb segítség.`};
-}
 /* Calisthenics ismétléses gyakorlatok: lineáris ismétlés-progresszió → következő lépcső / +2,5 kg.
    Ha van plusz súly és ismert a testsúly, a terhelés = testsúly + plusz, és a súlyzós motor számol vele. */
 function recCali(prog,e,t,phase,last){
   const {lo,hi,sets:n}=t;
+  if(!last&&e.ecc) return {kind:'new',why:`Első alkalom: ${n} × ${lo}–${hi} negatív, 5–8 mp egyenletes leengedéssel. A Variáció mezőbe írd a leengedés idejét (pl. 6 mp) — ebből látszik a haladás.`};
   if(!last) return {kind:'new',why: e.explosive? `Első alkalom: ${n}×${hi} robbanékony ismétlés, maximális sebességgel — ha lassul, állj meg.` : `Első alkalom: keresd meg azt a variációt${e.plus?' / plusz súlyt':''}, amivel ${lo}–${hi} ismétlés megy úgy, hogy kb. ${t.rir} ismétlés maradjon tartalékban, és írd a Variáció mezőbe.`};
   const sets=last.sets.filter(q=>q.r!=null); if(!sets.length) return null;
   const plus0=Math.max(0,...sets.map(q=>q.w||0)), bw=lastBw(), step=stepFor(prog,e.id);
@@ -1055,10 +1128,12 @@ function setStr(q,e){
   if(u==='sec') return `${rTxt(q)} mp`;
   if(u==='cm') return `${rTxt(q)} cm`;
   if(u==='check') return q.done?'kész':'–';
+  if(u==='cardio') return `${rTxt(q)} perc${q.w!=null?' · '+fmt(q.w)+' W':''}${q.rpe!=null?' · RPE '+q.rpe:''}${q.hr!=null?' · '+q.hr+'/perc':''}`;
+  if(e&&e.assist) return `${q.w!=null?'seg. '+fmt(q.w)+' kg × ':''}${rTxt(q)}${q.rir!=null?' @'+q.rir:''}`;
   if(e&&e.cali) return `${q.w?'+'+fmt(q.w)+' kg × ':''}${rTxt(q)}${q.rir!=null?' @'+q.rir:''}`;
   return `${fmt(q.w)||'–'}×${rTxt(q)}${q.rir!=null?' @'+q.rir:''}`;
 }
-function sessVol(s){ let v=0,n=0; for(const k in s.ex) for(const t of s.ex[k].sets) if(t.done){ n++; if(t.w&&t.r) v+=t.w*t.r; } return {v,n}; }
+function sessVol(s){ let v=0,n=0; for(const k in s.ex){ const e=findEx(s.program,k), skip=!!(e&&(e.assist||unitOf(e)==='cardio')); for(const t of s.ex[k].sets) if(t.done){ n++; if(!skip&&t.w&&t.r) v+=t.w*t.r; } } return {v,n}; }
 function toast(msg){ const t=$('#toast'); t.textContent=msg; t.hidden=false; clearTimeout(toast._t); toast._t=setTimeout(()=>t.hidden=true,2200); }
 
 /* ===================== RENDER ===================== */
@@ -1087,7 +1162,9 @@ function viewMissing(){
 }
 
 function estMin(list,phase){
-  let sec=0; for(const e of list){ const t=target(e,phase), u=unitOf(e); if(u==='check'){ sec+=8*60; continue; }
+  let sec=0; for(const e of list){ const t=target(e,phase), u=unitOf(e);
+    if(u==='cardio'){ let m=(e.cardio&&e.cardio.c0)||10; try{ const rc=recommend(curKey(),e,phase,null); if(rc&&rc.reps) m=rc.reps[0]; }catch(err){} sec+=m*60+60; continue; }
+    if(u==='check'){ sec+=8*60; continue; }
     const work= u==='sec'? (t.hi||30) : 40; sec+= t.sets*(work+(e.rest||0)) + 45; }
   return Math.max(5,Math.round(sec/300)*5);
 }
@@ -1098,7 +1175,9 @@ function trendOf(key,e,rc){
   const li=lastIssueFor(key,e,null);
   if(li&&li.type) return ['warn','⚠ múltkor '+ISSUE_S[li.type]];
   if(!rc) return null;
+  if(rc.unit==='cardio') return [rc.kind==='up'?'up':rc.kind==='down'?'down':'same', rc.lbl||''];
   if(rc.kind==='up'){ const l=lastFor(key,e.id,null,false), w0=l? Math.max(0,...l.sets.map(q=>q.w||0)) : 0;
+    if(e.assist) return ['up', w0&&rc.w!=null&&rc.w<w0? '↑ −'+fmt(w0-rc.w)+' kg segítség' : '↑ következő lépcső'];
     return ['up', rc.w&&w0&&rc.w>w0? '↑ +'+fmt(rc.w-w0)+' kg' : '↑ következő lépcső']; }
   if(rc.kind==='same') return ['same', rc.unit==='sec'? '= +2–3 mp' : '= +1 ism.'];
   if(rc.kind==='down') return ['down','↓ könnyebb'];
@@ -1118,14 +1197,14 @@ function viewHome(){
   const list=p.ex[slot.day];
   const recs=list.map(e=>unitOf(e)==='check'?null:recommend(key,e,slot.phase,null));
   const rows=list.map((e,i)=>{ const t=target(e,slot.phase), rc=recs[i], tr=trendOf(key,e,rc);
-    const val= rc&&rc.reps? `${rc.w&&fHasW(e)?(e.cali?'+':'')+fmt(rc.w)+' kg × ':''}${rc.reps[0]}${rc.unit==='sec'?' mp':''}` : '';
+    const val= rc&&rc.reps? (rc.unit==='cardio'? `${rc.reps[0]} perc${rc.w?' · '+fmt(rc.w)+' W':''}` : `${rc.w&&fHasW(e)?(e.cali?'+':e.assist?'seg. ':'')+fmt(rc.w)+' kg × ':''}${rc.reps[0]}${rc.unit==='sec'?' mp':''}`) : '';
     return `<li><span class="id">${esc(e.lab)}</span><span class="nm">${esc(e.name)}</span><span class="rx num">${val}</span>
-      <span class="sub"><span>${unitOf(e)==='check'?esc(e.reps):t.sets+' × '+esc(t.reps)}</span>${tr?`<span class="trend ${tr[0]}">${tr[1]}</span>`:''}${e.ss||e.ssFrom?`<span class="tag ss">${e.circ?'kör':p.ssLabel||'szuperszett'}</span>`:''}${e.kieg?'<span class="tag">kieg.</span>':''}${e.unpaired?'<span class="tag">külön</span>':''}</span></li>`; }).join('');
+      <span class="sub"><span>${unitOf(e)==='check'||unitOf(e)==='cardio'?esc(e.reps):t.sets+' × '+esc(t.reps)}</span>${tr?`<span class="trend ${tr[0]}">${tr[1]}</span>`:''}${e.ss||e.ssFrom?`<span class="tag ss">${e.circ?'kör':p.ssLabel||'szuperszett'}</span>`:''}${e.kieg?'<span class="tag">kieg.</span>':''}${e.unpaired?'<span class="tag">külön</span>':''}</span></li>`; }).join('');
   const wk=p.weeks[slot.week-1]||[], base=ps.pos-(slot.inWeek-1);
   const tiles=wk.map((day,i)=>{ const pos=base+i, done=pos<ps.pos, now=pos===ps.pos, dd=p.days[day]||{name:day,col:'blue'};
     const fs= done? finished().find(x=>x.program===key&&x.block===ps.block&&x.slot===pos+1) : null;
     return `<div class="wk${done?' done':now?' now':''}" data-col="${dd.col}"><b>${esc(dd.name)}</b><span>${done?'✓ '+(fs?huDate(fs.date):'kész'):now?'következő':(i+1)+'. alkalom'}</span>${now?'<i class="bar"></i>':''}</div>`; }).join('');
-  const nSets=list.reduce((a,e)=>a+(unitOf(e)==='check'?0:target(e,slot.phase).sets),0), nUp=recs.filter(r=>r&&r.kind==='up').length;
+  const nSets=list.reduce((a,e)=>a+(unitOf(e)==='check'||unitOf(e)==='cardio'?0:target(e,slot.phase).sets),0), nUp=recs.filter(r=>r&&r.kind==='up').length;
   const others=Object.keys(p.days).filter(k=>k!==slot.day).map(k=>`<button class="chip" data-act="start" data-day="${esc(k)}" data-col="${p.days[k].col}"><span class="dot"></span>${esc(p.days[k].name)}</button>`).join('');
   const lastD=finished().find(s=>s.program===key&&s.day===slot.day);
   const lastS=(()=>{ const x=finished().find(s=>s.program===key); return x&&x!==lastD? x : null; })();
@@ -1194,7 +1273,7 @@ function prScan(){
   if(_pr&&_prKey===k) return _pr;
   const best={}, out={};
   for(const s of L.slice().reverse()){ const bw=s.bw??lastBw();
-    for(const e of sessExList(s)){ const x=s.ex&&s.ex[e.id]; if(!x||!x.sets) continue; const u=unitOf(e); if(u==='check'||u==='cm') continue;
+    for(const e of sessExList(s)){ const x=s.ex&&s.ex[e.id]; if(!x||!x.sets) continue; const u=unitOf(e); if(u==='check'||u==='cm'||u==='cardio') continue;
       const m=metricOf(e), key=s.program+':'+e.id+':'+(x.swap||'');
       let top=null, ti=-1;
       x.sets.forEach((q,i)=>{ if(!q.done||q.r==null) return; const v= m.e1? e1rmX(fillRir(q,e,s.phase),e,bw) : q.r; if(v==null||!isFinite(v)) return; if(top==null||v>top){ top=v; ti=i; } });
@@ -1208,6 +1287,8 @@ function prScan(){
 function cmpDelta(e,now,was){
   const u=unitOf(e), cnt=a=>a.filter(q=>q.r!=null), sum=a=>cnt(a).reduce((x,q)=>x+q.r,0), mw=a=>Math.max(0,...cnt(a).map(q=>q.w||0));
   if(u==='sec'||u==='cm'){ const d=sum(now)-sum(was); return [d===0?'=':(d>0?'+':'−')+Math.abs(d)+(u==='sec'?' mp':' cm'), u==='cm'?(d<0?'pos':d>0?'neg':''):(d>0?'pos':d<0?'neg':'')]; }
+  if(u==='cardio'){ const d=sum(now)-sum(was); if(d) return [(d>0?'+':'−')+Math.abs(d)+' perc', d>0?'pos':'neg']; const dw0=mw(now)-mw(was); return [Math.abs(dw0)>0.01?(dw0>0?'+':'−')+fmt(Math.abs(dw0))+' W':'= ugyanannyi', dw0>0?'pos':dw0<0?'neg':'']; }
+  if(e.assist){ const da=mw(now)-mw(was); if(Math.abs(da)>0.01) return [(da>0?'+':'−')+fmt(Math.abs(da))+' kg segítség', da<0?'pos':'neg']; }
   const dw=mw(now)-mw(was); if(Math.abs(dw)>0.01) return [(dw>0?'+':'−')+fmt(Math.abs(dw))+' kg', dw>0?'pos':'neg'];
   const d=sum(now)-sum(was); return [d===0?'= ugyanannyi':(d>0?'+':'−')+Math.abs(d)+' ism.', d>0?'pos':d<0?'neg':''];
 }
@@ -1244,7 +1325,7 @@ function viewSummary(s){
     <section class="card stack">
       ${p.pain?`<div><div class="eyebrow">${p.painLabel||'Derék / sacrum fájdalom (0–10)'}</div><p class="small muted" style="margin:2px 0 8px">${p.painHint||'Edzés közben max. 3/10 elfogadható, ha 24 órán belül visszaáll.'}</p><div class="pain">${scale}</div></div>`:''}
       <div><div class="eyebrow" style="margin-bottom:6px">Milyen volt összességében?</div><div class="feel">${feels}</div></div>
-      <div><label class="eyebrow" for="sumbw">Testsúly (kg) <span style="text-transform:none;letter-spacing:0;font-weight:500">— ${p.cali?'a súlyozott gyakorlatok becsléséhez':'nem kötelező'}</span></label><input class="inp" id="sumbw" data-bw="${s.id}" inputmode="decimal" placeholder="${lastBw()!=null?fmt2(lastBw()):'pl. 82,35'}" value="${s.bw!=null?fmt2(s.bw):''}" style="max-width:170px;margin-top:4px;font-variant-numeric:tabular-nums"></div>
+      <div><label class="eyebrow" for="sumbw">Testsúly (kg) <span style="text-transform:none;letter-spacing:0;font-weight:500">— ${p.cali||Object.values(p.ex||{}).flat().some(x=>x.cali||x.assist)?'a testsúlyos / súlyozott / asszisztált gyakorlatok becsléséhez':'nem kötelező'}</span></label><input class="inp" id="sumbw" data-bw="${s.id}" inputmode="decimal" placeholder="${lastBw()!=null?fmt2(lastBw()):'pl. 82,35'}" value="${s.bw!=null?fmt2(s.bw):''}" style="max-width:170px;margin-top:4px;font-variant-numeric:tabular-nums"></div>
       <div><label class="eyebrow" for="sumnote">Megjegyzés</label><textarea id="sumnote" data-snote="${s.id}" placeholder="Alvás, energia, bármi, ami számít…">${esc(s.note)}</textarea></div>
       <button class="btn big fin" data-act="ssave">Mentés</button>
       ${coolDone?'':`<button class="btn sec" data-act="scool">Nyújtás indítása · kb. 8 perc</button>`}
@@ -1279,7 +1360,7 @@ function fCur(s){
   const st=steps.find(t=>g.includes(t[0])&&fUndone(s,t))||null;
   return {g,st,all};
 }
-const fHasW=e=>{ const u=unitOf(e); return u==='reps'&&(!e.cali||e.plus||e.weighted); };
+const fHasW=e=>{ const u=unitOf(e); return u==='cardio'||(u==='reps'&&(!e.cali||e.plus||e.weighted)); };
 // javasolt érték egy szetthez: a javaslat, de ha ma már más súllyal mentél, az a súly megy tovább
 function fSugg(s,e,i,rc){
   const x=s.ex[e.id], prev=x&&i>0? x.sets.slice(0,i).reverse().find(q=>q.done) : null;
@@ -1289,6 +1370,8 @@ function fSugg(s,e,i,rc){
   return {w:fHasW(e)?w:null,r};
 }
 function recoLbl(e,rc){
+  if(rc.unit==='cardio') return rc.lbl||'';
+  if(e.assist&&(rc.kind==='up'||rc.kind==='down')) return rc.kind==='up'? '↑ kevesebb segítség' : '↓ több segítség';
   return rc.unit==='sec'? {up:'↑ következő lépcső',same:'= +2–3 mp',deload:'deload',new:'első alkalom',down:'↓ könnyebb'}[rc.kind]
     : e.assist? ({up:'↑ kevesebb segítség',down:'↓ több segítség',same:'= +1 ismétlés',deload:'deload',new:'első alkalom'}[rc.kind]||'')
     : e.cali&&!rc.w&&rc.kind==='up'? '↑ következő lépcső' : e.cali&&!rc.w&&rc.kind==='down'? '↓ könnyebb variáció'
@@ -1296,6 +1379,7 @@ function recoLbl(e,rc){
 }
 function fSetsTxt(e,sets){
   const d=sets.filter(q=>q.done), u=unitOf(e);
+  if(u==='cardio'||e.assist) return d.map(q=>esc(setStr(q,e))).join(' · ');
   if(u==='sec'||u==='cm') return d.map(rTxt).join(' · ')+(u==='sec'?' mp':' cm');
   const ws=[...new Set(d.map(q=>q.w??null))];
   if(ws.length===1) return d.map(rTxt).join(' · ')+(ws[0]!=null?` <small>× ${e.cali?'+':''}${fmt(ws[0])} kg</small>`:'');
@@ -1306,7 +1390,7 @@ function fFold(s,e){
   let rx;
   if(d) rx= u==='check'? 'kész' : fSetsTxt(e,x.sets);
   else if(n) rx=`${n}/${x.sets.length} szett kész`;
-  else { const rc=u==='check'?null:recommend(s.program,e,s.phase,s.id); rx= u==='check'? esc(e.reps) : `${t.sets} × ${esc(t.reps)}${rc&&rc.w&&fHasW(e)?' · '+(e.cali?'+':'')+fmt(rc.w)+' kg':''}`; }
+  else { const rc=u==='check'?null:recommend(s.program,e,s.phase,s.id); rx= u==='check'? esc(e.reps) : u==='cardio'? (rc&&rc.reps? rc.reps[0]+' perc'+(rc.w?' · '+fmt(rc.w)+' W':'') : esc(e.reps)) : `${t.sets} × ${esc(t.reps)}${rc&&rc.w&&fHasW(e)?' · '+(e.cali?'+':'')+fmt(rc.w)+' kg':''}`; }
   return `<button class="fold ${d?'done':n?'part':'next'}" data-act="fopen" data-ex="${e.id}"><span class="id">${d?'✓':''}${esc(e.lab)}</span><span class="nm">${esc(e.name)}</span><span class="rx num">${rx}</span></button>`;
 }
 function fCard(s,g,st){
@@ -1318,30 +1402,42 @@ function fBlock(s,e,st,pair,gi,ssl){
   const mkey=s.program+':'+e.id, mval=S.settings.machine[mkey]||'';
   const G=pair? fGroup(s,e.id) : [e.id], circ=G.length>2||e.circ, nxt=e.ss? labOf(s.program,e.ss) : circ&&pair? labOf(s.program,G[0]) : '';
   const restT= e.rest? (circ&&pair? `~${e.rest} mp átállás → ${esc(nxt)}${e.ss?'':' (új kör)'}` : restTxt(e.rest)) : pair&&e.ss? 'pihenő nélkül → '+esc(nxt) : 'nincs pihenő';
-  const meta= u==='check'? `<b>${esc(e.reps)}</b>` : `<b>${t.sets} × ${esc(t.reps)}</b>${rirLbl(t.rir)?' · '+esc(rirLbl(t.rir)):''} · ${restT}`;
+  const meta= u==='check'? `<b>${esc(e.reps)}</b>` : u==='cardio'? `<b>${esc(e.reps)}</b> · zóna 2 · RPE ≤ 4` : `<b>${t.sets} × ${esc(t.reps)}</b>${rirLbl(t.rir)?' · '+esc(rirLbl(t.rir)):''} · ${restT}`;
   const tags=[pair?(circ?`<span class="tag ss">kör ${G.indexOf(e.id)+1}/${G.length}</span>`:`<span class="tag ss">${ssl} ${e.ss?'→ '+esc(labOf(s.program,e.ss)):'← '+esc(labOf(s.program,e.ssFrom))}</span>`):'',
     e.kieg?'<span class="tag">kiegészítő dózis</span>':'', e.skill?'<span class="tag">skill · nem bukásig</span>':'', e.test?'<span class="tag">teszt</span>':'',
     e.unpaired?'<span class="tag">külön szettek</span>':'', e.swapped?'<span class="tag">cserélve</span>':''].join('');
   const lastTxt= last? `Múltkor: ${last.sets.map(q=>setStr(q,e)).join(' · ')}${last.var?' · '+last.var:''}`
-    : u==='check'&&!e.test? '' : e.cali? 'Első alkalom — keresd meg a megfelelő variációt.' : 'Első alkalom — lődd be a súlyt.';
-  const reco= rc||lastTxt? `<div class="freco">${rc&&recoLbl(e,rc)?`<span class="k ${rc.kind}">${recoLbl(e,rc)}</span>`:''}${lastTxt?`<span>${esc(lastTxt)}</span>`:''}${rc&&rc.w?`<button class="stepb" data-act="step" data-key="${esc(mkey)}" aria-label="Súlylépcső váltása">lépcső ${fmt(rc.step)} kg</button>`:''}${rc&&rc.why?`<details data-od="wy${e.id}" ${odA('wy'+e.id)}><summary>Miért ez a javaslat?</summary><p>${esc(rc.why)}</p></details>`:''}</div>` : '';
-  const mach= u==='check'&&!e.test? '' : `<input class="fmach" id="m-${e.id}" data-machine="${esc(mkey)}" placeholder="${e.cali?'Variáció (pl. emelt pike 40 cm)':'Gépbeállítás (pl. ülés 4)'}" value="${esc(mval)}" aria-label="${e.cali?'Variáció':'Gépbeállítás'}">`;
-  const rows= u==='check'? fCheckRow(e,x) : x.sets.map((q,i)=>fRow(s,e,t,rc,q,i,!!st&&st[0]===e.id&&st[1]===i,x.sets.length)).join('');
+    : u==='check'&&!e.test? '' : u==='cardio'? '' : e.cali? 'Első alkalom — keresd meg a megfelelő variációt.' : 'Első alkalom — lődd be a súlyt.';
+  const reco= rc||lastTxt? `<div class="freco">${rc&&recoLbl(e,rc)?`<span class="k ${rc.kind}">${recoLbl(e,rc)}</span>`:''}${lastTxt?`<span>${esc(lastTxt)}</span>`:''}${rc&&rc.w&&u!=='cardio'?`<button class="stepb" data-act="step" data-key="${esc(mkey)}" aria-label="Súlylépcső váltása">lépcső ${fmt(rc.step)} kg</button>`:''}${rc&&rc.why?`<details data-od="wy${e.id}" ${odA('wy'+e.id)}><summary>Miért ez a javaslat?</summary><p>${esc(rc.why)}</p></details>`:''}</div>` : '';
+  const mach= u==='check'&&!e.test? '' : `<input class="fmach" id="m-${e.id}" data-machine="${esc(mkey)}" placeholder="${u==='cardio'?'Gép (pl. szobabicikli, 8-as program)':e.cali?'Variáció (pl. emelt pike 40 cm)':'Gépbeállítás (pl. ülés 4)'}" value="${esc(mval)}" aria-label="${e.cali?'Variáció':'Gépbeállítás'}">`;
+  const rows= u==='check'? fCheckRow(e,x) : u==='cardio'? x.sets.map((q,i)=>fCardioRow(s,e,q,i,rc)).join('') : x.sets.map((q,i)=>fRow(s,e,t,rc,q,i,!!st&&st[0]===e.id&&st[1]===i,x.sets.length)).join('');
   const tips= e.tip||(e.alt&&e.alt!=='—')? `<details class="more" data-od="tp${e.id}" ${odA('tp'+e.id)} style="flex-basis:100%"><summary>Végrehajtás${e.alt&&e.alt!=='—'?(e.cali?' · progresszió':' · alternatíva'):''}</summary>${e.tip?`<p>${esc(e.tip)}</p>`:''}${e.alt&&e.alt!=='—'?`<p class="muted">${e.cali?'Progresszió / könnyítés':'Alternatíva'}: ${esc(e.alt)}</p>`:''}</details>` : '';
   return `<div class="ch"><span class="badge">${esc(e.lab)}</span><div style="flex:1;min-width:0"><div class="exname">${esc(e.name)}</div><div class="meta">${meta}</div>${tags?`<div class="tags">${tags}</div>`:''}</div></div>
     ${reco}${issuePrevHtml(rc)}${mach}
     <div class="fsets">${rows}</div>
-    <div class="ffoot">${u==='check'?'':`<button class="fb" data-act="addset" data-ex="${e.id}">+ szett</button>${x.sets.length>1&&!x.sets[x.sets.length-1].done?`<button class="fb" data-act="rmset" data-ex="${e.id}">− szett</button>`:''}`}${tips}${u==='check'?'':issueBox(s,e,x)+modBox(s,e)}</div>`;
+    <div class="ffoot">${u==='check'||u==='cardio'?'':`<button class="fb" data-act="addset" data-ex="${e.id}">+ szett</button>${x.sets.length>1&&!x.sets[x.sets.length-1].done?`<button class="fb" data-act="rmset" data-ex="${e.id}">− szett</button>`:''}`}${tips}${u==='check'||u==='cardio'?'':issueBox(s,e,x)+modBox(s,e)}</div>`;
 }
 function fCheckRow(e,x){
   const q=x.sets[0];
   if(q.done) return `<div class="fset isdone" id="row-${e.id}-0"><div class="n">1</div><div class="sum"><span class="tick">✓</span> Kész</div><button class="undo" data-act="fundo" data-ex="${e.id}" data-i="0">Javít</button></div>`;
   return `<div id="row-${e.id}-0"><button class="fbig" data-act="done" data-ex="${e.id}" data-i="0">✓ Megjelölöm késznek</button></div>`;
 }
+function fCardioRow(s,e,q,i,rc){
+  const id=e.id;
+  if(q.done) return `<div class="fset isdone" id="row-${id}-${i}"><div class="n">${i+1}</div><div class="sum num" style="font-size:17px"><span class="tick">✓</span> ${esc(setStr(q,e))}${q.talk===false?' <span>· nem tudtál beszélni</span>':''}</div><button class="undo" data-act="fundo" data-ex="${id}" data-i="${i}">Javít</button></div>`;
+  const sg=fSugg(s,e,i,rc);
+  const stp=(f,val,sug,lbl,mode,nm)=>`<div class="stp ${val==null?'sugg':'val'}${sug==null?' nos':''}"><button data-act="fdec" data-f="${f}" data-ex="${id}" data-i="${i}" aria-label="${nm} csökkentése">−</button><label class="fld"><small data-l="${lbl}">${val==null&&sug!=null?'javasolt':lbl}</small><input id="${f}-${id}-${i}" data-ex="${id}" data-i="${i}" data-f="${f}" inputmode="${mode}" enterkeyhint="done" autocomplete="off" placeholder="${fmtv(sug)}" value="${fmtv(val)}" aria-label="${nm}"></label><button data-act="finc" data-f="${f}" data-ex="${id}" data-i="${i}" aria-label="${nm} növelése">+</button></div>`;
+  const rpe=[2,3,4,5,6,7,8].map(v=>`<button data-act="frpe" data-ex="${id}" data-i="${i}" data-v="${v}" class="${q.rpe==null&&v>=3&&v<=4?'sg':''}" aria-pressed="${q.rpe===v}" aria-label="RPE ${v}">${v}</button>`).join('');
+  const hm=S.settings.hrmax, z=hm? Math.round(hm*.6)+'–'+Math.round(hm*.7) : 'átlag';
+  return `<div class="fset active" id="row-${id}-${i}"><div class="n">${i+1}</div>${stp('w',q.w,sg.w,'W / szint','decimal','ellenállás')}${stp('r',q.r,sg.r,'perc','numeric','perc')}<button class="fok" data-act="done" data-ex="${id}" data-i="${i}" aria-label="Kardió kész">✓</button>
+    <div class="frir"><span>RPE</span>${rpe}</div>
+    <div class="frir"><span>Pulzus</span><input class="inp" style="max-width:96px;height:36px;text-align:center" id="hr-${id}-${i}" data-ex="${id}" data-i="${i}" data-f="hr" inputmode="numeric" placeholder="${z}" value="${q.hr??''}" aria-label="Átlagpulzus"><button data-act="ftalk" data-ex="${id}" data-i="${i}" aria-pressed="${q.talk===false}" style="max-width:none;flex:1;padding:0 10px;font-size:13px">${q.talk===false?'Nem tudtam beszélni':'Tudtam beszélni ✓'}</button></div>
+    <div class="funk"><button data-act="fctimer" data-ex="${id}" data-i="${i}">▶ ${q.r??sg.r??10} perces időzítő</button></div></div>`;
+}
 function fRow(s,e,t,rc,q,i,active,n){
   const u=unitOf(e), timed=u==='sec'||u==='cm', hasW=fHasW(e)||(!timed&&q.w!=null), id=e.id;
   if(q.done){
-    const main= (timed? `${rTxt(q)} ${u==='sec'?'mp':'cm'}` : `${hasW&&q.w!=null?(e.cali?'+':'')+fmt(q.w)+' kg × ':''}${rTxt(q)}${hasW&&q.w!=null?'':' ism.'}`)+(q.unk?`<span class="unk">${timed?'nem mért':'nem számolt'}</span>`:'');
+    const main= (timed? `${rTxt(q)} ${u==='sec'?'mp':'cm'}` : `${hasW&&q.w!=null?(e.cali?'+':e.assist?'seg. ':'')+fmt(q.w)+' kg × ':''}${rTxt(q)}${hasW&&q.w!=null?'':' ism.'}`)+(q.unk?`<span class="unk">${timed?'nem mért':'nem számolt'}</span>`:'');
     return `<div class="fset isdone" id="row-${id}-${i}"><div class="n">${i+1}</div><div class="sum num"><span class="tick">✓</span> ${main}${!timed&&q.rir!=null?` <span>@RIR ${q.rir}</span>`:''}</div><button class="undo" data-act="fundo" data-ex="${id}" data-i="${i}">Javít</button></div>`;
   }
   const sg=fSugg(s,e,i,rc), rL= u==='sec'?'mp':u==='cm'?'cm':'ism.';
@@ -1350,7 +1446,7 @@ function fRow(s,e,t,rc,q,i,active,n){
   let rir='';
   if(active&&!timed&&(isNumRir(t.rir)||isLast)){ const [a,b]= isLast?[0,0]:rng(t.rir);
     rir=`<div class="frir"><span>RIR</span>${[0,1,2,3,4].map(v=>`<button data-act="frir" data-ex="${id}" data-i="${i}" data-v="${v}" class="${q.rir==null&&v>=a&&v<=b?'sg':''}" aria-pressed="${q.rir===v}" aria-label="RIR ${v}">${v}</button>`).join('')}</div>`; }
-  return `<div class="fset${active?' active':''}${hasW?'':' one'}" id="row-${id}-${i}"><div class="n">${i+1}</div>${hasW?stp('w',q.w,sg.w,e.cali?'+kg':'kg','decimal','súly'):''}${stp('r',q.r,sg.r,rL,'numeric',u==='sec'?'másodperc':u==='cm'?'centiméter':'ismétlés')}<button class="fok" data-act="done" data-ex="${id}" data-i="${i}" aria-label="${i+1}. szett kész">✓</button>${rir}${isLast&&active?'<div class="flast">Utolsó szett: bukásig (RIR 0)</div>':''}${active?`<div class="funk"><button data-act="funk" data-ex="${id}" data-i="${i}">${timed?'Nem mértem le — kész így':'Nem számoltam meg — kész így'}</button></div>`:''}</div>`;
+  return `<div class="fset${active?' active':''}${hasW?'':' one'}" id="row-${id}-${i}"><div class="n">${i+1}</div>${hasW?stp('w',q.w,sg.w,e.cali?'+kg':e.assist?'segítség':'kg','decimal','súly'):''}${stp('r',q.r,sg.r,rL,'numeric',u==='sec'?'másodperc':u==='cm'?'centiméter':'ismétlés')}<button class="fok" data-act="done" data-ex="${id}" data-i="${i}" aria-label="${i+1}. szett kész">✓</button>${rir}${isLast&&active?'<div class="flast">Utolsó szett: bukásig (RIR 0)</div>':''}${active?`<div class="funk"><button data-act="funk" data-ex="${id}" data-i="${i}">${timed?'Nem mértem le — kész így':'Nem számoltam meg — kész így'}</button></div>`:''}</div>`;
 }
 function fFocus(){
   const s=S.settings.activeId&&S.sessions[S.settings.activeId]; if(!s||ui.tab!=='edzes') return;
@@ -1368,20 +1464,23 @@ function fScrollTo(el){
 }
 function flash(){ let f=$('#flash'); if(!f){ f=document.createElement('div'); f.id='flash'; f.className='flash'; document.body.appendChild(f); } f.classList.remove('on'); void f.offsetWidth; f.classList.add('on'); }
 function fAction(act,b,s){
-  if(!s||!['fopen','fundo','finc','fdec','frir','done','funk'].includes(act)) return false;
+  if(!s||!['fopen','fundo','finc','fdec','frir','done','funk','frpe','ftalk','fctimer'].includes(act)) return false;
   const id=b.dataset.ex, i=+b.dataset.i, x=s.ex[id], e=findEx(s.program,id);
   if(act==='fopen'){ const c=fCur(s); ui.fOpen= c.all&&fGroup(s,c.all[0]).includes(id)? null : id; render(); fScrollTo(document.getElementById('fcard-'+fGroup(s,id)[0])); return true; }
   const q=x&&x.sets[i]; if(!q||!e) return true;
   if(act==='fundo'){ q.done=false; delete q.unk; ui.fOpen=id; queue(s.id); render(); setTimeout(fFocus,60); return true; }
   if(act==='frir'){ const v=+b.dataset.v; q.rir= q.rir===v? null : v; queue(s.id); render(); return true; }
+  if(act==='frpe'){ const v=+b.dataset.v; q.rpe= q.rpe===v? null : v; queue(s.id); render(); return true; }
+  if(act==='ftalk'){ q.talk= q.talk===false? true : false; queue(s.id); render(); return true; }
+  if(act==='fctimer'){ const sg=fSugg(s,e,i,recommend(s.program,e,s.phase,s.id)), m=q.r??sg.r??10; startTimer(m*60,`Kardió · ${m} perc`); return true; }
   if(act==='finc'||act==='fdec'){ const f=b.dataset.f, u=unitOf(e), st= f==='w'? stepFor(s.program,id) : (u==='sec'||u==='cm')? 5 : 1;
     const sg=fSugg(s,e,i,recommend(s.program,e,s.phase,s.id)), base= q[f]!=null? q[f] : sg[f]!=null? sg[f] : 0;
     q[f]=Math.max(0,Math.round((base+(act==='finc'?1:-1)*st)*100)/100); queue(s.id); render(); return true; }
   // done
   if(q.done){ q.done=false; delete q.unk; queue(s.id); render(); return true; }
   if(act==='funk'){ const sg=fSugg(s,e,i,recommend(s.program,e,s.phase,s.id)); if(q.w==null&&sg.w!=null) q.w=sg.w; q.r=null; q.unk=true; }
-  else if(unitOf(e)!=='check'){ delete q.unk; const sg=fSugg(s,e,i,recommend(s.program,e,s.phase,s.id)); if(q.w==null&&sg.w!=null) q.w=sg.w; if(q.r==null&&sg.r!=null) q.r=sg.r;
-    if(q.r==null){ const u=unitOf(e); toast(u==='sec'?'Írd be, hány mp-ig tartottad — vagy „Nem mértem le”':u==='cm'?'Írd be a magasságot (cm) — vagy „Nem mértem le”':'Írd be az ismétlésszámot — vagy „Nem számoltam meg”'); const inp=document.getElementById('r-'+id+'-'+i); inp&&inp.focus(); return true; } }
+  else if(unitOf(e)!=='check'){ delete q.unk; const sg=fSugg(s,e,i,recommend(s.program,e,s.phase,s.id)); if(q.w==null&&sg.w!=null) q.w=sg.w; if(q.r==null&&sg.r!=null) q.r=sg.r; if(unitOf(e)==='cardio'){ if(q.pm==null&&sg.r!=null) q.pm=sg.r; if(q.pw==null&&sg.w!=null) q.pw=sg.w; }
+    if(q.r==null){ const u=unitOf(e); toast(u==='cardio'?'Írd be, hány percet tekertél':u==='sec'?'Írd be, hány mp-ig tartottad — vagy „Nem mértem le”':u==='cm'?'Írd be a magasságot (cm) — vagy „Nem mértem le”':'Írd be az ismétlésszámot — vagy „Nem számoltam meg”'); const inp=document.getElementById('r-'+id+'-'+i); inp&&inp.focus(); return true; } }
   q.done=true;
   const g=fGroup(s,id);
   if(ui.fOpen&&!fSteps(s).some(t=>g.includes(t[0])&&fUndone(s,t))) ui.fOpen=null;
@@ -1452,6 +1551,8 @@ function metricOf(e){
   const u=unitOf(e);
   if(u==='sec') return {label:'Leghosszabb tartás (mp)',unit:'mp',k:'Tartás'};
   if(u==='cm') return {label:'Doboz magassága (cm) — kisebb = jobb',unit:'cm',k:'Magasság',low:true};
+  if(u==='cardio') return {label:'Kardió időtartam (perc) — az ellenállás a táblázatban',unit:'perc',k:'Perc'};
+  if(e.assist) return lastBw()!=null? {label:'Becsült 1RM (testsúly − segítség, kg)',unit:'kg',e1:true,k:'e1RM'} : {label:'Legtöbb ismétlés egy szettben',unit:'ism.',k:'Ismétlés'};
   if(e.assist) return lastBw()!=null ? {label:'Becsült 1RM (testsúly − segítség, kg)',unit:'kg',e1:true,k:'e1RM'} : {label:'Legtöbb ismétlés egy szettben (add meg a testsúlyod az erőbecsléshez)',unit:'ism.',k:'Ismétlés'};
   if(e.cali) return (e.weighted||e.test&&e.plus)&&lastBw()!=null ? {label:'Becsült 1RM plusz súly (kg)',unit:'kg',e1:true,k:'e1RM +kg'} : {label:'Legtöbb ismétlés egy szettben',unit:'ism.',k:'Ismétlés'};
   return {label:'Becsült 1RM edzésenként (kg)',unit:'kg',e1:true,k:'e1RM'};
@@ -1620,6 +1721,7 @@ function viewInfo(){
       <div class="row" style="flex-wrap:nowrap"><label class="small" for="blk" style="white-space:nowrap">Blokk</label><input id="blk" type="number" inputmode="numeric" min="1" value="${ps.block}" style="width:72px;height:46px;border:1px solid var(--line);border-radius:10px;background:var(--surface);text-align:center;font-size:16px"><select id="slotSel" aria-label="Következő edzés">${slotOpts}</select></div>
     </section>
     ${modsCard(key)}
+    ${p.info?`<section class="card info"><div class="eyebrow" style="margin-bottom:6px">Program-szabályok</div><ul>${p.info.map(x=>`<li>${esc(x)}</li>`).join('')}</ul>${Object.values(p.ex).flat().some(e=>unitOf(e)==='cardio')?`<div class="row" style="flex-wrap:nowrap;margin-top:10px"><label class="small" for="hrmax" style="white-space:nowrap">Max pulzus (220 − életkor)</label><input class="inp" id="hrmax" data-hrmax="1" inputmode="numeric" value="${S.settings.hrmax||''}" placeholder="pl. 196" style="max-width:110px"></div><p class="small muted" style="margin:4px 0 0">${S.settings.hrmax?`Zóna 2: ${Math.round(S.settings.hrmax*.6)}–${Math.round(S.settings.hrmax*.7)} /perc. A kardió csak akkor lép tovább, ha az átlagpulzus nem haladja meg a felső értéket.`:'Ha megadod, a kardió-javaslat a pulzust is figyeli (zóna 2 felső határa = a max 70%-a).'}</p>`:''}</section>`:''}
     <section class="card stack" id="myprogs"><div class="eyebrow">Saját programok</div>
       <div>${myList}</div>
       <div class="row"><button class="btn" data-act="pnew-blank">+ Új program</button>${p.cali?'':`<button class="btn" data-act="pnew-copy">Másolat: ${esc(p.title)}</button>`}<button class="btn" data-act="ai-open">✨ Program AI-val</button></div>
@@ -1753,7 +1855,7 @@ function updateRest(){
   $('#frin').className='frest '+st;
   const a=$('#farc'); a.style.stroke= st==='go'?'var(--good)':st==='soon'?'var(--hl)':'var(--day)'; a.setAttribute('stroke-dashoffset',(C*(1-frac)).toFixed(2));
   $('#frt').textContent= left<=0?'Mehet':mmss(left);
-  $('#frh').textContent= left<=0?'Pihenő vége':'Pihenő';
+  const isC=/^Kardió/.test(timer.label||''); $('#frh').textContent= isC? (left<=0?'Kardió kész':'Kardió') : (left<=0?'Pihenő vége':'Pihenő');
   $('#frl').textContent= timer.label||'';
 }
 function tick(){
@@ -1785,7 +1887,7 @@ const aiDefaults=()=>({goal:'hyp',perWeek:3,minutes:60,exp:'mid',equip:'gym',foc
 function historySummary(){
   const list=finished(); if(!list.length) return '';
   const by={};
-  for(const s of list) for(const e of sessExList(s)){ const x=s.ex[e.id]; if(!x) continue;
+  for(const s of list) for(const e of sessExList(s)){ const x=s.ex[e.id]; if(!x||unitOf(e)==='cardio'||e.assist) continue;
     const sets=x.sets.filter(t=>t.done&&t.w&&t.r); if(!sets.length) continue;
     const k=e.name; const b=by[k]||(by[k]={n:0,best:null,last:null});
     b.n++; let top=sets[0]; for(const t of sets) if(e1rm(t)>e1rm(top)) top=t;
@@ -2681,6 +2783,7 @@ document.addEventListener('input',ev=>{
   const t=ev.target, s=S.settings.activeId&&S.sessions[S.settings.activeId];
   if(mobInput(t)) return;
   if(adaptInput(t,s)) return;
+  if(t.dataset.hrmax){ const v=parseInt(t.value,10); if(v>=120&&v<=230) S.settings.hrmax=v; else if(!t.value.trim()) delete S.settings.hrmax; queue('settings'); return; }
   if(ui.ai&&ui.tab==='info'&&t.dataset.af){ ui.ai.form[t.dataset.af]= t.type==='checkbox'? t.checked : t.value; return; }
   if(ui.edit&&ui.tab==='info'){ const d=ui.edit.draft;
     if(t.dataset.pf){ d[t.dataset.pf]= t.type==='checkbox'? t.checked : t.value; return; }
@@ -2722,7 +2825,7 @@ async function exportCsv(){
     for(const e of sessExList(s)){ const x=s.ex[e.id]; if(!x) continue; const t=e.reps?target(e,s.phase):{reps:'',rir:'',lastRir:null};
       if(!x.sets) continue;
       x.sets.forEach((q,i)=>{ if(!q.done) return;
-        rows.push([pname,s.block,s.week,s.slot,dname,s.date,e.lab,e.name,i+1,t.reps,(i===x.sets.length-1&&t.lastRir)||t.rir,fmt(q.w),unitOf(e)==='check'?(q.done?'kész':''):q.unk?'nem számolt':(q.r??''),q.rir??'',fmt(e1rmX(q,e,s.bw??lastBw())),!e.cali&&q.w&&q.r?fmt(q.w*q.r):'',x.var||S.settings.machine[s.program+':'+e.id]||'',s.back??'',s.bw!=null?fmt2(s.bw):'',s.note||'']); });
+        rows.push([pname,s.block,s.week,s.slot,dname,s.date,e.lab,e.name,i+1,t.reps,(i===x.sets.length-1&&t.lastRir)||t.rir,fmt(q.w),unitOf(e)==='check'?(q.done?'kész':''):q.unk?'nem számolt':(q.r??''),q.rir??(q.rpe!=null?'RPE '+q.rpe:''),fmt(e1rmX(q,e,s.bw??lastBw())),!e.cali&&!e.assist&&unitOf(e)!=='cardio'&&q.w&&q.r?fmt(q.w*q.r):'',x.var||S.settings.machine[s.program+':'+e.id]||'',s.back??'',s.bw!=null?fmt2(s.bw):'',s.note||'']); });
     }
   }
   const csv='﻿'+rows.map(r=>r.map(c=>{ c=String(c); return /[;"\n]/.test(c)?'"'+c.replace(/"/g,'""')+'"':c; }).join(';')).join('\r\n');
