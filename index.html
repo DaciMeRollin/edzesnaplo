@@ -788,6 +788,38 @@ const BUILTIN = {
       ['Láb – térd','bolgár guggolás → mellénnyel; pisztoly: magas doboz → alacsony doboz → teljes → súlyozott','3×8/láb → alacsonyabb doboz / +súly'],
       ['Láb – csípő','csúszó lábhajlítás két lábbal → egy lábbal → Nordic negatív; egylábas csípőemelés → váll a padon → mellénnyel','3×10–12 tiszta → következő lépcső'],
       ['L-ülés','tuck → egylábas → L → terpesz L','Összesen 60 mp 2–3 szettben → következő lépcső']]
+  },
+  MIN: {
+    title:'Minimum full-body (fenntartó)', label:'Min · heti 2', short:'Min', pain:true,
+    labels:{deload:'Deload'},
+    rules:{
+      intro:'Program RIR +1. Súlyok és gépbeállítások belövése — ha az F/A programból jössz, ugyanazok a súlyok indulnak.',
+      normal:'FENNTARTÁS: a cél, hogy ugyanazzal a súllyal ugyanannyi ismétlés menjen (Bickel: fiatal felnőtteknél az eredeti volumen 1/3–1/9-e is megtartja az izmot, ha a terhelés marad). Ha mégis több megy → kettős progresszió. Riasztójel: egy fő gyakorlatnál 2 egymást követő héten esik az ismétlésszám (nem alvás/stressz miatt) → +1 szett annál a mozgásnál.',
+      deload:'Fele szettszám, RIR 3–4, a súly marad. Utána új blokk ugyanazokkal a súlyokkal.'},
+    info:[
+      'Heti 2 edzés: A → B (pl. H + Cs), köztük ≥ 48–72 óra. Alkalmanként ~40–45 perc, 11–13 munkaszett.',
+      'Fenntartó dózis: heti ~4–6 kemény szett / nagy izomcsoport (compound szinergista = 0,5 szett). Muscle Ladder: középhaladónál 4–8 szett a minimum még a fejlődéshez is; Schoenfeld (Bickel): fiatal felnőtteknél az eredeti volumen 1/3-a, sőt 1/9-e is megtartotta az izomtömeget.',
+      'Alacsony volumennél az erőfeszítés a fő változó: compoundok RIR 1–2, izolációk RIR 0–1 (Schoenfeld). Frekvencia azonos volumennél nem számít (Schoenfeld meta-analízis) — a heti 2 alkalom csak a volumen elosztása.',
+      'Compound-elsőbbség (Muscle Ladder, minimalista edzés): egy gyakorlat több izmot üt (pl. chin-up fogású lehúzás: hát + bicepsz + hátsó váll). Az oldalemelés az egyetlen opcionális izoláció — az oldalsó vállat egyik compound sem terheli érdemben.',
+      'Pihenő: hack, kitörés, nyomás, dip 2–3 perc; izoláció 1–2 perc (Muscle Ladder 11.1).'],
+    days:{A:{name:'A nap',sub:'hack · chin-up lehúzás · dip · csípőfeszítés (+ oldalemelés)',col:'blue'},
+          B:{name:'B nap',sub:'kitörés · T-rúd evezés · ferde nyomás · ülő lábhajlítás (+ oldalemelés)',col:'green'}},
+    weeks:[['A','B'],['A','B'],['A','B'],['A','B'],['A','B'],['A','B'],['A','B'],['A','B']],
+    phases:['intro','normal','normal','normal','normal','normal','normal','deload'],
+    ex:{
+      A:[
+        ['MA1','Hack guggolás sarokékkel (vagy lábtoló)',3,'6–10','1–2',150,'Lábtoló','Négyfejű + far. A rossz boka-/guggolás-mobilitás miatt gép: így a négyfejű megy közel a bukáshoz, nem a technika limitál. Sarokék vagy magasabb lábállás, hogy a jobb sarok lent maradjon. Hát és far végig a párnán.',{lab:'A1'}],
+        ['MA2','Lehúzás chin-up (supinált) fogással',3,'6–10','1',120,'Asszisztált húzódzkodás (gép) / semleges lehúzás','Hát + bicepsz + hátsó váll egy gyakorlatból. A húzódzkodás mozgásmintája (váll addukció/extenzió + könyökhajlítás), de 6–10 ismétlésben bukás közelébe vihető — 3 tiszta húzódzkodásnál a szett túl rövid lenne. Fent teljes nyújtás, könyök LE a csípő felé. Ha a skill is kell: előtte 1 × 2–3 negatív húzódzkodás (5 mp).',{lab:'A2'}],
+        ['MA3','Korlát-tolódzkodás (dip) — testsúly, majd súlyöv',3,'6–12','1–2',120,'Gépi mellnyomás / asszisztált dip','Mell + tricepsz + első váll. Lapocka lent, törzs enyhén előre → több mell. 2–3 mp lefelé, mélység: felkar kb. vízszintesig, ameddig a váll eleje nem fáj. 3 × 12 RIR 1–2 → +2,5 kg súlyöv, vissza 6-ra.',{lab:'A3',bw:true,plus:true,weighted:true}],
+        ['MA4','45°-os csípőfeszítés',2,'8–12','1',90,'Hip thrust gép','Far + combhajlító + gerincfeszítő. Ugyanaz a csípőextenziós minta, mint az RDL, de kisebb derékterheléssel — a fenntartó blokkban nem éri meg az RDL-kockázat. A mozgás a csípőből jön, felül far összeszorít, NEM hátrafeszítés a derékból.',{lab:'A4'}],
+        ['MA5','Oldalemelés kábelen (opcionális)',2,'12–20','0–1',75,'Gépi / kézisúlyzós oldalemelés','Csak ha van rá 5 perc. Az oldalsó vállat egyik compound sem terheli érdemben. Csiga comb-magasságban. Az utolsó szett bukásig.',{lab:'A5',lastFail:true}]],
+      B:[
+        ['MB1','Hátralépéses kitörés kézisúlyzóval',3,'8–12','1–2',120,'Bolgár guggolás / lábtoló','Lábanként ennyi ismétlés. Négyfejű + far + adduktorok. A hátralépés kevesebb bokahajlítást kér; törzs enyhén előre → több far-nyújtás (Exercise Guide). Gyengébb lábbal kezdj.',{lab:'B1'}],
+        ['MB2','Mellkas-támaszos T-rúd evezés',3,'8–12','1',120,'Gépi evezés mellkas-támasszal','Felső hát + hát + hátsó váll + bicepsz. A mellkas-támasz kiveszi a derekat. Elöl teljes nyújtás, hátul lapockák össze, könyök kb. 45°.',{lab:'B2'}],
+        ['MB3','Ferde nyomás kézisúlyzóval (30°)',3,'6–10','1–2',120,'Ferde gépi / Smith nyomás','Felső mell + első váll + tricepsz. A kézisúlyzó mélyebb nyújtást enged és kíméli a vállat. Alul 1 mp megállás.',{lab:'B3'}],
+        ['MB4','Ülő lábhajlítás',2,'8–12','0–1',90,'Fekvő lábhajlítás','A combhajlító térdhajlító funkcióját egyik compound sem fedi le (a csípőfeszítés csak a csípő oldalát). Ülve megnyúlt helyzetben dolgozik (Maeo 2021). Dőlj előre a párna fölé. Az utolsó szett bukásig.',{lab:'B4',lastFail:true}],
+        ['MB5','Oldalemelés kábelen (opcionális)',2,'12–20','0–1',75,'Gépi / kézisúlyzós oldalemelés','Csak ha van rá 5 perc. Az utolsó szett bukásig.',{lab:'B5',lastFail:true}]]
+    }
   }
 };
 const PHASE = {
@@ -932,7 +964,7 @@ function draftFrom(k){
 /* ===================== STATE ===================== */
 const LS='edzesnaplo.v1';
 const defSettings=()=>({program:'PPL',prog:{},machine:{},step:{},activeId:null});
-function normSettings(d){ d=d||{}; const s=Object.assign(defSettings(),d); s.prog=Object.assign({PPL:{block:1,pos:0},AB:{block:1,pos:0},UL:{block:1,pos:0},FA:{block:1,pos:0},CAL:{block:1,pos:0}},d.prog||{}); s.machine=d.machine||{}; s.step=d.step||{}; return s; }
+function normSettings(d){ d=d||{}; const s=Object.assign(defSettings(),d); s.prog=Object.assign({PPL:{block:1,pos:0},AB:{block:1,pos:0},UL:{block:1,pos:0},FA:{block:1,pos:0},CAL:{block:1,pos:0},MIN:{block:1,pos:0}},d.prog||{}); s.machine=d.machine||{}; s.step=d.step||{}; return s; }
 function loadLocal(key){ try{ const raw=localStorage.getItem(key); if(raw){ const d=JSON.parse(raw); if(d&&d.settings) return {settings:normSettings(d.settings),sessions:d.sessions||{},programs:d.programs||{},mob:d.mob||{}}; } }catch(e){} return null; }
 let LSK=LS; try{ const u=localStorage.getItem(LS+'.uid'); if(u&&localStorage.getItem(LS+'.'+u)) LSK=LS+'.'+u; }catch(e){}
 let S = loadLocal(LSK) || {settings:normSettings(),sessions:{},programs:{},mob:{}};
@@ -1092,7 +1124,7 @@ function sessExList(s){
    Ismétlés bukásig egy súlyon = ism. + RIR  →  e1RM = súly × (1 + (ism.+RIR)/30)
    Fordítva: adott súlyon a cél-RIR mellett várható ism. = 30 × (e1RM/súly − 1) − cél-RIR
    A szettek közti fáradást (ismétlés-esést) a múltkori szettekből vesszük át. */
-const DEFAULT_STEP={L1:5,L2:5,L4:5,L6:5,A1:5,B1:5,B2:2,B7a:2,B8a:2,APU:5,U12:5,L11:5,L13:5,L21:5,L25:5,U21:2,U27:2,'A1.1':5,'A2.1':5,'A2.2':5,'F2.1':5,'F2.2':2,'F2.6a':2,'F2.6b':1,'A2.3':2,KARDIO:5};
+const DEFAULT_STEP={L1:5,L2:5,L4:5,L6:5,A1:5,B1:5,B2:2,B7a:2,B8a:2,APU:5,U12:5,L11:5,L13:5,L21:5,L25:5,U21:2,U27:2,'A1.1':5,'A2.1':5,'A2.2':5,'F2.1':5,'F2.2':2,'F2.6a':2,'F2.6b':1,'A2.3':2,KARDIO:5,MA1:5,MB1:2,MB3:2};
 const STEPS=[1,1.25,2,2.5,5,10];
 const stepFor=(prog,id)=> S.settings.step&&S.settings.step[prog+':'+id] || (prog==='CAL'?2.5:DEFAULT_STEP[id]) || 2.5;
 const mid=s=>{ if(!isNumRir(s)) return 2; const [a,b]=rng(s); return (a+b)/2; };

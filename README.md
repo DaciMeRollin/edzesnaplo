@@ -9,7 +9,7 @@ Minden, ami a mindennapi használathoz kell:
 | Mit szeretnél | Hol |
 |---|---|
 | Edzés naplózása, súly-/ismétlésjavaslat, kardió-progresszió | Edzés fül |
-| **Gyári program módosítása** (F/A, A/B, PPL, U/L, Cali) | Program fül → *„… szerkesztése”* |
+| **Gyári program módosítása** (F/A, A/B, PPL, U/L, Cali, Min) | Program fül → *„… szerkesztése”* |
 | Teljesen új program | Program fül → *+ Új program* / *Másolat* |
 | Program generálása AI-val | Program fül → *✨ Program AI-val* → *Prompt másolása* → bármelyik AI-chat → válasz vissza |
 | Program mentése fájlba / visszatöltése | Program fül → *Jelenlegi program exportálása* / *Program importálása* |
@@ -63,4 +63,4 @@ Minden adat csak a telefonon van: `localStorage`, kulcs `edzesnaplo.v1`. **Ha t�
     "ssNext":false,"lastFail":false,"xs":0,"alt":"…","tip":"…"}]}]}
 ```
 
-A `phases` értékei: `intro`, `normal`, `peak`, `deload`. Ha a `base` mező egy gyári program kulcsa (`FA`, `AB`, `PPL`, `UL`, `CAL`), az import a gyári program változataként nyílik meg.
+A `phases` értékei: `intro`, `normal`, `peak`, `deload`. Ha a `base` mező egy gyári program kulcsa (`FA`, `AB`, `PPL`, `UL`, `CAL`, `MIN`), az import a gyári program változataként nyílik meg.
