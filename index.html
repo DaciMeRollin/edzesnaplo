@@ -609,7 +609,7 @@ const BUILTIN = {
     }
   },
   PPL: {
-    title:'Gördülő PPL', label:'PPL · heti 4', short:'PPL', pain:true,
+    title:'Gördülő PPL', label:'PPL · heti 4', short:'PPL', pain:true, retired:true,
     days:{Push:{sub:'mell · váll · tricepsz (+ combhajlító, vádli)',col:'red'},
           Pull:{sub:'hát · hátsó váll · bicepsz (+ négyfejű, far, oldalsó váll)',col:'blue'},
           Legs:{sub:'négyfejű · combhajlító · far · vádli (+ mell, hát)',col:'yellow'}},
@@ -681,7 +681,7 @@ const BUILTIN = {
     }
   },
   UL: {
-    title:'Upper/Lower', label:'U/L · heti 4', short:'U/L', pain:true,
+    title:'Upper/Lower', label:'U/L · heti 4', short:'U/L', pain:true, retired:true,
     days:{U1:{name:'Upper 1',sub:'felsőtest · erő-fókusz (fekvenyomás, húzódzkodás)',col:'red'},
           L1:{name:'Lower 1',sub:'alsótest · erő-fókusz (guggolás) · combhajlító',col:'yellow'},
           U2:{name:'Upper 2',sub:'felsőtest · hipertrófia (ferde nyomás, lehúzás, tolódzkodás)',col:'blue'},
@@ -730,7 +730,7 @@ const BUILTIN = {
     }
   },
   CAL: {
-    title:'Calisthenics erőprogram', label:'Cali · heti 3', short:'Cali', pain:true, cali:true, ssLabel:'párban',
+    title:'Calisthenics erőprogram', label:'Cali · heti 3', short:'Cali', pain:true, retired:true, cali:true, ssLabel:'párban',
     painLabel:'Könyök / csukló / váll fájdalom (0–10)', painHint:'A kötőszövet lassabban adaptálódik, mint az izom. Ha visszatérő könyök- vagy csuklófájdalom van → korábbi deload.',
     labels:{deload:'Deload + teszt'},
     rules:{
@@ -963,7 +963,8 @@ function draftFrom(k){
 
 /* ===================== STATE ===================== */
 const LS='edzesnaplo.v1';
-const defSettings=()=>({program:'PPL',prog:{},machine:{},step:{},activeId:null});
+const isRetired=k=>!!(BUILTIN[k]&&BUILTIN[k].retired); // kivezetett gyári program: nem választható, a régi edzések megnyithatók
+const defSettings=()=>({program:'FA',prog:{},machine:{},step:{},activeId:null});
 function normSettings(d){ d=d||{}; const s=Object.assign(defSettings(),d); s.prog=Object.assign({PPL:{block:1,pos:0},AB:{block:1,pos:0},UL:{block:1,pos:0},FA:{block:1,pos:0},CAL:{block:1,pos:0},MIN:{block:1,pos:0}},d.prog||{}); s.machine=d.machine||{}; s.step=d.step||{}; return s; }
 function loadLocal(key){ try{ const raw=localStorage.getItem(key); if(raw){ const d=JSON.parse(raw); if(d&&d.settings) return {settings:normSettings(d.settings),sessions:d.sessions||{},programs:d.programs||{},mob:d.mob||{}}; } }catch(e){} return null; }
 let LSK=LS; try{ const u=localStorage.getItem(LS+'.uid'); if(u&&localStorage.getItem(LS+'.'+u)) LSK=LS+'.'+u; }catch(e){}
@@ -1072,7 +1073,7 @@ async function initPwa(){
 /* ===================== HELPERS ===================== */
 const $=s=>document.querySelector(s);
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-const curKey=()=>PROGRAMS[S.settings.program]?S.settings.program:'PPL';
+const curKey=()=>PROGRAMS[S.settings.program]&&!isRetired(S.settings.program)?S.settings.program:'FA';
 const P=()=>PROGRAMS[curKey()];
 const progState=k=>(S.settings.prog[k]||(S.settings.prog[k]={block:1,pos:0}));
 const PS=()=>progState(curKey());
@@ -1331,7 +1332,7 @@ function progSheet(){
   const opt=k=>{ const q=PROGRAMS[k], ps=progState(k), sl=q.slots[ps.pos]||q.slots[0];
     return `<button class="opt" data-act="prog" data-prog="${esc(k)}" aria-pressed="${k===key}"><span class="sw">${Object.values(q.days).map(d=>`<i data-col="${d.col}"></i>`).join('')}</span><span style="flex:1;min-width:0"><b>${esc(q.title)}</b><span class="s">${esc(q.label)} · ${ps.block}. blokk ${sl?sl.week+'. hét':''}</span></span>${k===key?'<b aria-hidden="true">✓</b>':''}</button>`; };
   return `<div class="scrim" data-act="psheet-x"></div><div class="sheet" role="dialog" aria-label="Program választása"><div class="grab"></div>
-    <div class="eyebrow" style="margin-bottom:4px">Program</div>${Object.keys(PROGRAMS).map(opt).join('')}
+    <div class="eyebrow" style="margin-bottom:4px">Program</div>${Object.keys(PROGRAMS).filter(k=>!isRetired(k)).map(opt).join('')}
     <button class="btn" data-act="newprog" style="margin-top:4px">+ Saját program összeállítása</button></div>`;
 }
 function viewHome(){
@@ -1847,7 +1848,7 @@ function viewInfo(){
   const key=curKey(), p=P(), ps=PS(); const maxIn=Math.max(...p.weeks.map(w=>w.length));
   let pos=0; const rows=p.weeks.map((w,wi)=>{ const cells=Array.from({length:maxIn},(_,i)=>{ if(i>=w.length) return '<td class="muted">—</td>'; const cls=pos===ps.pos?'cur':pos<ps.pos?'past':''; pos++; return `<td class="${cls}"><span class="dot" data-col="${p.days[w[i]].col}" style="margin-right:4px"></span>${esc(p.days[w[i]].name)}</td>`; }).join(''); return `<tr><th>${wi+1}.</th>${cells}<td class="small muted" style="text-align:left">${phLabel(p,p.phases[wi])}</td></tr>`; }).join('');
   const slotOpts=p.slots.map((s,i)=>`<option value="${i}" ${i===ps.pos?'selected':''}>${s.week}. hét · ${s.inWeek}. alkalom — ${esc(p.days[s.day].name)}</option>`).join('');
-  const mine=Object.keys(S.programs).filter(k=>PROGRAMS[k]);
+  const mine=Object.keys(S.programs).filter(k=>PROGRAMS[k]&&!isRetired(k));
   const myList= mine.length? mine.map(k=>{ const q=PROGRAMS[k], ov=!!S.programs[k].base;
       const del= ui.confirm==='pdel:'+k
         ? `<div class="confirm" style="flex-basis:100%"><span>${ov?'Visszaállítod a gyári változatot? A módosításaid elvesznek, az edzéseid megmaradnak.':'Törlöd a programot? A vele rögzített edzések az Előzményekben megmaradnak.'}</span><button class="btn danger sm" data-act="pdel-yes" data-key="${esc(k)}">${ov?'Visszaállítás':'Törlés'}</button><button class="btn sm" data-act="cancel">Mégse</button></div>`
@@ -2916,7 +2917,7 @@ document.addEventListener('click',ev=>{
     if(s&&s.program===k){ toast('Előbb fejezd be vagy vesd el a folyamatban lévő edzést'); ui.confirm=null; render(); return; }
     delete S.programs[k]; rebuildPrograms();
     if(ov){ const ps=progState(k); if(ps.pos>=PROGRAMS[k].slots.length) ps.pos=0; }
-    else if(S.settings.program===k){ S.settings.program='PPL'; }
+    else if(S.settings.program===k){ S.settings.program='FA'; }
     queue('settings'); ui.confirm=null; render(); toast(ov?'Gyári program visszaállítva':'Program törölve'); }
   else if(act==='start'){ if(audio==null){ try{ audio=new (window.AudioContext||window.webkitAudioContext)(); }catch(e){} } startSession(b.dataset.day); }
   else if(act==='addset'&&s){ s.ex[b.dataset.ex].sets.push({w:null,r:null,rir:null,done:false}); queue(s.id); render(); }

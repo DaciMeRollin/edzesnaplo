@@ -9,7 +9,7 @@ Minden, ami a mindennapi használathoz kell:
 | Mit szeretnél | Hol |
 |---|---|
 | Edzés naplózása, súly-/ismétlésjavaslat, kardió-progresszió | Edzés fül |
-| **Gyári program módosítása** (F/A, A/B, PPL, U/L, Cali, Min) | Program fül → *„… szerkesztése”* |
+| **Gyári program módosítása** (F/A, A/B, Min) | Program fül → *„… szerkesztése”* |
 | Teljesen új program | Program fül → *+ Új program* / *Másolat* |
 | Program generálása AI-val | Program fül → *✨ Program AI-val* → *Prompt másolása* → bármelyik AI-chat → válasz vissza |
 | Program mentése fájlba / visszatöltése | Program fül → *Jelenlegi program exportálása* / *Program importálása* |
@@ -48,6 +48,7 @@ Minden adat csak a telefonon van: `localStorage`, kulcs `edzesnaplo.v1`. **Ha t�
 ### A kód felépítése (`index.html`)
 
 - `BUILTIN` – a gyári programok. Gyakorlat-tuple: `[id, név, szett, ismétlés, RIR, pihenő mp, alternatíva, végrehajtás, {jelzők}]`. Jelzők: `bw`, `plus`, `weighted`, `assist`, `unit:'sec'|'cardio'|'check'|'cm'`, `lastFail`, `xs` (csúcshéten +szett), `lab` (kijelzett jel), `ss` (szuperszett-pár).
+- `retired:true` – kivezetett gyári program (PPL, U/L, Cali): nem választható, de a régi edzések az Előzményekben megnyithatók maradnak, ezért a definíciót NE töröld.
 - **Ne változtass meg meglévő `id`-t**: az előzmények és a súlyjavaslat ehhez kötődik.
 - `S.programs` – a felhasználó programjai vázlat-formában. `base: 'FA'` = a gyári F/A módosított változata (`buildOverride`), egyébként saját program (`buildProgram`). Mindkettő az `exObj`-on át lesz futó gyakorlat.
 - `recommendBase` → `coreGym` / `recCali` / `recAssist` / `recSec` / `recCardio` – a javaslatok.
